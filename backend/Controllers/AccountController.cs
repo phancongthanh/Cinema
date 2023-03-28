@@ -1,12 +1,11 @@
 ﻿using Cinema.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace Cinema.Controllers;
 
@@ -14,17 +13,20 @@ namespace Cinema.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly JwtBearerOptions _jwtBearerOptions;
 
-    public AccountController(UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
-        RoleManager<IdentityRole> roleManager)
+    public AccountController(UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        RoleManager<IdentityRole> roleManager,
+        IOptionsMonitor<JwtBearerOptions> jwtBearerOptions)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
+        _jwtBearerOptions = jwtBearerOptions.Get(JwtBearerDefaults.AuthenticationScheme);
     }
 
     // POST: api/Account/Register
@@ -33,7 +35,12 @@ public class AccountController : ControllerBase
     {
         if (ModelState.IsValid)
         {
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var user = new User {
+                UserName = model.Email,
+                Email = model.Email,
+                Name = model.Name,
+                Role = model.Role
+            };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -76,18 +83,23 @@ public class AccountController : ControllerBase
                 // Get user roles
                 var roles = await _userManager.GetRolesAsync(user);
 
-                // Create a symmetric security key
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key-here"));
+                // Get configuration
+                string issuer = _jwtBearerOptions.TokenValidationParameters.ValidIssuer;
+                string audience = _jwtBearerOptions.TokenValidationParameters.ValidAudience;
+                var key = _jwtBearerOptions.TokenValidationParameters.IssuerSigningKey;
+                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key-here"));
 
                 // Create a signing credentials using the security key
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 // Create a JWT token with username, role, issuer, audience and expiry date
                 var token = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
+                    issuer,
+                    audience,
                     claims: new List<Claim>
                     {
+                        new Claim("id", user.Id),
+                        new Claim("role", string.Join(",", roles)),
                         new Claim(ClaimTypes.NameIdentifier, user.Id),
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.Email, user.Email),
@@ -111,7 +123,7 @@ public class AccountController : ControllerBase
 
     // POST: api/Account/Logout
     [HttpPost("Logout")]
-    public async Task<IActionResult> Logout()
+    public IActionResult Logout()
     {
         // Do nothing as JWT is not stored in server. Just ask client to delete token.
         return Ok();

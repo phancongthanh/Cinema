@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Cinema.Data;
 using Cinema.Entities;
+using Cinema.Services;
+using Cinema.Models;
+using Cinema.Exceptions;
 
 namespace Cinema.Controllers;
 
@@ -9,124 +10,62 @@ namespace Cinema.Controllers;
 [ApiController]
 public class SchedulesController : ControllerBase
 {
-    private readonly CinemaContext _context;
+    private readonly IScheduleSystem _scheduleSystem;
 
-    public SchedulesController(CinemaContext context)
+    public SchedulesController(IScheduleSystem scheduleSystem)
     {
-        _context = context;
+        _scheduleSystem = scheduleSystem;
     }
+
 
     // GET: api/Schedules
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedule()
     {
-      if (_context.Schedules == null)
-      {
-          return NotFound();
-      }
-        return await _context.Schedules.ToListAsync();
+        return Ok(await _scheduleSystem.GetSchedules());
     }
 
     // GET: api/Schedules/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Schedule>> GetSchedule(string id)
+    public async Task<ActionResult<Schedule>> GetSchedule([FromRoute] string id)
     {
-      if (_context.Schedules == null)
-      {
-          return NotFound();
-      }
-        var schedule = await _context.Schedules.FindAsync(id);
-
-        if (schedule == null)
-        {
-            return NotFound();
-        }
-
-        return schedule;
+        var schedule = await _scheduleSystem.GetSchedule(id);
+        return schedule == null ? NotFound() : Ok(schedule);
     }
 
     // PUT: api/Schedules/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutSchedule(string id, Schedule schedule)
+    public async Task<ActionResult<ScheduleDetail>> PutSchedule([FromRoute] string id, [FromBody] Schedule schedule)
     {
         if (id != schedule.ScheduleId)
-        {
             return BadRequest();
-        }
-
-        _context.Entry(schedule).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await _scheduleSystem.UpdateSchedule(id, schedule.StartTime, schedule.EndTime);
+            return Ok(await _scheduleSystem.GetSchedule(id));
         }
-        catch (DbUpdateConcurrencyException)
+        catch (NotFoundException e)
         {
-            if (!ScheduleExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
+            return BadRequest(e.Message);
         }
-
-        return NoContent();
     }
 
     // POST: api/Schedules
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Schedule>> PostSchedule(Schedule schedule)
+    public async Task<ActionResult<ScheduleDetail>> PostSchedule(
+        [FromBody] Schedule schedule,
+        [FromQuery] double baseCost,
+        [FromQuery] double vipCost)
     {
-      if (_context.Schedules == null)
-      {
-          return Problem("Entity set 'CinemaContext.Schedule'  is null.");
-      }
-        _context.Schedules.Add(schedule);
         try
         {
-            await _context.SaveChangesAsync();
+            var scheduleId = await _scheduleSystem.CreateSchedule(schedule, baseCost, vipCost);
+            return Ok(_scheduleSystem.GetSchedule(scheduleId));
         }
-        catch (DbUpdateException)
+        catch (NotFoundException e)
         {
-            if (ScheduleExists(schedule.ScheduleId))
-            {
-                return Conflict();
-            }
-            else
-            {
-                throw;
-            }
+            return BadRequest(e.Message);
         }
-
-        return CreatedAtAction("GetSchedule", new { id = schedule.ScheduleId }, schedule);
-    }
-
-    // DELETE: api/Schedules/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteSchedule(string id)
-    {
-        if (_context.Schedules == null)
-        {
-            return NotFound();
-        }
-        var schedule = await _context.Schedules.FindAsync(id);
-        if (schedule == null)
-        {
-            return NotFound();
-        }
-
-        _context.Schedules.Remove(schedule);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
-
-    private bool ScheduleExists(string id)
-    {
-        return (_context.Schedules?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
     }
 }

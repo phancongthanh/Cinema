@@ -1,6 +1,7 @@
 ﻿using Cinema.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Cinema.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,7 @@ public static class ConfigureDatabase
             options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 31)),
                 builder => builder.MigrationsAssembly(typeof(CinemaContext).Assembly.FullName)));
 
-        services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        services.AddIdentity<User, IdentityRole>(options =>
         {
             // Configure password policy here
             options.Password.RequireDigit = false;

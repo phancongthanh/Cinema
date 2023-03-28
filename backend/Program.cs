@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Cinema.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -8,12 +13,24 @@ var services = builder.Services;
 
 services.AddDatabase(builder.Configuration);
 
-services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie();
+services.AddScoped<IFilmSystem, FilmSystem>();
+services.AddScoped<IRoomSystem, RoomSystem>();
+services.AddScoped<ISeatSystem, SeatSystem>();
+services.AddScoped<IScheduleSystem, ScheduleSystem>();
+
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        configuration.Bind("JwtSettings", options);
+        var key = Encoding.UTF8.GetBytes(configuration["JwtSettings:SecurityKey"]
+            ?? throw new ArgumentNullException("JwtSettings:SecurityKey"));
+        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
+    });
 
 services.AddCors();
 
 services.AddControllers();
+
 
 var app = builder.Build();
 
