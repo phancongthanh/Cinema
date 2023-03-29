@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Cinema.Data;
 using Cinema.Entities;
+using Cinema.Services;
+using Cinema.Exceptions;
 
 namespace Cinema.Controllers;
 
@@ -9,124 +9,59 @@ namespace Cinema.Controllers;
 [ApiController]
 public class RoomsController : ControllerBase
 {
-    private readonly CinemaContext _context;
+    private readonly IRoomSystem _roomSystem;
 
-    public RoomsController(CinemaContext context)
+    public RoomsController(IRoomSystem roomSystem)
     {
-        _context = context;
+        _roomSystem = roomSystem;
     }
 
     // GET: api/Rooms
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Room>>> GetRoom()
     {
-      if (_context.Rooms == null)
-      {
-          return NotFound();
-      }
-        return await _context.Rooms.ToListAsync();
+        return Ok(await _roomSystem.GetRooms());
     }
 
     // GET: api/Rooms/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Room>> GetRoom(string id)
+    public async Task<ActionResult<Room>> GetRoom([FromRoute] string id)
     {
-      if (_context.Rooms == null)
-      {
-          return NotFound();
-      }
-        var room = await _context.Rooms.FindAsync(id);
+        var room = await _roomSystem.GetRoom(id);
 
-        if (room == null)
-        {
+        if (room == null)        
             return NotFound();
-        }
 
-        return room;
+        return Ok(room);
     }
 
     // PUT: api/Rooms/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutRoom(string id, Room room)
+    public async Task<ActionResult<Room>> PutRoom([FromRoute] string id, [FromBody] Room room)
     {
         if (id != room.RoomId)
         {
             return BadRequest();
         }
 
-        _context.Entry(room).State = EntityState.Modified;
-
         try
         {
-            await _context.SaveChangesAsync();
+            await _roomSystem.UpdateRoom(room);
         }
-        catch (DbUpdateConcurrencyException)
+        catch (NotFoundException e)
         {
-            if (!RoomExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
+            return BadRequest(e.Message);
         }
 
-        return NoContent();
+        return Ok(await _roomSystem.GetRoom(id));
     }
 
     // POST: api/Rooms
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Room>> PostRoom(Room room)
+    public async Task<ActionResult<Room>> PostRoom([FromBody] Room room)
     {
-      if (_context.Rooms == null)
-      {
-          return Problem("Entity set 'CinemaContext.Room'  is null.");
-      }
-        _context.Rooms.Add(room);
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateException)
-        {
-            if (RoomExists(room.RoomId))
-            {
-                return Conflict();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        var roomId = await _roomSystem.CreateRoom(room);
 
-        return CreatedAtAction("GetRoom", new { id = room.RoomId }, room);
-    }
-
-    // DELETE: api/Rooms/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteRoom(string id)
-    {
-        if (_context.Rooms == null)
-        {
-            return NotFound();
-        }
-        var room = await _context.Rooms.FindAsync(id);
-        if (room == null)
-        {
-            return NotFound();
-        }
-
-        _context.Rooms.Remove(room);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
-
-    private bool RoomExists(string id)
-    {
-        return (_context.Rooms?.Any(e => e.RoomId == id)).GetValueOrDefault();
+        return Ok(await _roomSystem.GetRoom(roomId));
     }
 }

@@ -12,11 +12,9 @@ public class RegisterModel
     [DataType(DataType.Password)]
     public string Password { get; set; }
 
-    [DataType(DataType.Password)]
-    [Display(Name = "Confirm password")]
-    [Compare("Password",
-        ErrorMessage = "Password and confirmation password do not match.")]
-    public string ConfirmPassword { get; set; }
+    [Required]
+    [EmailAddress]
+    public string Name { get; set; }
 
     // Add a Role field to allow user to select role
     [Required]
