@@ -1,4 +1,6 @@
+import APIError from '../types/APIError';
 import Film from '../types/Film';
+import FilmDetail from '../types/FilmDetail';
 import identity from './identity';
 import server from './server';
 
@@ -6,7 +8,7 @@ import server from './server';
  * Lấy danh sách films của hệ thống
  * @returns Danh sách toàn bộ films : Film[]
  */
-export async function get() : Promise<Film[]> {
+export async function get() : Promise<FilmDetail[]> {
     const url = server.basePath + "/Films";
 
     const response = await fetch(url, {
@@ -25,20 +27,13 @@ export async function get() : Promise<Film[]> {
  * @param filmId id của film cần lấy
  * @returns film nếu tồn tại, null nếu không tồn tại film
  */
-export async function getById(filmId: string) : Promise<Film|null> {
+export async function getById(filmId: string) : Promise<FilmDetail|null> {
     const url = server.basePath + "/Films/" + filmId;
-
-    const token = identity.getToken();
-    if (!token) {
-        console.warn("Thêm film nhưng user chưa đăng nhập!");
-        throw Number(401);
-    }
 
     const response = await fetch(url, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
+            'Content-Type': 'application/json'
         }
     });
 
@@ -51,21 +46,35 @@ export async function getById(filmId: string) : Promise<Film|null> {
  * Film.filmId sẽ được server đổi
  * @param film dữ liệu của film
  * @returns film được thêm nếu thành công
- * @throws mã Http
+ * @throws APIError
  */
 export async function create(film: Film) : Promise<Film> {
     const url = server.basePath + "/Films";
 
+    const token = identity.getToken() || "";
+
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token
         },
         body: JSON.stringify(film)
     });
 
     if (response.ok) return await response.json();
-    throw response.status;
+    
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: ""
+    }
+    switch (response.status) {
+        case 400: error.message = await response.text(); throw error;
+        case 401: error.message = "Người dùng chưa đăng nhập"; throw error;
+        case 403: error.message = "Người dùng không có quyền thực hiện"; throw error;
+        default: throw error;
+    }
 }
 
 /**
@@ -77,11 +86,7 @@ export async function create(film: Film) : Promise<Film> {
 export async function update(film: Film) : Promise<Film> {
     const url = server.basePath + "/Films/" + film.filmId;
 
-    const token = identity.getToken();
-    if (!token) {
-        console.warn("Cập nhật film nhưng user chưa đăng nhập!");
-        throw Number(401);
-    }
+    const token = identity.getToken() || "";
 
     const response = await fetch(url, {
         method: 'PUT',
@@ -93,7 +98,18 @@ export async function update(film: Film) : Promise<Film> {
     });
 
     if (response.ok) return await response.json();
-    throw response.status;
+    
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: ""
+    }
+    switch (response.status) {
+        case 400: error.message = await response.text(); throw error;
+        case 401: error.message = "Người dùng chưa đăng nhập"; throw error;
+        case 403: error.message = "Người dùng không có quyền thực hiện"; throw error;
+        default: throw error;
+    }
 }
 
 const films = {

@@ -1,15 +1,19 @@
 ﻿using Cinema.Data;
 using Cinema.Entities;
 using Cinema.Exceptions;
+using Cinema.Models;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Services;
 
 public interface IFilmSystem
 {
-    Task<IEnumerable<Film>> GetFilms();
+    Task<IEnumerable<FilmDetail>> GetFilms();
 
     Task<Film?> GetFilm(string filmId);
+
+    Task<FilmDetail?> GetFilmDetail(string filmId);
 
     Task<string> CreateFilm(Film film);
 
@@ -40,9 +44,23 @@ public class FilmSystem : IFilmSystem
             .FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Film>> GetFilms()
+    public async Task<FilmDetail?> GetFilmDetail(string filmId)
     {
-        return await _context.Films.AsNoTracking().ToListAsync();
+        var film = await _context.Films.AsNoTracking()
+            .Where(f => f.FilmId == filmId)
+            .FirstOrDefaultAsync();
+        if (film == null) return null;
+        var schedules = await _context.Schedules.AsNoTracking()
+            .Where(s => s.FilmId == filmId)
+            .ToListAsync();
+        return new FilmDetail(film, schedules);
+    }
+
+    public async Task<IEnumerable<FilmDetail>> GetFilms()
+    {
+        var films = await _context.Films.AsNoTracking().ToListAsync();
+        var schedules = await _context.Schedules.AsNoTracking().ToListAsync();
+        return films.Select(f => new FilmDetail(f, schedules.Where(s => s.FilmId == f.FilmId)));
     }
 
     public async Task UpdateFilm(Film film)

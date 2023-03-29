@@ -27,7 +27,7 @@ public class SchedulesController : ControllerBase
 
     // GET: api/Schedules/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Schedule>> GetSchedule([FromRoute] string id)
+    public async Task<ActionResult<ScheduleDetail>> GetSchedule([FromRoute] string id)
     {
         var schedule = await _scheduleSystem.GetSchedule(id);
         return schedule == null ? NotFound() : Ok(schedule);

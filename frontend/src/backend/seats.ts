@@ -1,3 +1,4 @@
+import APIError from '../types/APIError';
 import Room from '../types/Room';
 import Seat from '../types/Seat';
 import identity from './identity';
@@ -9,16 +10,12 @@ import server from './server';
  * Chú ý seat.roomId cần tồn tại nếu không sẽ có lỗi 400
  * @param seat dữ liệu của seat
  * @returns thông tin room của seat sau khi thêm
- * @throws mã Http
+ * @throws APIError
  */
 export async function create(seat: Seat) : Promise<Room> {
     const url = server.basePath + "/Seats?roomId=" + seat.roomId;
 
-    const token = identity.getToken();
-    if (!token) {
-        console.warn("Thêm seat nhưng user chưa đăng nhập!");
-        throw Number(401);
-    }
+    const token = identity.getToken() || "";
 
     const response = await fetch(url, {
         method: 'POST',
@@ -30,7 +27,18 @@ export async function create(seat: Seat) : Promise<Room> {
     });
 
     if (response.ok) return await response.json();
-    throw response.status;
+    
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: ""
+    }
+    switch (response.status) {
+        case 400: error.message = await response.text(); throw error;
+        case 401: error.message = "Người dùng chưa đăng nhập"; throw error;
+        case 403: error.message = "Người dùng không có quyền thực hiện"; throw error;
+        default: throw error;
+    }
 }
 
 /**
@@ -38,16 +46,12 @@ export async function create(seat: Seat) : Promise<Room> {
  * Ghế phải tồn tại ứng đúng với roomId
  * @param seat dữ liệu của seat
  * @returns thông tin room của seat sau khi thêm
- * @throws mã Http
+ * @throws APIError
  */
 export async function update(seat: Seat) : Promise<Room> {
     const url = server.basePath + "/Seats/" + seat.seatId;
 
-    const token = identity.getToken();
-    if (!token) {
-        console.warn("Cập nhật seat nhưng user chưa đăng nhập!");
-        throw Number(401);
-    }
+    const token = identity.getToken() || "";
 
     const response = await fetch(url, {
         method: 'PUT',
@@ -59,7 +63,18 @@ export async function update(seat: Seat) : Promise<Room> {
     });
 
     if (response.ok) return await response.json();
-    throw response.status;
+    
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: ""
+    }
+    switch (response.status) {
+        case 400: error.message = await response.text(); throw error;
+        case 401: error.message = "Người dùng chưa đăng nhập"; throw error;
+        case 403: error.message = "Người dùng không có quyền thực hiện"; throw error;
+        default: throw error;
+    }
 }
 
 /**
@@ -67,16 +82,12 @@ export async function update(seat: Seat) : Promise<Room> {
  * Ghế phải tồn tại
  * @param seatId dữ liệu của seat
  * @returns thông tin room của seat sau khi thêm
- * @throws mã Http
+ * @throws APIError
  */
 export async function remove(seatId: string) : Promise<Room> {
     const url = server.basePath + "/Seats/" + seatId;
 
-    const token = identity.getToken();
-    if (!token) {
-        console.warn("Cập nhật seat nhưng user chưa đăng nhập!");
-        throw Number(401);
-    }
+    const token = identity.getToken() || "";
 
     const response = await fetch(url, {
         method: 'DELETE',
@@ -87,7 +98,18 @@ export async function remove(seatId: string) : Promise<Room> {
     });
 
     if (response.ok) return await response.json();
-    throw response.status;
+    
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: ""
+    }
+    switch (response.status) {
+        case 400: error.message = await response.text(); throw error;
+        case 401: error.message = "Người dùng chưa đăng nhập"; throw error;
+        case 403: error.message = "Người dùng không có quyền thực hiện"; throw error;
+        default: throw error;
+    }
 }
 
 const seats = {

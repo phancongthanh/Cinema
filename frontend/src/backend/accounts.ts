@@ -1,3 +1,4 @@
+import APIError from '../types/APIError';
 import LoginModel from '../types/LoginModel';
 import RegisterModel from '../types/RegisterModel';
 import identity from './identity';
@@ -26,7 +27,7 @@ export async function register(account: RegisterModel) : Promise<boolean> {
  * Đăng nhập
  * @param request Thông tin đăng nhập
  * @returns true nếu thành công
- * @throws status (mã Http) của request
+ * @throws APIError object
  */
 export async function login(request: LoginModel) : Promise<boolean> {
     const url = server.basePath + "/Account/Login";
@@ -42,7 +43,12 @@ export async function login(request: LoginModel) : Promise<boolean> {
         identity.setToken(await response.text(), request.rememberMe);
         return true;
     }
-    throw response.status;
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: response.status === 400 ? await response.text() : ""
+    }
+    throw error;
 }
 
 export async function logout() : Promise<void> {

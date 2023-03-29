@@ -2,6 +2,7 @@
 using Cinema.Entities;
 using Cinema.Services;
 using Cinema.Exceptions;
+using Cinema.Models;
 
 namespace Cinema.Controllers;
 
@@ -18,16 +19,16 @@ public class FilmsController : ControllerBase
 
     // GET: api/Films
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Film>>> GetFilm()
+    public async Task<ActionResult<IEnumerable<FilmDetail>>> GetFilm()
     {
         return Ok(await _filmSystem.GetFilms());
     }
 
     // GET: api/Films/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Film>> GetFilm([FromRoute] string id)
+    public async Task<ActionResult<FilmDetail>> GetFilm([FromRoute] string id)
     {
-        var film = await _filmSystem.GetFilm(id);
+        var film = await _filmSystem.GetFilmDetail(id);
         return film == null ? NotFound() : Ok(film);
     }
 
