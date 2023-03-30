@@ -13,7 +13,7 @@ public class RegisterModel
     public string Password { get; set; }
 
     [Required]
-    [EmailAddress]
+    [DataType(DataType.Text)]
     public string Name { get; set; }
 
     // Add a Role field to allow user to select role

@@ -1,6 +1,5 @@
 export default interface RegisterModel
 {
-    username: string,
     name: string,
     email: string,
     password: string,
