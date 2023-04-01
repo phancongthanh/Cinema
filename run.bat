@@ -1,1 +1,1 @@
-cd build && dotnet Cinema.dll --environment=Development && cd ..
+cd build && dotnet Cinema.dll --environment=Local && cd ..
