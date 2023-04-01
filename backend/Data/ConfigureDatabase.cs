@@ -33,6 +33,8 @@ public static class ConfigureDatabase
         })
         .AddEntityFrameworkStores<CinemaContext>();
 
+        services.AddScoped<DbContextInitialiser>();
+
         return services;
     }
 }

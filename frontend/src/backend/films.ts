@@ -19,7 +19,12 @@ export async function get() : Promise<FilmDetail[]> {
     });
 
     if (!response.ok) return [];
-    return await response.json();
+    const films: FilmDetail[] = await response.json();
+    films.forEach(film => film.schedules.forEach(schedule => {
+        schedule.startTime = new Date(schedule.startTime);
+        schedule.endTime = new Date(schedule.endTime);
+    }))
+    return films;
 }
 
 /**
@@ -38,7 +43,12 @@ export async function getById(filmId: string) : Promise<FilmDetail|null> {
     });
 
     if (!response.ok) return null;
-    return await response.json();
+    const film: FilmDetail = await response.json();
+    film.schedules.forEach(schedule => {
+        schedule.startTime = new Date(schedule.startTime);
+        schedule.endTime = new Date(schedule.endTime);
+    })
+    return film;
 }
 
 /**

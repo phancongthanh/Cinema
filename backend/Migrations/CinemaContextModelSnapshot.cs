@@ -67,6 +67,10 @@ namespace Cinema.Migrations
                     b.Property<string>("Poster")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");

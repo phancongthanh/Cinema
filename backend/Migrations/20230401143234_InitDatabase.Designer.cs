@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cinema.Migrations
 {
     [DbContext(typeof(CinemaContext))]
-    [Migration("20230328014308_InitDatabase")]
+    [Migration("20230401143234_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -68,6 +68,10 @@ namespace Cinema.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Poster")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Title")

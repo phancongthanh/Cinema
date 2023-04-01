@@ -17,6 +17,7 @@ public class FilmDetail : Film
         Language = film.Language;
         Poster = film.Poster;
         Trailer = film.Trailer;
+        Tags = film.Tags;
         Schedules = new List<Schedule>();
     }
 
@@ -31,6 +32,7 @@ public class FilmDetail : Film
         Language = film.Language;
         Poster = film.Poster;
         Trailer = film.Trailer;
+        Tags = film.Tags;
         Schedules = schedules;
     }
 }
