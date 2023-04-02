@@ -36,7 +36,7 @@ public class ScheduleSystem : IScheduleSystem
         if (_context.Films.Any(f => f.FilmId == schedule.FilmId))
             throw new NotFoundException("Phim không tồn tại!");
         await _context.Schedules.AddAsync(schedule);
-        foreach (var seat in room.Seats.Where(s => s.IsAvailable))
+        foreach (var seat in room.Seats)
         {
             var ticket = new Ticket()
             {
@@ -45,7 +45,7 @@ public class ScheduleSystem : IScheduleSystem
                 SeatId = seat.SeatId,
                 Cost = seat.IsVip ? vipCost : baseCost,
                 UserId = null,
-                Status = TicketStatus.Available
+                Status = seat.IsAvailable ? TicketStatus.Available : TicketStatus.Unavailable
             };
             await _context.Tickets.AddAsync(ticket);
         }

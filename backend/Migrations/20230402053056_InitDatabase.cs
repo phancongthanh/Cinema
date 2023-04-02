@@ -307,6 +307,10 @@ namespace Cinema.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Position = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Row = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Column = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     IsVip = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsAvailable = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },

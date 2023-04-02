@@ -134,6 +134,10 @@ namespace Cinema.Migrations
                     b.Property<string>("SeatId")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("Column")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("tinyint(1)");
 
@@ -147,6 +151,10 @@ namespace Cinema.Migrations
                     b.Property<string>("RoomId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Row")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("SeatId");
 
