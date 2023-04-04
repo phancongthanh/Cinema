@@ -22,6 +22,8 @@ namespace Cinema.Data
 
         public DbSet<Ticket> Tickets => Set<Ticket>();
 
+        public DbSet<Booking> Bookings => Set<Booking>();
+
         public DbSet<FileEntity> Files => Set<FileEntity>();
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -35,12 +37,18 @@ namespace Cinema.Data
             builder.Entity<Schedule>().ToTable(nameof(Schedule)).HasKey(x => x.ScheduleId);
             builder.Entity<Ticket>().ToTable(nameof(Ticket)).HasKey(x => x.TicketId);
             builder.Entity<Ticket>().Property(t => t.TicketId).ValueGeneratedOnAdd();
+            builder.Entity<Booking>().ToTable(nameof(Booking)).HasKey(x => x.BookingId);
+            builder.Entity<Booking>().Property(t => t.BookingId).ValueGeneratedOnAdd();
+            builder.Entity<Ticket>().HasMany<Booking>().WithOne().HasForeignKey(x => x.TicketId);
             builder.Entity<Schedule>().HasMany<Ticket>().WithOne().HasForeignKey(x => x.ScheduleId);
+            builder.Entity<Schedule>().HasMany<Booking>().WithOne().HasForeignKey(x => x.ScheduleId);
 
             builder.Entity<Film>().HasMany<Schedule>().WithOne().HasForeignKey(x => x.FilmId);
             builder.Entity<Room>().HasMany<Schedule>().WithOne().HasForeignKey(x => x.RoomId);
             builder.Entity<Seat>().HasMany<Ticket>().WithOne().HasForeignKey(x => x.SeatId);
 
+            builder.Entity<User>().HasMany<Ticket>().WithOne().HasForeignKey(x => x.UserId);
+            builder.Entity<User>().HasMany<Booking>().WithOne().HasForeignKey(x => x.UserId);
             base.OnModelCreating(builder);
         }
     }

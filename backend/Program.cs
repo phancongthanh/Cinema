@@ -17,6 +17,7 @@ services.AddScoped<IFilmSystem, FilmSystem>();
 services.AddScoped<IRoomSystem, RoomSystem>();
 services.AddScoped<ISeatSystem, SeatSystem>();
 services.AddScoped<IScheduleSystem, ScheduleSystem>();
+services.AddScoped<IBookingSystem, BookingSystem>();
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

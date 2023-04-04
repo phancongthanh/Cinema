@@ -3,7 +3,7 @@
 public enum TicketStatus
 {
     Available,
-    Sold,
+    Booked,
     Paid,
     Canceled,
     Unavailable
