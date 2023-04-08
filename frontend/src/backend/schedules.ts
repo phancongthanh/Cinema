@@ -3,6 +3,17 @@ import Schedule from '../types/Schedule';
 import ScheduleDetail from '../types/ScheduleDetail';
 import identity from './identity';
 import server from './server';
+import ticket from './ticket';
+
+const schedules = {
+    get,
+    getById,
+    create,
+    update,
+    ticket
+}
+
+export default schedules;
 
 /**
  * Lấy danh sách schedules của hệ thống
@@ -138,12 +149,3 @@ export async function update(scheduleId: string, startTime: Date, endTime: Date)
         default: throw error;
     }
 }
-
-const schedules = {
-    get,
-    getById,
-    create,
-    update
-}
-
-export default schedules;
