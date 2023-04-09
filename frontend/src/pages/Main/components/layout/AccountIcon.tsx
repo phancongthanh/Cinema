@@ -1,16 +1,12 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {Avatar, Divider, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
-import { IconButton } from '@mui/material';
-import { Logout, Settings } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
-import identity from '../../../../backend/identity';
 import accounts from '../../../../backend/accounts';
+import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Logout, Settings } from '@mui/icons-material';
 
 
-
-const AdminHeader = () => {
-  
+const AccountIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate()
   const {setAuth} = useAuth()
@@ -25,14 +21,12 @@ const AdminHeader = () => {
 
   const logout = () => {
     setAuth(null)
-    navigate('/login', {replace : true})
+    // navigate('/login', {replace : true})
     accounts.logout();
   }
 
   return (
-    <div className=" bg-neutral-200 h-12">
-      <Link to='/'>Back</Link>
-      <div className="items">
+    <div className="items">
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -98,8 +92,7 @@ const AdminHeader = () => {
         </MenuItem>
       </Menu>
         </div>
-    </div>
   )
 }
 
-export default AdminHeader
+export default AccountIcon

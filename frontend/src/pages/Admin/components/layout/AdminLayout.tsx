@@ -2,6 +2,8 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
 import AdminHeader from './AdminHeader'
+import RequiredAuth from '../../../../components/RequiredAuth'
+
 
 const AdminLayout = () => {
   return (
@@ -9,7 +11,7 @@ const AdminLayout = () => {
       <Sidebar/>
       <div className="flex flex-col w-screen">
         <AdminHeader/>
-        <Outlet/>
+        <RequiredAuth allowedRole={'Admin'} />
       </div>
     </div>
   )

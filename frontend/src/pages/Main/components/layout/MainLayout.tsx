@@ -10,7 +10,7 @@ const MainLayout = () => {
   return (
     <div className='flex flex-col'>
         <Header/>
-         <div className='h-screen'>
+         <div className='h-[100dvh]'>
           <Outlet/>
           </div>
         <Footer/>

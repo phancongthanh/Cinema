@@ -1,29 +1,36 @@
 
 import Layout from './pages/Main/components/layout/MainLayout';
-import { AccountsEdit, AdminLayout, Analysis, Book, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit } from './pages';
+import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo } from './pages';
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import React from 'react';
+import { AuthProvider } from './context/AuthProvider';
+import RequiredAuth from './components/RequiredAuth';
+
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
           <Route path="/login"  element={<Login />}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/NeedLogin" element={<NeedLogin />}/>
+          <Route path="/needLogin" element={<NeedLogin />}/>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />}/>
             <Route path="home" element={<Home />}/>
             <Route path="showtimes" element={<Showtimes />}/>
             <Route path="price" element={<Price />}/>
+            {/* <Route element={<RequiredAuth allowedRole={'Member'} />}> */}
+              <Route path="book" element={<Book />}>
+                <Route path="chooseFilm" element={<ChooseFilm />}/>
+                <Route path="chooseSeats" element={<ChooseSeats />}/>
+                <Route path="userInfo" element={<UserInfo />}/>
+                <Route path="payment" element={<Payment />}/>
+                <Route path="notification" element={<Notification />}/>
+               </Route>
+              <Route path="refund" element={<Refund />}/>
+            {/* </Route> */}
           </Route>
 
-          {/* <Route element={<RequiredAuth />}> */}
-          <Route>
-            <Route path="/Book" element={<Book />}/>
-            <Route path="/Refund" element={<Refund />}/>
-          </Route>
-
-          {/* <Route element={<RequiredAuth allowedRole={RoleSchema.Administrator}/>}> */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Analysis />}/>
             <Route path="analysis" element={<Analysis />}/>
@@ -39,9 +46,9 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    // <AuthProvider>
-     <RouterProvider router={router} />
-    // </AuthProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 

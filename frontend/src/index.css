@@ -19,9 +19,14 @@ code {
 
 @layer components {
   .btn-sidebar {
-    @apply  hover:bg-sky-50 p-2 rounded-l-2xl;
+    @apply  hover:bg-sky-50 p-2 rounded-l-2xl opacity-80 transition duration-500 ease-in-out hover:opacity-100;
   }
   .btn-sidebar-select {
     @apply  bg-sky-50 p-2 rounded-l-2xl cursor-default;
   }
+
+  .tab {
+    @apply  hover:opacity-100 opacity-80 duration-200 ease-in-out;
+  }
+  
 }

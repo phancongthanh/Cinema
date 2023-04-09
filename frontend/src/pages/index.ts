@@ -4,6 +4,13 @@ export {default as Showtimes} from './Main/Showtimes';
 export {default as Price} from './Main/Price';
 export {default as Refund} from './Main/Refund';
 export {default as Book} from './Main/Book';
+    export {default as ChooseFilm} from './Main/Book/components/ChooseFilm';
+    export {default as ChooseSeats} from './Main/Book/components/ChooseSeats';
+    export {default as UserInfo} from './Main/Book/components/UserInfo';
+    export {default as Payment} from './Main/Book/components/Payment';
+    export {default as Notification} from './Main/Book/components/Notification';
+
+
 
 //Auth
 export {default as Login} from './Auth/Login';
