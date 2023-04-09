@@ -30,7 +30,7 @@ const AdminHeader = () => {
   }
 
   return (
-    <div className=" bg-neutral-200 h-12">
+    <div className=" bg-neutral-200 h-12 flex justify-between px-4 items-center">
       <Link to='/'>Back</Link>
       <div className="items">
         <Tooltip title="Account settings">

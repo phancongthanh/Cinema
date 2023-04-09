@@ -11,7 +11,7 @@ const getAuth = () : Role | null => {
   // if(!identity.getToken()) return null;
   // login
   // return identity.getRole() || null;
-  return 'Member';
+  return 'Admin';
 }
 
 const AuthContext = createContext<{

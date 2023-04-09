@@ -11,7 +11,9 @@ const AdminLayout = () => {
       <Sidebar/>
       <div className="flex flex-col w-screen">
         <AdminHeader/>
-        <RequiredAuth allowedRole={'Admin'} />
+        <div className="p-8">
+          <RequiredAuth allowedRole={'Admin'} />
+        </div>
       </div>
     </div>
   )

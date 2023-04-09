@@ -4,7 +4,18 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        up: {
+          '0%': { transform: 'translate(0, 0)' },
+          '100%': { transform: 'translate(0, -0.5rem)' },
+        },
+        down: {
+          '0%': { transform: 'translate(0, 0)' },
+          '100%': { transform: 'translate(0, 0.5rem)' },
+        },
+      },
+    },
   },
   plugins: [],
 }
