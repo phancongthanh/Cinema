@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cinema.Entities;
+using Cinema.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Data;
 
@@ -6,11 +9,13 @@ public class DbContextInitialiser
 {
     private readonly ILogger<DbContextInitialiser> _logger;
     private readonly CinemaContext _context;
+    private readonly UserManager<User> _userManager;
 
-    public DbContextInitialiser(ILogger<DbContextInitialiser> logger, CinemaContext context)
+    public DbContextInitialiser(ILogger<DbContextInitialiser> logger, CinemaContext context, UserManager<User> userManager)
     {
         _logger = logger;
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task InitialiseAsync()
@@ -42,25 +47,117 @@ public class DbContextInitialiser
         }
     }
 
-    public Task TrySeedAsync()
+    public async Task TrySeedAsync()
     {
-        /*
         // Default users
-        var administrator = new ApplicationUser {
-            UserName = "+84987654321"};
-        var command = new CreateAccountCommand(
-            new AccountModel() { Country = 84, Phone = "+84987654321", Password = "Admin@123"},
-            "Web Chat",
-            DateTime.Now.AddYears(18),
-            Domain.Enums.GenderType.Male
-            );
-        var result = await _mediator.Send(command);
-        
-        if (_userManager.Users.All(u => u.UserName != administrator.UserName))
+        var administrator = new User {
+            UserName = "admin@admin.com",
+            Email = "admin@admin.com",
+            Name = "Admin",
+            Role = "Admin"
+        };
+        if (!_userManager.Users.Any(u => u.UserName == administrator.UserName))
         {
-            await _userManager.CreateAsync(administrator, "Administrator!");
+            await _userManager.CreateAsync(administrator, "admin");
         }
-        */
-        return Task.CompletedTask;
+        // Films
+        if (!_context.Films.Any())
+        {
+            var films = new[]
+            {
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "KHÓA CHẶT CỬA NÀO SUZUME (PHỤ ĐỀ VIỆT, ANH) - P",
+                    Category = "Hoạt hình",
+                    Time = 100,
+                    Description = "\"Khóa Chặt Cửa Nào Suzume\" kể câu chuyện khi Suzume vô tình gặp một chàng trai trẻ đến thị trấn nơi cô sinh sống với mục đích tìm kiếm \"một cánh cửa\". Để bảo vệ Nhật Bản khỏi thảm họa, những cánh cửa rải rác khắp nơi phải được đóng lại, và bất ngờ thay Suzume cũng có khả năng đóng cửa đặc biệt này. Từ đó cả hai cùng nhau thực hiện sự mệnh \"khóa chặt cửa\"!",
+                    Director = "Makoto Shinkai",
+                    Actors = null,
+                    Language = "PHỤ ĐỀ VIỆT, ANH",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016786_0.jpeg",
+                    Trailer = "https://youtu.be/w9HWe8zt64M"
+                },
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "ANH EM SUPER MARIO (HH lồng tiếng P)",
+                    Category = "Hài, Hoạt hình",
+                    Time = 84,
+                    Description = "Câu chuyện về cuộc phiêu lưu của anh em Super Mario đến vương quốc Nấm.",
+                    Director = "Aaron Horvath, Michael Jelenic",
+                    Actors = "Chris Pratt, Anya Taylor-Joy, Charlie Day,…",
+                    Language = "HH lồng tiếng P",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016784_0.jpeg",
+                    Trailer = "https://youtu.be/UGO_i2tf1BM"
+                },
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "CHUỘT NHÍ VÀ SỨ MỆNH THẦN BIỂN (lồng tiếng)-P",
+                    Category = "Hài, Hoạt hình",
+                    Time = 90,
+                    Description = "Bé Tí – một chú chuột nhỏ thông minh luôn mang trong mình một ước mơ to lớn là được trở thành một vị anh hùng thám hiểm như Anh Hùng Biển vĩ đại. Nhưng với Bố Bự - chú mèo đã nhận nuôi cô thì đây là điều hão huyền.",
+                    Director = "David Alaux",
+                    Actors = "Valentino Bisegna, Sara Di Sturco, Chiara Fabiano and Mattia Fabiano",
+                    Language = "HH lồng tiếng P",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016781_0.jpeg",
+                    Trailer = "https://youtu.be/9dldS-QoUIk"
+                },
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "CUỘC CHIẾN BẤT TỬ (HH lồng tiếng P)",
+                    Category = "Hài, Hoạt hình",
+                    Time = 79,
+                    Description = "How To Save The Immortal là bộ phim về nhân vật phản diện nổi tiếng nhất trong truyện cổ tích Nga. Bộ phim được đạo diện bởi Roman Artemiev và sự tham gia sản xuất của Vadim Sotskov, Sergei Selyanov, and Sergei Zernov. Xoay quanh cuộc đời của nhân vật Drybone sở hữu sức mạnh bất tử, dù luôn trẻ trung và bảnh bao nhưng vẫn không thể tìm được cô dâu cho mình trong suốt 300 năm. Mặc cho anh ta đe dọa, bắt cóc hay thậm chí biến nhiều công chúa thành ếch thì kế hoạch tán tỉnh của Hoàng Tử Bóng Đêm cùng không thuộn buồm xuôi gió hơn. Trong khi đó thì tất cả những gì mà nữ chiến binh xinh đẹp và dũng cảm Barbara làm là chống lại những kẻ sắp theo đuổi cô trên đấu trường hay những kẻ cầu hôn chỉ vì thèm muốn của hồi môn của Barbara. Sự đối lập này vô tình đưa Drybone và Barbara vào cuộc gặp gỡ định mệnh và cùng chiến đấu với phe phản diện mới là Vua Lentil – kẻ nắm giữ cây kim có thể tước đoạt mạng sống của Hoàng Tử Bóng Đêm Drybone. Dù vậy, hắn không thể ngờ vẫn còn điều kỳ diệu ẩn chứa bên trong trái tim của Drybone giúp anh ấy sống sót...",
+                    Director = "Roman Artemiev",
+                    Actors = "iktor Dobronravov, Ekaterina Tarasova, Vladimir Sychov, Elizaveta Boyarskaya, Roman Artemiev, Irina Savina, Elena Shulman, Anton Eldarov",
+                    Language = "HH lồng tiếng P",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
+                    Trailer = "https://youtu.be/eyq8cwWhMjk"
+                }
+            };
+            await _context.Films.AddRangeAsync(films);
+            await _context.SaveChangesAsync();
+        }
+        // Rooms
+        if (!_context.Rooms.Any())
+        {
+            for (int i=0;i<5;i++)
+            {
+                var room = new Room()
+                {
+                    RoomId = Guid.NewGuid().ToString(),
+                    Name = "Phòng " + (i+1),
+                    Address = "Tầng " + (i / 2 + 1) + " - Phòng " + (i+1)
+                };
+                for (int row = 1; row <= 10;row++)
+                {
+                    for (int col = 1; col <= 15; col++)
+                    {
+                        var seat = new Seat()
+                        {
+                            SeatId = Guid.NewGuid().ToString(),
+                            RoomId = room.RoomId,
+                            Position = "Hàng " + row + " - Cột " + col,
+                            Row = row,
+                            Column = col,
+                            IsAvailable = true,
+                            IsVip = row >= 4 && row <= 9 && col >= 3 && col <= 13
+                        };
+                        room.Seats.Add(seat);
+                    }
+                }
+                await _context.Rooms.AddAsync(room);
+            }
+            await _context.SaveChangesAsync();
+        }
+        // Schedules
+
     }
 }

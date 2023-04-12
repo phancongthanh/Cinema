@@ -1,8 +1,8 @@
-import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom"
+import { FC } from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { FC } from "react";
-import useAuth from "../hooks/useAuth";
-import { Role } from "../context/AuthProvider";
+import useAuth from '../hooks/useAuth';
+import { Role } from '../types/User';
 
 type propTypes = {
     allowedRole: Role;

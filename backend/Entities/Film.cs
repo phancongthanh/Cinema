@@ -8,6 +8,8 @@ public class Film
     
     public string Category { get; set;} = string.Empty;
 
+    public int Time { get; set; }
+
     public string Description { get; set; } = string.Empty;
 
     public string? Director { get; set; }

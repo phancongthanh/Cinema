@@ -24,6 +24,13 @@ namespace Cinema.Controllers
             return Ok("Đã tạo database!");
         }
 
+        [HttpGet("seed")]
+        public async Task<IActionResult> Seed()
+        {
+            await _dbContextInitialiser.SeedAsync();
+            return Ok("Đã tạo dữ liệu!");
+        }
+
         [HttpGet("script")]
         public IActionResult GetDatabaseScript()
         {

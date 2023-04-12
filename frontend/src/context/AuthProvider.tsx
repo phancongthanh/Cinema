@@ -1,18 +1,10 @@
-import { createContext, useState, ReactNode, FC, useEffect } from "react";
-import LoginModel from "../types/LoginModel";
-import identity from "../backend/identity";
-import users from "../backend/users";
-import User from "../types/User";
-import accounts from "../backend/accounts";
+import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 
-export type Role = 'Admin' | 'Manager' | 'Member';
+import identity from '../backend/identity';
+import users from '../backend/users';
+import { Role } from '../types/User';
 
-const getAuth = () : Role | null => {
-  // if(!identity.getToken()) return null;
-  // login
-  // return identity.getRole() || null;
-  return 'Admin';
-}
+const getAuth = () : Role | null => identity.check() ? identity.getRole() : null;
 
 const AuthContext = createContext<{
   auth: Role| null;

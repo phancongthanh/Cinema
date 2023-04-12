@@ -8,9 +8,9 @@ public class Seat
 
     public string Position { get; set; } = string.Empty;
 
-    public string Row { get; set; } = string.Empty;
+    public int Row { get; set; }
 
-    public string Column { get; set; } = string.Empty;
+    public int Column { get; set; }
 
     public bool IsVip { get; set; }
 

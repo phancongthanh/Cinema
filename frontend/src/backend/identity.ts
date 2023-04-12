@@ -9,6 +9,12 @@ const identity = {
         const jwt = jwtDecode<JwtPayload>(token);
         return jwt.exp ? new Date(jwt.exp) : null;
     },
+    check: () => {
+        const token = sessionStorage.getItem("token") || localStorage.getItem("token");
+        if (!token) return null;
+        const jwt = jwtDecode<JwtPayload>(token);
+        return jwt.exp && new Date(jwt.exp) >= new Date();
+    },
     getUserId: () => {
         const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         if (!token) return null;
