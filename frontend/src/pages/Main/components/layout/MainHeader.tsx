@@ -15,14 +15,17 @@ const MainHeader = () => {
 
   return (
     <>
-        <div className='justify-end flex-row flex p-4 px-8 space-x-4 border-b content-center'>
+        <div className='p-4 pr-8 pl-20 space-x-4 border-b bg-neutral-100'>
           {auth !== null ?
+          <div className='flex justify-between'>
+            <img src='https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/logo_home.png' alt="Logo" className='cursor-pointer' onClick={() => navigate('/')}/>
             <AccountIcon/>
+          </div>
           :
-          <>
-            <Button className='text-2xl font-bold' variant="outlined" onClick={() => navigate('register')}>Đăng ký</Button>
-            <Button className='' variant="contained" onClick={() => navigate('login')}>Đăng nhập</Button> 
-          </>
+          <div className='flex justify-end space-x-8'>
+            <Button className='text-2xl font-bold' variant="outlined" onClick={() => navigate('/register')}>Đăng ký</Button>
+            <Button className='' variant="contained" onClick={() => navigate('/login')}>Đăng nhập</Button> 
+          </div>
           }
         </div>
         <TabPanel/>

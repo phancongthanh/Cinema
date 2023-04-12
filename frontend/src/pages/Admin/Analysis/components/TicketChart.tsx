@@ -52,7 +52,7 @@ const TicketChart = () => {
           <YAxis type="category" dataKey="title"/>
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#8884d8" maxBarSize={40}/>
+          <Bar dataKey="value" name='Doanh thu' fill="#8884d8" maxBarSize={40}/>
         </BarChart>
       </ResponsiveContainer>
     </div>

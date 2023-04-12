@@ -8,13 +8,13 @@ import {
 } from '@mui/material';
 
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { literal, object, string, TypeOf } from 'zod';
+import { boolean, literal, object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoadingButton } from '@mui/lab';
 import FormInput from '../../components/FormInput';
 import LoginModel from '../../types/LoginModel';
 import accounts from '../../backend/accounts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import users from '../../backend/users';
 import identity from '../../backend/identity';
@@ -25,9 +25,7 @@ const loginSchema = object({
     .nonempty('Cần nhập mật khẩu')
     .min(8, 'Mật khẩu phải ít nhất 8 ký tự')
     .max(32, 'Mật khẩu phải ít hơn 32 ký tự'),
-  rememberMe: literal(true, {
-    errorMap: () => ({ message: 'Phải đồng ý với điều khoản' })
-  }),
+  rememberMe: boolean(),
 });
 
 type LoginInput = TypeOf<typeof loginSchema>;
@@ -64,6 +62,7 @@ const Login = () => {
       password: values.password,
       rememberMe: values.rememberMe
     }
+    alert(JSON.stringify(loginForm));
     const IsloginOK = await accounts.login(loginForm);
     if(!IsloginOK) {
       alert('Đăng nhập thất bại');
@@ -98,9 +97,8 @@ const Login = () => {
               fullWidth
               label='Mật khẩu'
               type='password'
-              sx={{ mb: 2}}
               defaultValue={'12345678'}
-            />
+            /> 
 
             <FormGroup>
               <FormControlLabel
@@ -108,26 +106,26 @@ const Login = () => {
                 {...register('rememberMe')}
                 label={
                   <Typography color={errors['rememberMe'] ? 'error' : 'inherit'}>
-                    Chấp nhận điều khoản sử dụng
+                    Ghi nhớ đăng nhập
                   </Typography>
                 }
               />
-              <FormHelperText error={!!errors['rememberMe']} disabled>
-                {errors['rememberMe'] ? errors['rememberMe'].message : ' '}
-              </FormHelperText>
             </FormGroup>
+
+            <Link to={'/register'} className='text-blue-600 hover:text-blue-300 '>Quên mật khẩu?</Link>
 
             <LoadingButton
               variant='contained'
               loading={loading}
               fullWidth
               type='submit'
-              sx={{ mt: 4, py: 2}}
+              sx={{ mt: 1, py: 2}}
             >
               Đăng nhập
             </LoadingButton>
           </form>
         </FormProvider>
+        <div className='mt-4'>Không có tài khoản? <Link to={'/register'} className='text-blue-600 hover:text-blue-300'>Đăng ký</Link></div>
       </div>
     </div>
   )

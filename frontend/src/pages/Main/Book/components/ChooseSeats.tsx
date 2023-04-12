@@ -59,6 +59,7 @@ const ChooseSeats = () => {
     <div className="flex min-w-[60rem] min-h-[30rem] p-4 border rounded-2xl shadow ">
       <div className="flex flex-col items-center flex-[2_2_0%]">
         <div className="mt-4 text-2xl">Chọn ghế</div>
+        <img src="https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/img49.png" className="mt-4 ml-24  w-3/6 self-start"/>
         <div className='mt-4 flex flex-row items-center'>
             <Seats setSeatsSelector={setSeatsSelector} seatsSelector={seatsSelector} tseats={tseats}/>
             <div className='flex flex-col space-y-12 ml-8'>

@@ -13,7 +13,6 @@ const router = createBrowserRouter(
     <Route>
           <Route path="/login"  element={<Login />}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/needLogin" element={<NeedLogin />}/>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />}/>
             <Route path="home" element={<Home />}/>
@@ -29,6 +28,7 @@ const router = createBrowserRouter(
                </Route>
               <Route path="refund" element={<Refund />}/>
             {/* </Route> */}
+            <Route path="needLogin" element={<NeedLogin />}/>
           </Route>
 
           <Route path="/admin" element={<AdminLayout />}>

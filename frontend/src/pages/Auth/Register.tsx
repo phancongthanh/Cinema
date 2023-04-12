@@ -15,7 +15,7 @@ import FormInput from '../../components/FormInput';
 import RegisterModel from '../../types/RegisterModel';
 import accounts from '../../backend/accounts';
 import LoginModel from '../../types/LoginModel';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 const registerSchema = object({
   name: string()
@@ -170,6 +170,7 @@ const Register = () => {
             </LoadingButton>
           </form>
         </FormProvider>
+        <div className='mt-4'>Đã có tài khoản? <Link to={'/login'} className='text-blue-600 hover:text-blue-300'>Đăng nhập</Link></div>
       </div>
     </div>
   )
