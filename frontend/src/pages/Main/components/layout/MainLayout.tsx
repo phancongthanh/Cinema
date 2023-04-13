@@ -10,9 +10,9 @@ const MainLayout = () => {
   return (
     <div className='flex flex-col'>
         <MainHeader/>
-         <div className='my-12 mx-4'>
+         {/* <div className='my-12 mx-4'> */}
           <Outlet/>
-          </div>
+          {/* </div> */}
         <Footer/>
     </div>
   )

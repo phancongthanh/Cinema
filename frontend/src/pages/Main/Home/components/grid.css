@@ -1,0 +1,97 @@
+:root{
+  --red:#;
+  --green: #B6D4A2;
+  --gray:#3F3D56;
+  --Darkblue:#7c7b89;
+  /* --gray:#5e5b76; */
+  --blue:#75A5B4;
+  /* --red: rgb(253,55,13); */
+  /* --black: rgb(23,19,60); */
+  /* --yellow: rgb(239,228,176); */
+  --smooth: all.3s ease-in;
+
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    align-items: center;
+    justify-items: center;
+  }
+  .movie{
+    display: flex;
+    justify-content: center;
+  }
+  .image-grid img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .image-grid img:hover {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+  
+  .image-grid img::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 14px;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+  
+  .image-grid img:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  .book-box{
+    width: 50px;
+    height: 30px;
+    background-image: linear-gradient(to right bottom, var(--blue), var(--green));
+    padding: 1px;
+    border-radius: 10px;
+    
+}
+  .book-btn{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border-radius: inherit;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+}
+.book-btn:hover{
+    background-color: whitesmoke;
+    color: var(--gray);
+    transition: 2s;
+  }
+  /* .image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .image-container:hover .image-title {
+    opacity: 100;
+  } */

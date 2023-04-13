@@ -1,0 +1,38 @@
+
+.menu-tab{
+    margin: 0 15%;
+    position: relative;
+}
+.menu-tab ul {
+    border-bottom: 1px solid #8a8a8a;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(138, 138, 138);
+    height: 50px;
+}
+
+.menu-tab li {
+    display: inline-block;
+    margin-right: 100px;
+    font-size: 24px;
+    cursor: pointer;
+    float: left;
+    font-family: "OpenSans-Bold";
+    height: 50px;
+    padding-top: 7px;
+    text-transform: uppercase;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.menu-tab p{
+    color: #fe0000;
+    margin: 10px 10px 0 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
