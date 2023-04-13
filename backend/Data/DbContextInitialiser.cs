@@ -50,7 +50,8 @@ public class DbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default users
-        var administrator = new User {
+        var administrator = new User
+        {
             UserName = "admin@admin.com",
             Email = "admin@admin.com",
             Name = "Admin",
@@ -128,15 +129,15 @@ public class DbContextInitialiser
         // Rooms
         if (!_context.Rooms.Any())
         {
-            for (int i=0;i<5;i++)
+            for (int i = 0; i < 5; i++)
             {
                 var room = new Room()
                 {
                     RoomId = Guid.NewGuid().ToString(),
-                    Name = "Phòng " + (i+1),
-                    Address = "Tầng " + (i / 2 + 1) + " - Phòng " + (i+1)
+                    Name = "Phòng " + (i + 1),
+                    Address = "Tầng " + (i / 2 + 1) + " - Phòng " + (i + 1)
                 };
-                for (int row = 1; row <= 10;row++)
+                for (int row = 1; row <= 10; row++)
                 {
                     for (int col = 1; col <= 15; col++)
                     {
@@ -158,6 +159,51 @@ public class DbContextInitialiser
             await _context.SaveChangesAsync();
         }
         // Schedules
-
+        if (!_context.Schedules.Any())
+        {
+            var schedules = new List<Schedule>();
+            var films = await _context.Films.ToListAsync();
+            var rooms = await _context.Rooms.Include(r => r.Seats).ToListAsync();
+            for (int i=0;i<rooms.Count;i++)
+            {
+                var room = rooms[i];
+                var time = DateTime.Now.AddDays(1);
+                time.AddMinutes(60 - time.Minute);
+                var random = new Random(0);
+                while (time < DateTime.Now.AddDays(14))
+                {
+                    var film = films[random.Next(films.Count)];
+                    if (time.Hour < 7) time = time.AddHours(7 - time.Hour);
+                    else if (time.Hour >= 11 && time.Hour < 14) time = time.AddHours(14 - time.Hour);
+                    else if (time.Hour >= 17) time = time.AddHours(24 - time.Hour + 7);
+                    var schedule = new Schedule()
+                    {
+                        ScheduleId = Guid.NewGuid().ToString(),
+                        RoomId = room.RoomId,
+                        FilmId = films[0].FilmId,
+                        StartTime = time,
+                        EndTime = time.AddMinutes(films[0].Time / 30 * 30 + 30)
+                    };
+                    time = schedule.EndTime;
+                    if (random.Next(1000) < 200) schedules.Add(schedule);
+                }
+            }
+            _context.Schedules.AddRange(schedules);
+            foreach (var schedule in schedules)
+            {
+                
+                var room = rooms.Single(r => r.RoomId == schedule.RoomId);
+                var tickets = room.Seats.Select(seat => new Ticket()
+                {
+                    SeatId = seat.SeatId,
+                    ScheduleId = schedule.ScheduleId,
+                    Cost = seat.IsVip ? 75000 : 50000,
+                    UserId = null,
+                    Status = TicketStatus.Available
+                });
+                _context.Tickets.AddRange(tickets);
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

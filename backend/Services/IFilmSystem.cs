@@ -52,6 +52,7 @@ public class FilmSystem : IFilmSystem
         if (film == null) return null;
         var schedules = await _context.Schedules.AsNoTracking()
             .Where(s => s.FilmId == filmId)
+            .OrderBy(s => s.StartTime)
             .ToListAsync();
         return new FilmDetail(film, schedules);
     }
@@ -60,7 +61,7 @@ public class FilmSystem : IFilmSystem
     {
         var films = await _context.Films.AsNoTracking().ToListAsync();
         var schedules = await _context.Schedules.AsNoTracking().ToListAsync();
-        return films.Select(f => new FilmDetail(f, schedules.Where(s => s.FilmId == f.FilmId)));
+        return films.Select(f => new FilmDetail(f, schedules.Where(s => s.FilmId == f.FilmId).OrderBy(s => s.StartTime)));
     }
 
     public async Task UpdateFilm(Film film)

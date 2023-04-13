@@ -90,12 +90,18 @@ public class BookingSystem : IBookingSystem
 
     public async Task<IEnumerable<Booking>> Get(string userId)
     {
-        return await _context.Bookings.AsNoTracking().Where(b => b.UserId == userId).ToListAsync();
+        return await _context.Bookings.AsNoTracking()
+            .Where(b => b.UserId == userId)
+            .OrderBy(b => b.BookingTime)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<Booking>> Get(int ticketId)
     {
-        return await _context.Bookings.AsNoTracking().Where(b => b.TicketId == ticketId).ToListAsync();
+        return await _context.Bookings.AsNoTracking()
+            .Where(b => b.TicketId == ticketId)
+            .OrderBy(b => b.BookingTime)
+            .ToListAsync();
     }
 
     public async Task Pay(string userId, int ticketId)
