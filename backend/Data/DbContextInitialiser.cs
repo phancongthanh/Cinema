@@ -167,7 +167,7 @@ public class DbContextInitialiser
             for (int i=0;i<rooms.Count;i++)
             {
                 var room = rooms[i];
-                var time = DateTime.Now.AddDays(1);
+                var time = DateTime.Now.AddDays(-1);
                 time.AddMinutes(60 - time.Minute);
                 var random = new Random(0);
                 while (time < DateTime.Now.AddDays(14))
@@ -180,7 +180,7 @@ public class DbContextInitialiser
                     {
                         ScheduleId = Guid.NewGuid().ToString(),
                         RoomId = room.RoomId,
-                        FilmId = films[0].FilmId,
+                        FilmId = film.FilmId,
                         StartTime = time,
                         EndTime = time.AddMinutes(films[0].Time / 30 * 30 + 30)
                     };
