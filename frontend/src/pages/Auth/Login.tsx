@@ -23,7 +23,7 @@ const loginSchema = object({
   email: string().nonempty('Cần nhập Email').email('Email không hợp lệ'),
   password: string()
     .nonempty('Cần nhập mật khẩu')
-    .min(8, 'Mật khẩu phải ít nhất 8 ký tự')
+    .min(5, 'Mật khẩu phải ít nhất 5 ký tự')
     .max(32, 'Mật khẩu phải ít hơn 32 ký tự'),
   rememberMe: boolean(),
 });
@@ -62,13 +62,12 @@ const Login = () => {
       password: values.password,
       rememberMe: values.rememberMe
     }
-    alert(JSON.stringify(loginForm));
     const IsloginOK = await accounts.login(loginForm);
     if(!IsloginOK) {
       alert('Đăng nhập thất bại');
       return;
     } else {
-      alert('Đăng nhập thành công');
+      // alert('Đăng nhập thành công');
       setAuth(identity.getRole());
       navigate('/')
     }
@@ -125,7 +124,7 @@ const Login = () => {
             </LoadingButton>
           </form>
         </FormProvider>
-        <div className='mt-4'>Không có tài khoản? <Link to={'/register'} className='text-blue-600 hover:text-blue-300'>Đăng ký</Link></div>
+        <div className='mt-4'>Không có tài khoản? <Link to={'/register'} className='text-blue-600 hover:text-blue-300'>Đăng nhập</Link></div>
       </div>
     </div>
   )

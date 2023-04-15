@@ -23,7 +23,7 @@ const registerSchema = object({
   email: string().nonempty('Cần nhập Email').email('Email không hợp lệ'),
   password: string()
     .nonempty('Cần nhập mật khẩu')
-    .min(8, 'Mật khẩu phải ít nhất 8 ký tự')
+    .min(5, 'Mật khẩu phải ít nhất 8 ký tự')
     .max(32, 'Mật khẩu phải ít hơn 32 ký tự'),
   passwordConfirm: string().nonempty('Cần nhập lại mật khẩu'),
   terms: literal(true, {

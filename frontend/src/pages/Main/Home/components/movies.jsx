@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './grid.css';
+import { Link } from 'react-router-dom';
 
 
 const ImageGrid = ({ images }) => {
@@ -28,7 +29,7 @@ const ImageGrid = ({ images }) => {
             <p className='image-date'>{image.Date}</p>
             <div>
               <div class="book-box">
-                        <a href="" class="book-btn">Đặt Vé</a>
+                        <Link to={`/book`} class="book-btn">Đặt Vé</Link>
                     </div>
             </div>
           </div>

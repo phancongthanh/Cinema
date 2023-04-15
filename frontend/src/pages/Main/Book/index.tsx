@@ -132,7 +132,7 @@ const Book = () => {
 
   return (
     <pageContext.Provider value={{page, setPage, booking, setBooking, setErrorMessage}}>
-      <div className='justify-center items-center flex-row mt-20'>
+      <div className='justify-center items-center flex-row my-20'>
         <BookHeader/>
         <div className='flex justify-center items-center mt-20 relative'>
           <Button disabled={page <= 0} onClick={prevPage} className=' absolute -left-60'>back</Button>
