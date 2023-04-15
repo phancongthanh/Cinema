@@ -1,8 +1,36 @@
-import React from 'react'
-import TimelineMovie from './Showtimes/components/timelineMovie'
+import React, { useEffect, useState } from 'react';
+
+import backend from '../../backend';
+import Timeline from './Showtimes/components/Tilmeline';
 
 const Showtimes = () => {
-  const data =[
+  const [films, setFilms] = useState(null);
+
+  useEffect(() => {
+    backend.films.get()
+    .then(fs => setFilms(fs.filter(f => f.schedules.some(s => s.startTime > new Date()))))
+  }, [])
+  
+  return (
+    <div style={{margin:'0% 10%'}}>
+      <br />
+      <br />
+      <h1 style={{ textAlign: 'center', fontFamily: 'Arial', fontSize:'36px' }}>PHIM ĐANG CHIẾU</h1>
+      <br />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <img src='https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/img48.png' alt="icon" />
+      <br />
+    </div>
+    <br />
+    {films ? <Timeline films={films}></Timeline> : <></>}
+    </div>
+  )
+}
+
+export default Showtimes
+
+/*
+const data =[
     {imageUrl:'https://posterspy.com/wp-content/uploads/2020/06/KeanuWIPcool1.jpg',
     title:"The Matrix",
     Time:'120p',
@@ -53,20 +81,4 @@ const Showtimes = () => {
     Notice:'Giới hạn trẻ em dưới 18 tuổi'
     },
   ];
-  return (
-    <div style={{margin:'0% 10%'}}>
-      <br />
-      <br />
-      <h1 style={{ textAlign: 'center', fontFamily: 'Arial', fontSize:'36px' }}>PHIM ĐANG CHIẾU</h1>
-      <br />
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <img src='https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/img48.png' alt="My Image" />
-      <br />
-    </div>
-    <br />
-    <TimelineMovie data={data}></TimelineMovie>
-    </div>
-  )
-}
-
-export default Showtimes
+*/
