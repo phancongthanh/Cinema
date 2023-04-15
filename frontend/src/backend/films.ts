@@ -20,10 +20,15 @@ export async function get() : Promise<FilmDetail[]> {
 
     if (!response.ok) return [];
     const films: FilmDetail[] = await response.json();
-    films.forEach(film => film.schedules.forEach(schedule => {
-        schedule.startTime = new Date(schedule.startTime);
-        schedule.endTime = new Date(schedule.endTime);
-    }))
+    films.forEach(film => {
+            film.schedules.forEach(schedule => {
+                schedule.startTime = new Date(schedule.startTime);
+                schedule.endTime = new Date(schedule.endTime);
+            });
+            film.schedules.sort((a,b) => a.startTime.getTime() - b.startTime.getTime());
+            film.releaseTime = film.schedules.length > 0 ? film.schedules[0].startTime : null;
+        }
+    );
     return films;
 }
 
@@ -48,6 +53,8 @@ export async function getById(filmId: string) : Promise<FilmDetail|null> {
         schedule.startTime = new Date(schedule.startTime);
         schedule.endTime = new Date(schedule.endTime);
     })
+    film.schedules.sort((a,b) => a.startTime.getTime() - b.startTime.getTime());
+    film.releaseTime = film.schedules.length > 0 ? film.schedules[0].startTime : null;
     return film;
 }
 

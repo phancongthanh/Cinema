@@ -37,7 +37,6 @@ function Timeline({films}: {films: FilmDetail[]}) {
 }
 
 const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
-  console.log(films)
     return (
         <>
             {films.map((film, index) => (
@@ -51,7 +50,7 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                                 <br />
                                 <b style={{fontWeight:'400'}}>Xuất Xứ: {film.country}</b>
                                 <br />
-                                <b style={{fontWeight:'400'}}>Ngày chiếu: {film.schedules[0].startTime.toLocaleDateString("vi-VN")}</b>
+                                <b style={{fontWeight:'400'}}>Khởi chiếu: {film.releaseTime?.toLocaleDateString("vi-VN") || ""}</b>
                                 <br />
                                 <b style={{fontWeight:'400'}}>Nội dung: {film.description.substring(0, 150) + "..."}</b>
                             </p>

@@ -69,7 +69,7 @@ public class DbContextInitialiser
                 new Film()
                 {
                     FilmId = Guid.NewGuid().ToString(),
-                    Title = "KHÓA CHẶT CỬA NÀO SUZUME (PHỤ ĐỀ VIỆT, ANH) - P",
+                    Title = "KHÓA CHẶT CỬA NÀO SUZUME",
                     Category = "Hoạt hình",
                     Time = 100,
                     Description = "\"Khóa Chặt Cửa Nào Suzume\" kể câu chuyện khi Suzume vô tình gặp một chàng trai trẻ đến thị trấn nơi cô sinh sống với mục đích tìm kiếm \"một cánh cửa\". Để bảo vệ Nhật Bản khỏi thảm họa, những cánh cửa rải rác khắp nơi phải được đóng lại, và bất ngờ thay Suzume cũng có khả năng đóng cửa đặc biệt này. Từ đó cả hai cùng nhau thực hiện sự mệnh \"khóa chặt cửa\"!",
@@ -83,7 +83,7 @@ public class DbContextInitialiser
                 new Film()
                 {
                     FilmId = Guid.NewGuid().ToString(),
-                    Title = "ANH EM SUPER MARIO (HH lồng tiếng P)",
+                    Title = "ANH EM SUPER MARIO",
                     Category = "Hài, Hoạt hình",
                     Time = 84,
                     Description = "Câu chuyện về cuộc phiêu lưu của anh em Super Mario đến vương quốc Nấm.",
@@ -97,7 +97,7 @@ public class DbContextInitialiser
                 new Film()
                 {
                     FilmId = Guid.NewGuid().ToString(),
-                    Title = "CHUỘT NHÍ VÀ SỨ MỆNH THẦN BIỂN (lồng tiếng)-P",
+                    Title = "CHUỘT NHÍ VÀ SỨ MỆNH THẦN BIỂN",
                     Category = "Hài, Hoạt hình",
                     Time = 90,
                     Description = "Bé Tí – một chú chuột nhỏ thông minh luôn mang trong mình một ước mơ to lớn là được trở thành một vị anh hùng thám hiểm như Anh Hùng Biển vĩ đại. Nhưng với Bố Bự - chú mèo đã nhận nuôi cô thì đây là điều hão huyền.",
@@ -111,7 +111,7 @@ public class DbContextInitialiser
                 new Film()
                 {
                     FilmId = Guid.NewGuid().ToString(),
-                    Title = "CUỘC CHIẾN BẤT TỬ (HH lồng tiếng P)",
+                    Title = "CUỘC CHIẾN BẤT TỬ",
                     Category = "Hài, Hoạt hình",
                     Time = 79,
                     Description = "How To Save The Immortal là bộ phim về nhân vật phản diện nổi tiếng nhất trong truyện cổ tích Nga. Bộ phim được đạo diện bởi Roman Artemiev và sự tham gia sản xuất của Vadim Sotskov, Sergei Selyanov, and Sergei Zernov. Xoay quanh cuộc đời của nhân vật Drybone sở hữu sức mạnh bất tử, dù luôn trẻ trung và bảnh bao nhưng vẫn không thể tìm được cô dâu cho mình trong suốt 300 năm. Mặc cho anh ta đe dọa, bắt cóc hay thậm chí biến nhiều công chúa thành ếch thì kế hoạch tán tỉnh của Hoàng Tử Bóng Đêm cùng không thuộn buồm xuôi gió hơn. Trong khi đó thì tất cả những gì mà nữ chiến binh xinh đẹp và dũng cảm Barbara làm là chống lại những kẻ sắp theo đuổi cô trên đấu trường hay những kẻ cầu hôn chỉ vì thèm muốn của hồi môn của Barbara. Sự đối lập này vô tình đưa Drybone và Barbara vào cuộc gặp gỡ định mệnh và cùng chiến đấu với phe phản diện mới là Vua Lentil – kẻ nắm giữ cây kim có thể tước đoạt mạng sống của Hoàng Tử Bóng Đêm Drybone. Dù vậy, hắn không thể ngờ vẫn còn điều kỳ diệu ẩn chứa bên trong trái tim của Drybone giúp anh ấy sống sót...",
@@ -164,30 +164,29 @@ public class DbContextInitialiser
             var schedules = new List<Schedule>();
             var films = await _context.Films.ToListAsync();
             var rooms = await _context.Rooms.Include(r => r.Seats).ToListAsync();
-            for (int i=0;i<rooms.Count;i++)
+            
+            var time = DateTime.Now.AddDays(-3);
+            time = time.AddMinutes(60 - time.Minute);
+            var random = new Random(0);
+            while (time < DateTime.Now.AddDays(14))
             {
-                var room = rooms[i];
-                var time = DateTime.Now.AddDays(-1);
-                time.AddMinutes(60 - time.Minute);
-                var random = new Random(0);
-                while (time < DateTime.Now.AddDays(14))
+                var room = rooms[random.Next(rooms.Count)];
+                var film = films[random.Next(films.Count)];
+                if (time.Hour < 7) time = time.AddHours(7 - time.Hour);
+                else if (time.Hour >= 11 && time.Hour < 14) time = time.AddHours(14 - time.Hour);
+                else if (time.Hour >= 17) time = time.AddHours(24 - time.Hour + 7);
+                var schedule = new Schedule()
                 {
-                    var film = films[random.Next(films.Count)];
-                    if (time.Hour < 7) time = time.AddHours(7 - time.Hour);
-                    else if (time.Hour >= 11 && time.Hour < 14) time = time.AddHours(14 - time.Hour);
-                    else if (time.Hour >= 17) time = time.AddHours(24 - time.Hour + 7);
-                    var schedule = new Schedule()
-                    {
-                        ScheduleId = Guid.NewGuid().ToString(),
-                        RoomId = room.RoomId,
-                        FilmId = film.FilmId,
-                        StartTime = time,
-                        EndTime = time.AddMinutes(films[0].Time / 30 * 30 + 30)
-                    };
-                    time = schedule.EndTime;
-                    if (random.Next(1000) < 200) schedules.Add(schedule);
-                }
+                    ScheduleId = Guid.NewGuid().ToString(),
+                    RoomId = room.RoomId,
+                    FilmId = film.FilmId,
+                    StartTime = time,
+                    EndTime = time.AddMinutes(film.Time / 30 * 30 + 30)
+                };
+                time = schedule.EndTime;
+                if (random.Next(1000) < 800) schedules.Add(schedule);
             }
+
             _context.Schedules.AddRange(schedules);
             foreach (var schedule in schedules)
             {

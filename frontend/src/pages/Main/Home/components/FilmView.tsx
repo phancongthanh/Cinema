@@ -1,6 +1,7 @@
 import './grid.css';
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import FilmDetail from '../../../../types/FilmDetail';
 
@@ -19,7 +20,7 @@ const FilmItem = ({film}: {film: FilmDetail}) => {
     <p className='image-date'>{date}</p>
     <div>
       <div className="book-box">
-          <a href="" className="book-btn">Đặt Vé</a>
+        <Link to={`/book`} className="book-btn">Đặt Vé</Link>
       </div>
     </div>
   </div>
@@ -40,7 +41,8 @@ const FilmView = ({ films, tab }: { films: FilmDetail[], tab: number}) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const fs = films.filter(f => tab ? f.schedules[0].startTime < new Date() : f.schedules[0].startTime > new Date());
+  const fs = tab ? films.filter(f => f.releaseTime && f.releaseTime > new Date())
+    : films.filter(f => f.releaseTime && f.releaseTime.getTime() - new Date().getTime() < 3*24*60*60*1000);
 
   return (
     <div  className="movie" >
