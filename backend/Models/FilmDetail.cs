@@ -9,12 +9,13 @@ public class FilmDetail : Film
     public FilmDetail(Film film)
     {
         FilmId = film.FilmId;
-        Title = film.FilmId;
+        Title = film.Title;
         Category = film.Category;
         Description = film.Description;
         Director = film.Director;
         Actors = film.Actors;
-        Language = film.Language;
+        Time = film.Time;
+        Country = film.Country;
         Poster = film.Poster;
         Trailer = film.Trailer;
         Tags = film.Tags;
@@ -24,12 +25,13 @@ public class FilmDetail : Film
     public FilmDetail(Film film, IEnumerable<Schedule> schedules)
     {
         FilmId = film.FilmId;
-        Title = film.FilmId;
+        Title = film.Title;
         Category = film.Category;
         Description = film.Description;
         Director = film.Director;
         Actors = film.Actors;
-        Language = film.Language;
+        Time = film.Time;
+        Country = film.Country;
         Poster = film.Poster;
         Trailer = film.Trailer;
         Tags = film.Tags;

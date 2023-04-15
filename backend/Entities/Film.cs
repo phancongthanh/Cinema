@@ -16,7 +16,7 @@ public class Film
     
     public string? Actors { get; set; } = string.Empty;
 
-    public string Language { get; set; } = string.Empty;
+    public string Country { get; set; } = string.Empty;
 
     public string? Poster { get; set; }
 

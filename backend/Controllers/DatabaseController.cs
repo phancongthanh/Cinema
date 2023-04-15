@@ -17,6 +17,14 @@ namespace Cinema.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Initialise()
+        {
+            await _dbContextInitialiser.InitialiseAsync();
+            await _dbContextInitialiser.SeedAsync();
+            return Ok("Đã tạo database và dữ liệu!");
+        }
+
         [HttpGet("initialise")]
         public async Task<IActionResult> InitialiseDatabase()
         {

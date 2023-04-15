@@ -75,7 +75,7 @@ public class DbContextInitialiser
                     Description = "\"Khóa Chặt Cửa Nào Suzume\" kể câu chuyện khi Suzume vô tình gặp một chàng trai trẻ đến thị trấn nơi cô sinh sống với mục đích tìm kiếm \"một cánh cửa\". Để bảo vệ Nhật Bản khỏi thảm họa, những cánh cửa rải rác khắp nơi phải được đóng lại, và bất ngờ thay Suzume cũng có khả năng đóng cửa đặc biệt này. Từ đó cả hai cùng nhau thực hiện sự mệnh \"khóa chặt cửa\"!",
                     Director = "Makoto Shinkai",
                     Actors = null,
-                    Language = "PHỤ ĐỀ VIỆT, ANH",
+                    Country = "Nhật",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016786_0.jpeg",
                     Trailer = "https://youtu.be/w9HWe8zt64M"
@@ -89,7 +89,7 @@ public class DbContextInitialiser
                     Description = "Câu chuyện về cuộc phiêu lưu của anh em Super Mario đến vương quốc Nấm.",
                     Director = "Aaron Horvath, Michael Jelenic",
                     Actors = "Chris Pratt, Anya Taylor-Joy, Charlie Day,…",
-                    Language = "HH lồng tiếng P",
+                    Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016784_0.jpeg",
                     Trailer = "https://youtu.be/UGO_i2tf1BM"
@@ -103,7 +103,7 @@ public class DbContextInitialiser
                     Description = "Bé Tí – một chú chuột nhỏ thông minh luôn mang trong mình một ước mơ to lớn là được trở thành một vị anh hùng thám hiểm như Anh Hùng Biển vĩ đại. Nhưng với Bố Bự - chú mèo đã nhận nuôi cô thì đây là điều hão huyền.",
                     Director = "David Alaux",
                     Actors = "Valentino Bisegna, Sara Di Sturco, Chiara Fabiano and Mattia Fabiano",
-                    Language = "HH lồng tiếng P",
+                    Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016781_0.jpeg",
                     Trailer = "https://youtu.be/9dldS-QoUIk"
@@ -117,7 +117,7 @@ public class DbContextInitialiser
                     Description = "How To Save The Immortal là bộ phim về nhân vật phản diện nổi tiếng nhất trong truyện cổ tích Nga. Bộ phim được đạo diện bởi Roman Artemiev và sự tham gia sản xuất của Vadim Sotskov, Sergei Selyanov, and Sergei Zernov. Xoay quanh cuộc đời của nhân vật Drybone sở hữu sức mạnh bất tử, dù luôn trẻ trung và bảnh bao nhưng vẫn không thể tìm được cô dâu cho mình trong suốt 300 năm. Mặc cho anh ta đe dọa, bắt cóc hay thậm chí biến nhiều công chúa thành ếch thì kế hoạch tán tỉnh của Hoàng Tử Bóng Đêm cùng không thuộn buồm xuôi gió hơn. Trong khi đó thì tất cả những gì mà nữ chiến binh xinh đẹp và dũng cảm Barbara làm là chống lại những kẻ sắp theo đuổi cô trên đấu trường hay những kẻ cầu hôn chỉ vì thèm muốn của hồi môn của Barbara. Sự đối lập này vô tình đưa Drybone và Barbara vào cuộc gặp gỡ định mệnh và cùng chiến đấu với phe phản diện mới là Vua Lentil – kẻ nắm giữ cây kim có thể tước đoạt mạng sống của Hoàng Tử Bóng Đêm Drybone. Dù vậy, hắn không thể ngờ vẫn còn điều kỳ diệu ẩn chứa bên trong trái tim của Drybone giúp anh ấy sống sót...",
                     Director = "Roman Artemiev",
                     Actors = "iktor Dobronravov, Ekaterina Tarasova, Vladimir Sychov, Elizaveta Boyarskaya, Roman Artemiev, Irina Savina, Elena Shulman, Anton Eldarov",
-                    Language = "HH lồng tiếng P",
+                    Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
                     Trailer = "https://youtu.be/eyq8cwWhMjk"
