@@ -18,7 +18,7 @@ const router = createBrowserRouter(
             <Route path="home" element={<Home />}/>
             <Route path="showtimes" element={<Showtimes />}/>
             <Route path="price" element={<Price />}/>
-            {/* <Route element={<RequiredAuth allowedRole={'Member'} />}> */}
+            <Route element={<RequiredAuth allowedRole={'Member'} />}>
               <Route path="book/" element={<Book />}>
                 <Route path="chooseFilm/:filmid?/:scheduleid?" element={<ChooseFilm />}/>
                 <Route path="chooseSeats/:filmid?/:scheduleid?" element={<ChooseSeats />}/>
@@ -27,7 +27,7 @@ const router = createBrowserRouter(
                 <Route path="notification/:filmid?/:scheduleid?" element={<Notification />}/>
                </Route>
               <Route path="refund" element={<Refund />}/>
-            {/* </Route> */}
+            </Route>
             <Route path="needLogin" element={<NeedLogin />}/>
           </Route>
 
