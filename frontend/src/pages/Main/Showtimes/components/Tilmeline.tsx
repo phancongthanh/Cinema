@@ -1,5 +1,7 @@
 import '../styles/timelineMovie.css';
 
+import { Link } from 'react-router-dom';
+
 import FilmDetail from '../../../../types/FilmDetail';
 
 function Timeline({films}: {films: FilmDetail[]}) {
@@ -36,6 +38,12 @@ function Timeline({films}: {films: FilmDetail[]}) {
   );
 }
 
+const getTimeWithFormat = (time: Date) => {
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return (h<10 ? "0"+h : h) + ":" + (m<10 ? "0"+m : m);
+}
+
 const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
     return (
         <>
@@ -46,7 +54,7 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                         <div className="info">
                             <h3>{film.title}</h3>
                             <p>
-                                <b style={{fontWeight:'400'}}>Thời lượng: {film.time}</b>
+                                <b style={{fontWeight:'400'}}>Thời lượng: {film.time} phút</b>
                                 <br />
                                 <b style={{fontWeight:'400'}}>Xuất Xứ: {film.country}</b>
                                 <br />
@@ -58,7 +66,9 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                                 <ul>
                                     {film.schedules.map(s => 
                                         <li style={{fontWeight: '400'}}>
-                                            {s.startTime.getHours()+":"+s.startTime.getMinutes()}
+                                          <Link to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}>
+                                            {getTimeWithFormat(s.startTime)}
+                                          </Link>  
                                         </li>
                                     )}
                                 </ul>
