@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import FilmDetail from '../../../../types/FilmDetail';
+import { Height } from '@mui/icons-material';
+import { minHeight } from '@mui/system';
 
 const FilmItem = ({ film }: { film: FilmDetail }) => {
   const porter = film.poster;
@@ -22,9 +24,9 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
         />
       </Link>
       <div style={{height: '110px', maxHeight:'none', minHeight:'0'}}>
-        <p className="image-title">{title}</p>
-        <p className="image-time">Thời lượng: {time}</p>
-        <p className="image-date">Khởi chiếu: {date}</p>
+        <p className="image-title" style={{fontWeight:'bold',}}>{title}</p>
+        <p className="image-time"><span style={{fontWeight:'600'}}>Thời lượng: </span> {time}</p>
+        <p className="image-date"><span style={{fontWeight:'600'}}>Khởi chiếu: </span> {date}</p>
       </div>
       <div>
         

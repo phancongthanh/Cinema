@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 import FilmDetail from '../../../../types/FilmDetail';
 import '../styles/details.css'
+import { useState } from 'react';
+import Modal from 'react-modal';
 
 function FilmInFor ({ film }: { film: FilmDetail }) {
     const poster = film.poster;
@@ -13,8 +15,19 @@ function FilmInFor ({ film }: { film: FilmDetail }) {
     const director = film.director
     const actors = film.actors;
     const category = film.category;
-    const caa = film.trailer;
+    const trailer = film.trailer;
     const Origin = film.country
+  
+    const [showVideo, setShowVideo] = useState(false);
+
+  const handleShowVideo = () => {
+    setShowVideo(true);
+  }
+
+  const handleCloseVideo = () => {
+    setShowVideo(false);
+  }
+
 
     return (
       <div key={film.filmId}>
@@ -23,17 +36,17 @@ function FilmInFor ({ film }: { film: FilmDetail }) {
             <div className="info">
                   <h3>{title}</h3>
                   <p className='info-details'>
-                    <b style={{fontWeight:'400'}}>Loại phim: {category}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Loại phim: </span> {category}</b>
                     <br />
-                    <b style={{fontWeight:'400'}}>Thời lượng: {time}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Thời lượng: </span> {time}</b>
                     <br />
-                    <b style={{fontWeight:'400'}}>Xuất Xứ: {Origin}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Xuất xứ: </span> {Origin}</b>
                     <br />
-                    <b style={{fontWeight:'400'}}>Khởi Chiếu: {date}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Khởi chiếu: </span> {date}</b>
                     <br />
-                    <b style={{fontWeight:'400'}}>Diễn Viên: {actors}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Diễn viên: </span> {actors}</b>
                     <br />
-                    <b style={{fontWeight:'400'}}>Đạo diễn: {director}</b>
+                    <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Đạo diễn: </span> {director}</b>
                     <div className='button-flex' style={{display:'flex'}} >
                     <div className="box">
                       <Link to={`/book/chooseFilm/${film.filmId}`} className="Ticket-btn">
@@ -41,9 +54,12 @@ function FilmInFor ({ film }: { film: FilmDetail }) {
                       </Link>
                     </div>
                     <div className="box">
-                      <Link to={''} className="Trailer-btn">
-                         Xem Trailer
-                      </Link>
+                      <button onClick={handleShowVideo} className='Trailer-btn'>Xem Trailer</button>
+
+                      <Modal isOpen={showVideo} onRequestClose={handleCloseVideo} className='modal'>
+                        <iframe width="840" height="472" src={`${trailer}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+
+                      </Modal>
                     </div>
                     </div>
                     </p>
