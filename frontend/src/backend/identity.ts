@@ -7,13 +7,13 @@ const identity = {
         const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         if (!token) return null;
         const jwt = jwtDecode<JwtPayload>(token);
-        return jwt.exp ? new Date(jwt.exp) : null;
+        return jwt.exp ? new Date(jwt.exp*1000) : null;
     },
     check: () => {
         const token = sessionStorage.getItem("token") || localStorage.getItem("token");
         if (!token) return null;
         const jwt = jwtDecode<JwtPayload>(token);
-        return jwt.exp && new Date(jwt.exp) >= new Date();
+        return jwt.exp && new Date(jwt.exp*1000) >= new Date();
     },
     getUserId: () => {
         const token = sessionStorage.getItem("token") || localStorage.getItem("token");

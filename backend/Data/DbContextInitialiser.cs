@@ -10,12 +10,14 @@ public class DbContextInitialiser
     private readonly ILogger<DbContextInitialiser> _logger;
     private readonly CinemaContext _context;
     private readonly UserManager<User> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public DbContextInitialiser(ILogger<DbContextInitialiser> logger, CinemaContext context, UserManager<User> userManager)
+    public DbContextInitialiser(ILogger<DbContextInitialiser> logger, CinemaContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     public async Task InitialiseAsync()
@@ -50,17 +52,44 @@ public class DbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default users
-        var administrator = new User
-        {
-            UserName = "admin@admin.com",
-            Email = "admin@admin.com",
-            Name = "Admin",
-            Role = "Admin"
+        var users = new[] {
+            new User() {
+                UserName = "admin@gmail.com",
+                Email = "admin@gmail.com",
+                Name = "Admin",
+                Role = "Admin"
+            },
+            new User()
+            {
+                UserName = "manager@gmail.com",
+                Email = "manager@gmail.com",
+                Name = "Manager",
+                Role = "Manager"
+            },
+            new User()
+            {
+                UserName = "member@gmail.com",
+                Email = "member@gmail.com",
+                Name = "Member",
+                Role = "Member"
+            }
         };
-        if (!_userManager.Users.Any(u => u.UserName == administrator.UserName))
+        foreach (var user in users)
         {
-            await _userManager.CreateAsync(administrator, "admin");
+            // Check if role exists and create it if not
+            if (!await _roleManager.RoleExistsAsync(user.Role))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(user.Role));
+            }
+            if (!_userManager.Users.Any(u => u.UserName == user.UserName))
+            {
+                var result = await _userManager.CreateAsync(user, user.UserName);
+                if (!result.Succeeded) _logger.LogError("Tạo tài khoản" + user.UserName + " lỗi!");
+                // Assign role to user
+                else await _userManager.AddToRoleAsync(user, user.Role);
+            }
         }
+        
         // Films
         if (!_context.Films.Any())
         {
@@ -121,6 +150,49 @@ public class DbContextInitialiser
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
                     Trailer = "https://youtu.be/eyq8cwWhMjk"
+                },
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "NGƯỜI NHỆN: DU HÀNH VŨ TRỤ NHỆN",
+                    Category = "Hành động, Khoa học viễn tưởng",
+                    Time = 100,
+                    Description = "Vô số Spider-Man từ khắp các vũ trụ đang đối đầu nhau?! Xem ngay Official Trailer của SPIDER-MAN: ACROSS THE SPIDER-VERSE",
+                    Director = "Joaquim Dos Santos, Justin K. Thompson, Kemp Powers",
+                    Actors = "Shameik Moore",
+                    Country = "Mỹ",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016798_0.jpeg",
+                    Trailer = "https://youtu.be/SUz8Aw28vrc"
+                },
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "SIÊU LỪA GẶP SIÊU LẦY- C16",
+                    Category = "Hài",
+                    Time = 112,
+                    Description = "Thuộc phong cách hành động – hài hước với các “cú lừa” thông minh và lầy lội đến từ bộ đôi Tú (Anh Tú) và Khoa (Mạc Văn Khoa), Siêu Lừa Gặp Siêu Lầy của đạo diễn Võ Thanh Hòa theo chân của Khoa – tên lừa đảo tầm cỡ “quốc nội” đến đảo ngọc Phú Quốc với mong muốn đổi đời. Tại đây, Khoa gặp Tú – tay lừa đảo “hàng real” và cùng Tú thực hiện các phi vụ từ nhỏ đến lớn. Cứ ngỡ sự ranh mãnh của Tú và sự may mắn trời cho của Khoa sẽ giúp họ trở thành bộ đôi bất khả chiến bại, nào ngờ lại đối mặt với nhiều tình huống dở khóc – dở cười. Nhất là khi băng nhóm của bộ đôi nhanh chóng mở rộng vì sự góp mặt của ông Năm (Nhất Trung) và bé Mã Lai (Ngọc Phước).",
+                    Director = "Võ Thanh Hòa",
+                    Actors = "Anh Tú, Mạc Văn Khoa, Ngọc Phước, Nhất Trung,...",
+                    Country = "Việt Nam",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016720_0.jpeg",
+                    Trailer = "https://youtu.be/s8l6VZQH9iM"
+                }
+                ,
+                new Film()
+                {
+                    FilmId = Guid.NewGuid().ToString(),
+                    Title = "KHẮC TINH CỦA QUỶ- C18",
+                    Category = "Kinh dị",
+                    Time = 104,
+                    Description = "Lấy cảm hứng từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican (Russell Crowe, đoạt giải Oscar®), bộ phim \"The Pope's Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỷ mà Vatican đã cố gắng giấu kín.",
+                    Director = "Julius Avery",
+                    Actors = "Russell Crowe, Franco Nero,...",
+                    Country = "Mỹ",
+                    Tags = "",
+                    Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016805_0.jpeg",
+                    Trailer = "https://youtu.be/p4LAYNacgkI"
                 }
             };
             await _context.Films.AddRangeAsync(films);
@@ -164,17 +236,17 @@ public class DbContextInitialiser
             var schedules = new List<Schedule>();
             var films = await _context.Films.ToListAsync();
             var rooms = await _context.Rooms.Include(r => r.Seats).ToListAsync();
-            
-            var time = DateTime.Now.AddDays(-3);
+
+            var time = DateTime.Now.AddDays(-1);
             time = time.AddMinutes(60 - time.Minute);
             var random = new Random(0);
-            while (time < DateTime.Now.AddDays(14))
+            while (time < DateTime.Now.AddDays(7))
             {
                 var room = rooms[random.Next(rooms.Count)];
-                var film = films[random.Next(films.Count)];
+                var film = films[random.Next(time > DateTime.Now.AddDays(4) ? films.Count : films.Count-2)];
                 if (time.Hour < 7) time = time.AddHours(7 - time.Hour);
-                else if (time.Hour >= 11 && time.Hour < 14) time = time.AddHours(14 - time.Hour);
-                else if (time.Hour >= 17) time = time.AddHours(24 - time.Hour + 7);
+                else if (time.Hour >= 12 && time.Hour < 14) time = time.AddHours(14 - time.Hour);
+                else if (time.Hour >= 18) time = time.AddHours(24 - time.Hour + 7);
                 var schedule = new Schedule()
                 {
                     ScheduleId = Guid.NewGuid().ToString(),
@@ -184,13 +256,13 @@ public class DbContextInitialiser
                     EndTime = time.AddMinutes(film.Time / 30 * 30 + 30)
                 };
                 time = schedule.EndTime;
-                if (random.Next(1000) < 800) schedules.Add(schedule);
+                schedules.Add(schedule);
             }
 
             _context.Schedules.AddRange(schedules);
             foreach (var schedule in schedules)
             {
-                
+
                 var room = rooms.Single(r => r.RoomId == schedule.RoomId);
                 var tickets = room.Seats.Select(seat => new Ticket()
                 {

@@ -107,7 +107,7 @@ public class AccountController : ControllerBase
                         // Add roles as claims
                         new Claim(ClaimTypes.Role, string.Join(",", roles))
                     },
-                    expires: DateTime.Now.AddMinutes(30),
+                    expires: DateTime.Now.AddDays(3),
                     signingCredentials: creds
                 );
 

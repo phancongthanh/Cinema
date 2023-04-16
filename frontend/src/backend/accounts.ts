@@ -56,7 +56,8 @@ export async function logout() : Promise<void> {
 
     const token = identity.getToken();
     if (!token) return;
-
+    sessionStorage.clear();
+    localStorage.clear();
     await fetch(url, {
         method: 'POST',
         headers: {
