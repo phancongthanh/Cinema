@@ -21,9 +21,11 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
           title={title}
         />
       </Link>
-      <p className="image-title">{title}</p>
-      <p className="image-time">Thời lượng: {time}</p>
-      <p className="image-date">Khởi chiếu: {date}</p>
+      <div style={{height: '110px', maxHeight:'none', minHeight:'0'}}>
+        <p className="image-title">{title}</p>
+        <p className="image-time">Thời lượng: {time}</p>
+        <p className="image-date">Khởi chiếu: {date}</p>
+      </div>
       <div>
         
         <div className="book-box">
