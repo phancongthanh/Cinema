@@ -1,17 +1,16 @@
-import "./grid.css";
+import './grid.css';
 
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import FilmDetail from "../../../../types/FilmDetail";
+import FilmDetail from '../../../../types/FilmDetail';
 
 const FilmItem = ({ film }: { film: FilmDetail }) => {
   const porter = film.poster;
   const title = film.title;
   const time = film.time + " phút";
   const start = film.schedules[0].startTime;
-  const date =
-    start.getDate() + "-" + (start.getMonth() + 1) + "-" + start.getFullYear();
+  const date = start.getDate() + "-" + (start.getMonth() + 1) + "-" + start.getFullYear();
   return (
     <div key={film.filmId}>
       <a href="">
@@ -23,8 +22,8 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
         />
       </a>
       <p className="image-title">{title}</p>
-      <p className="image-time">{time}</p>
-      <p className="image-date">{date}</p>
+      <p className="image-time">Thời lượng: {time}</p>
+      <p className="image-date">Khởi chiếu: {date}</p>
       <div>
         <div className="book-box">
           <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">
@@ -62,9 +61,7 @@ const FilmView = ({ films, tab }: { films: FilmDetail[]; tab: number }) => {
   return (
     <div className="movie">
       <div className="image-grid" style={{ width: tableWidth }}>
-        {fs.map((f) => (
-          <FilmItem film={f} />
-        ))}
+        {fs.map(f => (<FilmItem film={f} />))}
       </div>
     </div>
   );
