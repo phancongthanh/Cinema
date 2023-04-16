@@ -8,7 +8,8 @@ export default interface FilmDetail {
     director: string|null,  // Đạo diễn
     actors: string|null,    // Diễn viên, các nhau bởi dấu ',' ví dụ: "Nguyễn A,Nguyễn B,Nguyễn B"
     time: number            // Thời gian chiếu
-    country: string,       // Ngôn ngữ
+    releaseTime: Date|null,      // Thời gian khởi chiếu, null là không có thời gian chiếu
+    country: string,        // Xuất sứ
     poster: string|null,
     trailer: string|null,
     tags: string,            // Tags để tìm kiếm
