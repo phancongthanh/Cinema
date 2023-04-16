@@ -37,7 +37,7 @@ public class BookingSystem : IBookingSystem
         {
             case TicketStatus.Available:
                 {
-                    ticket.Status = TicketStatus.Available;
+                    ticket.Status = TicketStatus.Booked;
                     var booking = new Booking()
                     {
                         UserId = userId,

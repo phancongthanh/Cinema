@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Cinema.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class BookingController : ControllerBase
 {
     private readonly IBookingSystem _bookingSystem;
