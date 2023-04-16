@@ -100,7 +100,7 @@ const ChooseFilm = () => {
         />
       </div>
         <ul className="w-full max-w-xs h-64 flex flex-col overflow-auto">
-        {scheduless && scheduless.map((schedule) => (
+        {scheduless && scheduless.filter(schedule => (schedule.startTime.getTime() - new Date().getTime()) > 0).sort((a,b) => a.startTime.getTime() - b.startTime.getTime()).map((schedule) => (
 
         <li
           key={schedule.scheduleId}
@@ -111,7 +111,9 @@ const ChooseFilm = () => {
           }`}
           onClick={() => handleScheduleSelect(schedule)}
         >
-          {schedule.startTime.toLocaleString()}
+          {schedule.startTime && schedule.startTime?.getUTCDate()}/{schedule.startTime && schedule.startTime?.getUTCMonth() + 1}/{schedule.startTime && schedule.startTime?.getUTCFullYear()}
+          {" - "}
+          {schedule.startTime && schedule.startTime?.getUTCHours()}:{schedule.startTime && schedule.startTime?.getUTCMinutes()}
         </li>
         ))}
       </ul>

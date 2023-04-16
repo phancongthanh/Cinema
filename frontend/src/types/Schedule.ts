@@ -1,4 +1,5 @@
 export default interface Schedule {
+    getTime(): unknown;
     scheduleId: string,
     roomId: string,         // Tham chiếu phòng sử dụng của lần chiếu này
     filmId: string,         // Tham chiếu bộ phim được chiếu
