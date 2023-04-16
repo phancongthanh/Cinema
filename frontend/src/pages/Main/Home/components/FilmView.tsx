@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import FilmDetail from "../../../../types/FilmDetail";
-import { Link } from "react-router-dom";
 
 const FilmItem = ({ film }: { film: FilmDetail }) => {
   const porter = film.poster;
