@@ -3,17 +3,19 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import { IconButton } from '@mui/material';
 import { FC, useState } from 'react';
 import Seat from '../../../../types/Seat';
+import Ticket from '../../../../types/Ticket';
 
 
 
 interface Props {
-  seatsSelector: Seat[],
-  setSeatsSelector: React.Dispatch<React.SetStateAction<Seat[]>>
+  ticketsSelector: Ticket[] | null
+  setTicketsSelector: React.Dispatch<React.SetStateAction<Ticket[] | null>>
   tseats: Seat[]
+  ticketss: Ticket[] | null
 }
   
 
-const Seats : FC<Props> = ({seatsSelector, setSeatsSelector, tseats}) => {
+const Seats : FC<Props> = ({ticketsSelector, setTicketsSelector, tseats, ticketss}) => {
 
     const [seats, setSeats] = useState<Seat[]>(tseats);
   
@@ -24,17 +26,22 @@ const Seats : FC<Props> = ({seatsSelector, setSeatsSelector, tseats}) => {
     const arrCol = Array.from({length: maxCol}, (_, i) => i + 1)
     
     const handleSelectSeat = (seat : Seat) => {
-      setSeatsSelector((prev) => {
-        if(prev.filter((s) => s.seatId === seat.seatId).length !== 0) {
-          return prev.filter((s) => s.seatId !== seat.seatId)
+      if(ticketss)  {
+        const ticket = ticketss.find((ticket) => ticket.seatId === seat.seatId)
+        if(ticket) {
+          setTicketsSelector((prev) =>
+            prev ? [...prev, ticket] : [ticket]
+          )
         }
-        else return [...prev, seat]
-      })
+      }
     }
 
     const handleRemoveSeat = (seat : Seat) => {
-      setSeatsSelector((prev) => {
-        return prev.filter((s) => s.seatId !== seat.seatId)
+      setTicketsSelector((prev) => {
+        if(prev) {
+          return prev.filter((ticket) => ticket.seatId !== seat.seatId)
+        }
+        return null
       })
     }
 
@@ -60,7 +67,7 @@ const Seats : FC<Props> = ({seatsSelector, setSeatsSelector, tseats}) => {
                     {
                    !seat[0].isAvailable ?
                       <IconButton disabled><EventSeatIcon className='text-red-800' /></IconButton>
-                    : seatsSelector.includes(seat[0]) ?
+                    : ticketsSelector && ticketsSelector.find((ticket) => ticket.seatId === seat[0].seatId) ?
                       <IconButton onClick={() => handleRemoveSeat(seat[0])}><EventSeatIcon className='text-green-500' /></IconButton>
                     : seat[0].isVip ?
                       <IconButton onClick={() => handleSelectSeat(seat[0])}><EventSeatIcon className='text-yellow-500' /></IconButton>

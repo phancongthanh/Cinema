@@ -1,12 +1,16 @@
 import React, { FC } from 'react'
 import Seat from '../../../../types/Seat'
 import { priceNor, priceVip } from './ChooseSeats'
+import Ticket from '../../../../types/Ticket'
 
 interface Props {
   seat: Seat
+  ticketsSelector: Ticket[] | null
 }
 
-const SeatInfo :FC<Props> = ({seat}) => {
+const SeatInfo :FC<Props> = ({seat, ticketsSelector}) => {
+
+  const cost =  ticketsSelector && ticketsSelector.find((ticket) => ticket.seatId === seat.seatId)?.cost
 
   return (
     <div className='flex flex-row justify-between'>
@@ -16,7 +20,7 @@ const SeatInfo :FC<Props> = ({seat}) => {
         </div>
       <div className='text-sm'>  
         <div>Giá:</div>
-        <div>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(seat.isVip ? priceVip : priceNor)}</div>
+        <div>{cost && new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(cost)}</div>
       </div>
     </div>
   )

@@ -5,11 +5,26 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useNavigate } from 'react-router-dom';
 import { usePage } from '..';
 import ClearIcon from '@mui/icons-material/Clear';
+import Ticket from '../../../../types/Ticket';
+import identity from '../../../../backend/identity';
+import backend from '../../../../backend';
 
 const Payment = () => {
+  const {booking} = usePage()
+
   const [value, setValue] = useState(0);
   const [process, setProcess] = useState(0);
-  const [success, SetSuccess] = useState(false);
+  const [success, SetSuccess] = useState(true);
+
+  const Booking = async () => {
+    const userId = identity.getUserId()
+    if(userId) {
+      booking.tickets?.forEach((ticket: Ticket) => {
+        console.log("dat ve" + ticket.ticketId)
+        backend.schedules.ticket.book(userId , ticket.ticketId)
+      })
+    }
+  }
 
   const navigate = useNavigate();
   const {setPage} = usePage();
@@ -30,7 +45,7 @@ const Payment = () => {
     }
     setErrorMessage('');
     setProcess(1);
-    setTimeout(() => {
+    setTimeout(async () => {
       if(success) {
         setProcess(2);
         setBooking((prev) => {
@@ -39,6 +54,7 @@ const Payment = () => {
             isPay: true
           }
         })
+        await Booking();
         setTimeout(() => {
           setPage(4);
         }, 3000)

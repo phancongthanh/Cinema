@@ -19,12 +19,12 @@ const router = createBrowserRouter(
             <Route path="showtimes" element={<Showtimes />}/>
             <Route path="price" element={<Price />}/>
             {/* <Route element={<RequiredAuth allowedRole={'Member'} />}> */}
-              <Route path="book" element={<Book />}>
-                <Route path="chooseFilm" element={<ChooseFilm />}/>
-                <Route path="chooseSeats" element={<ChooseSeats />}/>
-                <Route path="userInfo" element={<UserInfo />}/>
-                <Route path="payment" element={<Payment />}/>
-                <Route path="notification" element={<Notification />}/>
+              <Route path="book/" element={<Book />}>
+                <Route path="chooseFilm/:filmid?/:scheduleid?" element={<ChooseFilm />}/>
+                <Route path="chooseSeats/:filmid?/:scheduleid?" element={<ChooseSeats />}/>
+                <Route path="userInfo/:filmid?/:scheduleid?" element={<UserInfo />}/>
+                <Route path="payment/:filmid?/:scheduleid?" element={<Payment />}/>
+                <Route path="notification/:filmid?/:scheduleid?" element={<Notification />}/>
                </Route>
               <Route path="refund" element={<Refund />}/>
             {/* </Route> */}

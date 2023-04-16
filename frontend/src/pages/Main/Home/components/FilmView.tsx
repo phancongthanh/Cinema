@@ -3,6 +3,7 @@ import './grid.css';
 import React, { useEffect, useState } from 'react';
 
 import FilmDetail from '../../../../types/FilmDetail';
+import { Link } from 'react-router-dom';
 
 const FilmItem = ({film}: {film: FilmDetail}) => {
   const porter = film.poster;
@@ -19,7 +20,7 @@ const FilmItem = ({film}: {film: FilmDetail}) => {
     <p className='image-date'>{date}</p>
     <div>
       <div className="book-box">
-          <a href="" className="book-btn">Đặt Vé</a>
+        <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">Đặt Vé</Link>
       </div>
     </div>
   </div>

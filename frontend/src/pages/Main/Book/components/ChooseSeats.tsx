@@ -5,6 +5,9 @@ import Seat from '../../../../types/Seat';
 import { Divider } from '@mui/material';
 import SeatInfo from './SeatInfo';
 import { usePage } from '..';
+import backend from '../../../../backend';
+import Room from '../../../../types/Room';
+import Ticket from '../../../../types/Ticket';
 
 export const priceNor = 100_000;
 export const priceVip = 200_000;
@@ -36,22 +39,32 @@ for (let i = 1; i <= 100; i++) {
 
 const ChooseSeats = () => {
   const {booking , setBooking} = usePage();
+  const [ticketsSelector, setTicketsSelector] = React.useState<Ticket[] | null>(booking.tickets);
+  const [seatss, setSeatss] = React.useState<Seat[] | null>(null);
+  const [room, setRoom] = React.useState<Room | null>(null);
+  const [ticketss, setTicketss] = React.useState<Ticket[] | null>(null);
+  
 
-  const [seatsSelector, setSeatsSelector] = React.useState<Seat[]>(tseats.filter((seat) => booking.seatId.includes(seat.seatId)) || []);
+  useEffect(() => {
+    const getData = async () => {
+      const schedule = await backend.schedules.getById(booking.scheduleId)
+      if(schedule) {
+        setRoom(schedule.room);
+        setSeatss(schedule.room.seats)
+        setTicketss(schedule.tickets)
+      }
+    }
+    getData();
+  }, [])
 
   useEffect(() => {
     setBooking((prev) => {
       return {
         ...prev,
-        seatId: seatsSelector.map(seat => seat.seatId),
-        cost: seatsSelector.reduce((acc, seat) => {
-          if(seat.isVip) return acc + priceVip;
-          else return acc + priceNor;
-        }, 0)
+        tickets: ticketsSelector
       }
-    }
-    )
-  }, [seatsSelector])
+    })
+  }, [ticketsSelector])
 
   
 
@@ -59,9 +72,13 @@ const ChooseSeats = () => {
     <div className="flex min-w-[60rem] min-h-[30rem] p-4 border rounded-2xl shadow ">
       <div className="flex flex-col items-center flex-[2_2_0%]">
         <div className="mt-4 text-2xl">Chọn ghế</div>
-        <img src="https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/img49.png" className="mt-4 ml-24  w-3/6 self-start"/>
-        <div className='mt-4 flex flex-row items-center'>
-            <Seats setSeatsSelector={setSeatsSelector} seatsSelector={seatsSelector} tseats={tseats}/>
+        {room && <div className='text-2xl mr-4'>{room.address}</div>}
+        <img src="https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/img49.png" className={`mt-4 ml-4 w-[${30}rem] self-start`}/>
+        
+          
+
+            <div className='mt-4 flex flex-row items-center'>
+            {seatss && <Seats setTicketsSelector={setTicketsSelector} ticketsSelector={ticketsSelector} tseats={seatss} ticketss={ticketss}/>} 
             <div className='flex flex-col space-y-12 ml-8'>
               <div className='flex flex-row items-center'>
                 <EventSeatIcon className='text-gray-500 mr-2' />
@@ -86,14 +103,14 @@ const ChooseSeats = () => {
       <div className='flex flex-1 flex-col ml-4 items-center relative'>
         <div className="mt-4 text-2xl">Thông tin ghế đã đặt</div>
         <div className='mt-4 space-y-4 overflow-auto max-h-[24rem] w-72 p-4'>
-          {seatsSelector.map((seat) => (
-            <SeatInfo seat={seat}/>
+          {seatss?.filter((seat) => ticketsSelector?.find((ticket) => ticket.seatId === seat.seatId)).map((seat) => (
+            <SeatInfo seat={seat} ticketsSelector={ticketsSelector}/>
           ))}
 
         </div>
         <div className='flex flex-row absolute bottom-0'>
           <div>Tổng tiền: </div>
-          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(booking.cost)}
+          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(ticketsSelector?.reduce((acc, ticket) => acc + (ticket.cost), 0) || 0)}
         </div>
        </div>
     </div>
@@ -101,5 +118,3 @@ const ChooseSeats = () => {
 }
 
 export default ChooseSeats
-
-// className={`col-[span_${seat.col}_/_span_${seat.col}] row-[span_${seat.row}_/_span_${seat.row}]`}
