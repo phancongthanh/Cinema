@@ -89,7 +89,6 @@ const Login = () => {
               label='Email Address'
               type='email'
               sx={{ mb: 2}}
-              defaultValue={'abcd1234@gmail.com'}
             />
             <FormInput
               name='password'
@@ -97,7 +96,6 @@ const Login = () => {
               fullWidth
               label='Mật khẩu'
               type='password'
-              defaultValue={'12345678'}
             /> 
 
             <FormGroup>

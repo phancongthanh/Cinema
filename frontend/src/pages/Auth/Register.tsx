@@ -111,7 +111,6 @@ const Register = () => {
               label='Tên'
               type='name'
               sx={{ mb: 2}}
-              defaultValue={'Nguyễn Văn A'}
             />
         
             <FormInput
@@ -121,7 +120,6 @@ const Register = () => {
               label='Email Address'
               type='email'
               sx={{ mb: 2}}
-              defaultValue={'abcd1234@gmail.com'}
             />
 
             <FormInput
@@ -131,7 +129,6 @@ const Register = () => {
               label='Mật khẩu'
               type='password'
               sx={{ mb: 2}}
-              defaultValue={'12345678'}
             />
 
             <FormInput
@@ -141,7 +138,6 @@ const Register = () => {
               label='Nhập lại mật khẩu'
               type='password'
               sx={{ mb: 2}}
-              defaultValue={'12345678'}
             />
             
             <FormGroup>
