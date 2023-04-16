@@ -63,6 +63,7 @@ const Login = () => {
       rememberMe: values.rememberMe
     }
     const IsloginOK = await accounts.login(loginForm);
+    setLoading(false);
     if(!IsloginOK) {
       alert('Đăng nhập thất bại');
       return;
