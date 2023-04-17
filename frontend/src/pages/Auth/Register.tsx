@@ -76,7 +76,6 @@ const Register = () => {
       alert('Đăng ký thất bại, ');
       return;
     } else {
-      alert('Đăng ký thành công');
       const login : LoginModel = {
         email: values.email,
         password: values.password,

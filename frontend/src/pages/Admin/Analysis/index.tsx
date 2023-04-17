@@ -5,6 +5,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import PaidIcon from '@mui/icons-material/Paid';
 import RevenueChart from './components/RevenueChart';
 import TicketChart from './components/TicketChart';
+import RoomChart from './components/RoomChart';
+import TicketCancelChart from './components/TicketCancelChart';
 
 
 
@@ -18,7 +20,13 @@ const Analysis = () => {
           <AnalysisBox label={'Doanh thu'} icon={<PaidIcon sx={{ fontSize: 80, color: 'orange' }}/>} value={1100} prevValue={1000}/>
         </div>
         <RevenueChart/>
-        <TicketChart/>
+        <div className="flex">
+          <TicketChart/>
+          <div>
+            <RoomChart/>
+            <TicketCancelChart/>
+          </div>
+        </div>
       </div>
     </div>
   )

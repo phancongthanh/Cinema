@@ -22,6 +22,7 @@ const Payment = () => {
       booking.tickets?.forEach((ticket: Ticket) => {
         console.log("dat ve" + ticket.ticketId)
         backend.schedules.ticket.book(userId , ticket.ticketId)
+        backend.schedules.ticket.pay(userId , ticket.ticketId)
       })
     }
   }

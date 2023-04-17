@@ -86,11 +86,11 @@ const AccountIcon = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => navigate('/userinfo')}>
           <Avatar src ={avatarSrc}/> Thông tin cá nhân
         </MenuItem>
-        {role !== 'Member' &&
-        <MenuItem>
+        {role !== 'Member' && 
+        <MenuItem onClick={() => navigate('/admin')}>
          <ListItemIcon>
             <DashboardIcon fontSize="small" />
           </ListItemIcon>
