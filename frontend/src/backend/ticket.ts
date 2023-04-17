@@ -18,7 +18,7 @@ export default ticket;
  * @returns Danh sách toàn bộ bookings : Booking[] của người dùng userId
  */
 export async function getBookingOfUser(userId: string) : Promise<Booking[]> {
-    const url = server.basePath + "/Booking";
+    const url = server.basePath + "/Booking?userId=" + userId;
 
     const token = identity.getToken() || "";
 

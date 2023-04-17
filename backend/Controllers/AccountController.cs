@@ -17,16 +17,19 @@ public class AccountController : ControllerBase
     private readonly SignInManager<User> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly JwtBearerOptions _jwtBearerOptions;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
     public AccountController(UserManager<User> userManager,
         SignInManager<User> signInManager,
         RoleManager<IdentityRole> roleManager,
-        IOptionsMonitor<JwtBearerOptions> jwtBearerOptions)
+        IOptionsMonitor<JwtBearerOptions> jwtBearerOptions,
+        IPasswordHasher<User> passwordHasher)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
         _jwtBearerOptions = jwtBearerOptions.Get(JwtBearerDefaults.AuthenticationScheme);
+        _passwordHasher = passwordHasher;
     }
 
     // POST: api/Account/Register
@@ -119,6 +122,30 @@ public class AccountController : ControllerBase
         }
 
         return BadRequest(ModelState);
+    }
+
+    // Định nghĩa phương thức đổi mật khẩu
+    [HttpPost("ChangePassword")]
+    public async Task<IActionResult> ChangePassword([FromQuery] string userId, [FromQuery] string old, [FromBody] string password)
+    {
+        // Tìm người dùng theo id
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound("User không tồn tại!");
+        }
+
+        // Kiểm tra mật khẩu cũ có đúng không
+        var result = await _userManager.CheckPasswordAsync(user, old);
+        if (!result && !old.IsNullOrEmpty())
+        {
+            return BadRequest("Mật khẩu cũ không đúng!");
+        }
+
+        // Đổi mật khẩu mới và cập nhật người dùng
+        user.PasswordHash = _passwordHasher.HashPassword(user, password);
+        var updateResult = await _userManager.UpdateAsync(user);
+        return updateResult.Succeeded ? Ok() : BadRequest();
     }
 
     // POST: api/Account/Logout

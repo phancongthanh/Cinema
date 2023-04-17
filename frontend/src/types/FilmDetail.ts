@@ -12,6 +12,5 @@ export default interface FilmDetail {
     country: string,        // Xuất sứ
     poster: string|null,
     trailer: string|null,
-    tags: string,            // Tags để tìm kiếm
     schedules: Array<Schedule>
 }

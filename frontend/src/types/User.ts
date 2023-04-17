@@ -6,5 +6,7 @@ export default interface User
     username: string,
     name: string,
     email: string,
+    phoneNumber: string|null,
+    address: string|null,
     role: Role
 }

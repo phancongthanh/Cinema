@@ -26,8 +26,7 @@ export const AddFilmDetail = ({ reload, back }: { reload: () => void, back: () =
             time: Number(time),
             country:country,
             poster: poster,
-            trailer: trailer,
-            tags: ""
+            trailer: trailer
         };
         console.log(film);
         backend.films.create(film).then(()=>reload).catch(e => console.log(e.message));

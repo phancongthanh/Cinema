@@ -18,7 +18,6 @@ public class FilmDetail : Film
         Country = film.Country;
         Poster = film.Poster;
         Trailer = film.Trailer;
-        Tags = film.Tags;
         Schedules = new List<Schedule>();
     }
 
@@ -34,7 +33,6 @@ public class FilmDetail : Film
         Country = film.Country;
         Poster = film.Poster;
         Trailer = film.Trailer;
-        Tags = film.Tags;
         Schedules = schedules;
     }
 }

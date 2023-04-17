@@ -51,6 +51,37 @@ export async function login(request: LoginModel) : Promise<boolean> {
     throw error;
 }
 
+/**
+ * Đăng nhập
+ * @param userId Id người dùng cần đổi
+ * @param old mật khẩu cũ
+ * @param password mật khẩu mới
+ * @returns true nếu thành công
+ * @throws APIError object
+ */
+export async function changePassword(userId: string, old: string, password: string) : Promise<boolean> {
+    const url = server.basePath + "/Account/ChangePassword"
+        + "?userId=" + userId
+        + "&old=" + old;
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: password
+    });
+
+    if (response.ok) return true;
+
+    const error:APIError = {
+        status: response.status,
+        response: response,
+        message: response.status === 400 ? await response.text() : ""
+    }
+    throw error;
+}
+
 export async function logout() : Promise<void> {
     const url = server.basePath + "/Account/Logout";
 
@@ -70,6 +101,7 @@ export async function logout() : Promise<void> {
 const accounts = {
     register,
     login,
+    changePassword,
     logout
 }
 

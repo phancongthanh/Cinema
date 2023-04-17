@@ -121,7 +121,6 @@ public class DbContextInitialiser
                     Director = "Makoto Shinkai",
                     Actors = null,
                     Country = "Nhật",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016786_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/w9HWe8zt64M"
                 },
@@ -135,7 +134,6 @@ public class DbContextInitialiser
                     Director = "Aaron Horvath, Michael Jelenic",
                     Actors = "Chris Pratt, Anya Taylor-Joy, Charlie Day,…",
                     Country = "Mỹ",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016784_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/UGO_i2tf1BM"
                 },
@@ -149,7 +147,6 @@ public class DbContextInitialiser
                     Director = "David Alaux",
                     Actors = "Valentino Bisegna, Sara Di Sturco, Chiara Fabiano and Mattia Fabiano",
                     Country = "Mỹ",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016781_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/9dldS-QoUIk"
                 },
@@ -163,7 +160,6 @@ public class DbContextInitialiser
                     Director = "Roman Artemiev",
                     Actors = "iktor Dobronravov, Ekaterina Tarasova, Vladimir Sychov, Elizaveta Boyarskaya, Roman Artemiev, Irina Savina, Elena Shulman, Anton Eldarov",
                     Country = "Mỹ",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/eyq8cwWhMjk"
                 },
@@ -177,7 +173,6 @@ public class DbContextInitialiser
                     Director = "Joaquim Dos Santos, Justin K. Thompson, Kemp Powers",
                     Actors = "Shameik Moore",
                     Country = "Mỹ",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016798_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/SUz8Aw28vrc"
                 },
@@ -191,7 +186,6 @@ public class DbContextInitialiser
                     Director = "Võ Thanh Hòa",
                     Actors = "Anh Tú, Mạc Văn Khoa, Ngọc Phước, Nhất Trung,...",
                     Country = "Việt Nam",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016720_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/s8l6VZQH9iM"
                 }
@@ -206,7 +200,6 @@ public class DbContextInitialiser
                     Director = "Julius Avery",
                     Actors = "Russell Crowe, Franco Nero,...",
                     Country = "Mỹ",
-                    Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016805_0.jpeg",
                     Trailer = "https://www.youtube.com/embed/p4LAYNacgkI"
                 }

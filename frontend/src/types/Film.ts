@@ -8,6 +8,5 @@ export default interface Film {
     time: number            // Thời gian chiếu
     country: string,       // Ngôn ngữ
     poster: string|null,
-    trailer: string|null,
-    tags: string            // Tags để tìm kiếm
+    trailer: string|null
 }
