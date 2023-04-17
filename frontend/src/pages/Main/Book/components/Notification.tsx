@@ -5,6 +5,7 @@ import Ticket from '../../../../types/Ticket'
 import { Divider } from '@mui/material'
 import Seat from '../../../../types/Seat'
 import identity from '../../../../backend/identity'
+import TicketView from '../../../../components/TicketView'
 
 const Notification = () => { 
   const {booking} = usePage()
@@ -57,30 +58,7 @@ const Notification = () => {
           <div className="space-y-4 overflow-auto h-[24rem] w-[42rem]">
           {booking.tickets?.map(ticket => {
             return (
-          <div key={ticket.ticketId} className='flex bg-slate-200 rounded-tr-[6rem] rounded-bl-3xl p-4 space-x-4 w-[40rem]'>
-                {filmUrl && <img src={filmUrl} height={140} width={140}/>}
-                <Divider orientation='vertical' flexItem/>
-                <div className='flex flex-col items-center relative w-[40rem]'>
-                  <div>{film}</div>
-                  <div>{room}</div>
-                  <div className='absolute bottom-0 left-4 flex space-x-4 items-center justify-end'>
-                    <div>
-                      <div>Mã vé: {ticket.ticketId}</div>
-                      <div>Ngày chiếu: {startTime && startTime?.getUTCDate()}/{startTime && startTime?.getUTCMonth() + 1}/{startTime && startTime?.getUTCFullYear()}</div>
-                      <div>Giờ chiếu: {startTime && startTime?.getUTCHours()}:{startTime && startTime?.getUTCMinutes()}</div>
-                      <div>Giờ kết thúc: {endTime && endTime?.getUTCHours()}:{endTime && endTime?.getUTCMinutes()}</div>
-                    </div>
-                    <div className='flex flex-col items-center h-32 w-32 rounded p-1'>
-                      <div>Giá: </div>
-                      <div>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(ticket.cost)}</div>
-                      
-                      <div>Vị trí: </div>
-                      <div>{seats && seats.find(seat => seat.seatId === ticket.seatId)?.position}</div>
-                    </div>
-                  </div>
-                  <img src={'https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/logo_home.png'} height={100} width={100} className='absolute bottom-0 right-0'/>
-              </div>
-              </div>
+              <TicketView filmUrl={filmUrl} film={film} room={room} ticket={ticket} startTime={startTime} endTime={endTime} seats={seats}/>
             )})}
             </div>
         </div>

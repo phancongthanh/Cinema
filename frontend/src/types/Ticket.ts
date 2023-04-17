@@ -8,6 +8,7 @@ export const enum TicketStatus
 }
 
 export default interface Ticket {
+    id: number;
     ticketId: number,
     seatId: string,         // Tham chiếu ghế của vé này
     scheduleId: string,     // Tham chiếu lịch chiếu/suất chiếu

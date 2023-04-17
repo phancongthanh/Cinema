@@ -13,10 +13,10 @@ const Sidebar = () => {
       </div>
       <div className='flex flex-col mt-5 ml-2 space-y-3'>
         <Link to={'analysis'} className={path === '/admin/analysis' || path === '/admin' ? 'btn-sidebar-select' : 'btn-sidebar'}>Thống kê</Link>
-        <SidebarItem path={path} to={'showtimes'} label={'Chỉnh sửa suất chiếu'}/>
-        <SidebarItem path={path} to={'film'} label={'Chỉnh sửa phim'}/>
-        <SidebarItem path={path} to={'rooms'} label={'Chỉnh sửa phòng'}/>
-        <SidebarItem path={path} to={'accounts'} label={'Chỉnh sửa tài khoản'}/>
+        <SidebarItem path={path} to={'showtimes'} label={'Quản lý suất chiếu'}/>
+        <SidebarItem path={path} to={'film'} label={'Quản lý phim'}/>
+        <SidebarItem path={path} to={'rooms'} label={'Quản lý phòng'}/>
+        <SidebarItem path={path} to={'accounts'} label={'Quản lý tài khoản'}/>
       </div>
     </div>
   )

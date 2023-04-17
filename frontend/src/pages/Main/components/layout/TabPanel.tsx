@@ -48,7 +48,7 @@ const TabPanel  = () => {
                     <Divider orientation="vertical" flexItem variant='middle'/>
                     <Tab label={"Đặt vé"} value={3} disabled={value === 3} component={Link} to={'book/chooseFilm'} className={'tab'}/>
                     {auth === 'Member' && <Divider orientation="vertical" flexItem variant='middle'/>}
-                    {auth === 'Member' && <Tab label={"Thông tin vé đã đặt"} value={4} disabled={value === 4} component={Link} to={'refund'} className={'tab'}/>}
+                    {auth === 'Member' && <Tab label={"Vé đã đặt"} value={4} disabled={value === 4} component={Link} to={'refund'} className={'tab'}/>}
 
 
 
