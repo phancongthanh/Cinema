@@ -3,9 +3,8 @@ import './grid.css';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import identity from '../../../../backend/identity';
 import FilmDetail from '../../../../types/FilmDetail';
-import { Height } from '@mui/icons-material';
-import { minHeight } from '@mui/system';
 
 const FilmItem = ({ film }: { film: FilmDetail }) => {
   const porter = film.poster;
@@ -31,9 +30,7 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
       <div>
         
         <div className="book-box">
-          <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">
-            Đặt Vé
-          </Link>
+          {identity.getRole() ? "" : <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">Đặt Vé</Link>}
         </div>
       </div>
     </div>

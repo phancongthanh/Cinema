@@ -1,25 +1,16 @@
-import React, { useEffect } from "react";
-import {
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { boolean, object, string, TypeOf } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
-import FormInput from "./FormInput";
-import { Link, useNavigate } from "react-router-dom";
-import User from "../types/User";
-import backend from "../backend";
-import identity from "../backend/identity";
-import EditIcon from '@mui/icons-material/Edit';
+import { zodResolver } from '@hookform/resolvers/zod';
 import DoneIcon from '@mui/icons-material/Done';
+import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Divider, IconButton } from '@mui/material';
+import React, { useEffect } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { object, string, TypeOf } from 'zod';
+
+import backend from '../backend';
+import identity from '../backend/identity';
+import User from '../types/User';
+import FormInput from './FormInput';
 
 type ProfileModel = {
   name: string;

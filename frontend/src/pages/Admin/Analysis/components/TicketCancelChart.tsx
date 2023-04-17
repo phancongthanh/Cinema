@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import backend from '../../../../backend'
-import Film from '../../../../types/Film'
+import React from 'react';
+import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const TicketCancelChart = () => {
 

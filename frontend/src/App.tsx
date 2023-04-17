@@ -1,10 +1,34 @@
-
-import Layout from './pages/Main/components/layout/MainLayout';
-import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmDetail, FilmsEdit, Home, Info, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo  } from './pages';
 import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+
 import RequiredAuth from './components/RequiredAuth';
 import { AuthProvider } from './context/AuthProvider';
+import {
+  AccountsEdit,
+  AdminLayout,
+  Analysis,
+  Book,
+  ChooseFilm,
+  ChooseSeats,
+  FilmDetail,
+  FilmsEdit,
+  Home,
+  Info,
+  Login,
+  MainLayout,
+  Missing,
+  NeedLogin,
+  Notification,
+  Payment,
+  Price,
+  Refund,
+  Register,
+  RoomsEdit,
+  Showtimes,
+  ShowtimesEdit,
+  UserInfo,
+} from './pages';
+
 
 
 

@@ -1,19 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import backend from "../../../../backend";
-import Film from "../../../../types/Film";
+import React from 'react';
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+
+import backend from '../../../../backend';
 
 const RoomChart = () => {
   const [data, setData] = React.useState<{ title: string; value: number }[]>(
