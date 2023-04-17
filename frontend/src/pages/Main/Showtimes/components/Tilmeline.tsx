@@ -65,8 +65,8 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                             <div className='mar-top'>
                                 <ul>
                                     {film.schedules.map(s => 
-                                        <li style={{fontWeight: '400'}}>
-                                          <Link to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}>
+                                        <li style={{fontWeight: '400', }}>
+                                          <Link style={{textDecoration:'none', color:'black'}} to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}>
                                             {getTimeWithFormat(s.startTime)}
                                           </Link>  
                                         </li>
