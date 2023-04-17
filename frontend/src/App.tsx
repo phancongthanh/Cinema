@@ -1,14 +1,33 @@
-
-import Layout from './pages/Main/components/layout/MainLayout';
-<<<<<<< HEAD
-import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo  } from './pages';
-=======
-import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmDetail, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo } from './pages';
->>>>>>> 08be8c3b61b65192d7a0930bf381aa3daa9c598d
-import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import React from 'react';
-import { AuthProvider } from './context/AuthProvider';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+
 import RequiredAuth from './components/RequiredAuth';
+import { AuthProvider } from './context/AuthProvider';
+import {
+  AccountsEdit,
+  AdminLayout,
+  Analysis,
+  Book,
+  ChooseFilm,
+  ChooseSeats,
+  FilmDetail,
+  FilmsEdit,
+  Home,
+  Login,
+  MainLayout,
+  Missing,
+  NeedLogin,
+  Notification,
+  Payment,
+  Price,
+  Refund,
+  Register,
+  RoomsEdit,
+  Showtimes,
+  ShowtimesEdit,
+  UserInfo,
+} from './pages';
+
 
 
 
