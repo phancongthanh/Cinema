@@ -7,7 +7,7 @@ import RequiredAuth from '../../../../components/RequiredAuth'
 
 const AdminLayout = () => {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row min-h-[100dvh]">
       <Sidebar/>
       <div className="flex flex-col w-screen">
         <AdminHeader/>

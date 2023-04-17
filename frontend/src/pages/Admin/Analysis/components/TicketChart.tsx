@@ -1,39 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-
-const data: {title: string, value: number}[] = [
-    {
-        title: 'The Social Network',
-        value: 1000
-    },
-    {
-        title: 'Black Panther',
-        value: 200
-    },
-    {
-        title: 'Avengers: Endgame',
-        value: 300
-    },
-    {
-        title: 'La La Land',
-        value: 600
-    },
-    {
-        title: 'The Grand Budapest Hotel',
-        value: 100
-    },
-    {
-        title: 'The Matrix',
-        value: 700
-    },
-]
-
-const sortedData: {title: string, value: number}[] = data.sort((a, b) => b.value - a.value)
-
+import backend from '../../../../backend'
+import Film from '../../../../types/Film'
 
 const TicketChart = () => {
+  const [data, setData] = React.useState<{title: string, value: number}[]>([])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const films = await backend.films.get()
+      setData(films?.map((film) => {
+        return {
+          title: film.title,
+          value: Math.floor(Math.random() * (1000 - 200 + 1) + 200)
+        }
+      }))
+    }
+    fetchData()
+  }, [])
+  
+
+  const sortedData: {title: string, value: number}[] = data.sort((a, b) => b.value - a.value)
+
   return (
-    <div className='h-[60rem] w-[30rem]'>
+    <div className='h-[60rem] w-[30rem] flex flex-col items-center'>
      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
@@ -52,9 +42,10 @@ const TicketChart = () => {
           <YAxis type="category" dataKey="title"/>
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" name='Doanh thu' fill="#8884d8" maxBarSize={40}/>
+          <Bar dataKey="value" name='Số vé' fill="#8884d8" maxBarSize={40}/>
         </BarChart>
       </ResponsiveContainer>
+      Số vé bán được trong tháng
     </div>
   )
 }

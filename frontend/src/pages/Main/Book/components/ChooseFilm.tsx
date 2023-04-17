@@ -19,7 +19,7 @@ const ChooseFilm = () => {
 
   const [selectedFilm, setSelectedFilm] = useState<{filmId: string, title: string}| null | undefined>(null);
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null | undefined>(null);
-  const [filterDate, seFilterDate] = useState<Date>(new Date());
+  const [filterDate, seFilterDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const getFilms = async () => {
@@ -101,12 +101,13 @@ const ChooseFilm = () => {
         <div className="flex items-center my-4">
         <input
           type="date"
-          value={filterDate.toISOString().substr(0, 10)}
+          placeholder="dd-mm-yyyy"
+          value={filterDate ? filterDate.toISOString().substr(0, 10) : ''}
           onChange={(e) => seFilterDate(new Date(e.target.value))}
         />
       </div>
         <ul className="w-full max-w-xs h-64 flex flex-col overflow-auto">
-        {scheduless && scheduless.filter(schedule => (schedule.startTime.getTime() - new Date().getTime()) > 0).sort((a,b) => a.startTime.getTime() - b.startTime.getTime()).map((schedule) => (
+        {scheduless && scheduless.filter(schedule => filterDate ? schedule.startTime.getDate() === filterDate.getDate() : schedule).filter(schedule => (schedule.startTime.getTime() - new Date().getTime()) > 0).sort((a,b) => a.startTime.getTime() - b.startTime.getTime()).map((schedule) => (
 
         <li
           key={schedule.scheduleId}

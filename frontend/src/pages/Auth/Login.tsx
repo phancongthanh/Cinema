@@ -62,15 +62,15 @@ const Login = () => {
       password: values.password,
       rememberMe: values.rememberMe
     }
+    try{
     const IsloginOK = await accounts.login(loginForm);
     setLoading(false);
-    if(!IsloginOK) {
+    setAuth(identity.getRole());
+    navigate('/')
+    } catch (error) {
+      setLoading(false);
       alert('Đăng nhập thất bại');
       return;
-    } else {
-      // alert('Đăng nhập thành công');
-      setAuth(identity.getRole());
-      navigate('/')
     }
   };
 
@@ -123,7 +123,7 @@ const Login = () => {
             </LoadingButton>
           </form>
         </FormProvider>
-        <div className='mt-4'>Không có tài khoản? <Link to={'/register'} className='text-blue-600 hover:text-blue-300'>Đăng nhập</Link></div>
+        <div className='mt-4'>Không có tài khoản? <Link to={'/register'} className='text-blue-600 hover:text-blue-300'>Đăng ký</Link></div>
       </div>
     </div>
   )
