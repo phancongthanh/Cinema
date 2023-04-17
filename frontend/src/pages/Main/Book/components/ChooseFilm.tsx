@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+
 import { usePage } from '..';
-import Schedule from '../../../../types/Schedule';
+import backend from '../../../../backend';
 import films from '../../../../backend/films';
 import FilmDetail from '../../../../types/FilmDetail';
-import backend from '../../../../backend';
-import { useSearchParams } from 'react-router-dom';
+import Schedule from '../../../../types/Schedule';
+
+const getTimeWithFormat = (time: Date) => {
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return (h<10 ? "0"+h : h) + ":" + (m<10 ? "0"+m : m);
+}
 
 const ChooseFilm = () => {
   const {booking, setBooking} = usePage();
@@ -111,9 +117,7 @@ const ChooseFilm = () => {
           }`}
           onClick={() => handleScheduleSelect(schedule)}
         >
-          {schedule.startTime && schedule.startTime?.getUTCDate()}/{schedule.startTime && schedule.startTime?.getUTCMonth() + 1}/{schedule.startTime && schedule.startTime?.getUTCFullYear()}
-          {" - "}
-          {schedule.startTime && schedule.startTime?.getUTCHours()}:{schedule.startTime && schedule.startTime?.getUTCMinutes()}
+          {schedule.startTime.toLocaleDateString('vi-VN') + " - " + getTimeWithFormat(schedule.startTime)}
         </li>
         ))}
       </ul>
