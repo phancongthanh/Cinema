@@ -1,8 +1,15 @@
 
 .menu-tab{
-    margin: 0 15%;
+    margin: 0 15vw;
     position: relative;
 }
+/* Media query for screens smaller than 768px */
+@media (max-width: 886px) {
+    .menu-tab {
+        margin: 0 0;
+        position: relative;
+    }
+  }
 .menu-tab ul {
     border-bottom: 1px solid #8a8a8a;
     border-bottom-width: 1px;
@@ -13,7 +20,7 @@
 
 .menu-tab li {
     display: inline-block;
-    margin-right: 100px;
+    margin-right: 5vw;
     font-size: 24px;
     cursor: pointer;
     float: left;

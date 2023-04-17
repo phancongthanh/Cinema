@@ -23,7 +23,7 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
           title={title}
         />
       </Link>
-      <div style={{height: '110px', maxHeight:'none', minHeight:'0'}}>
+      <div style={{height: '110px', maxHeight:'none', minHeight:'50px'}}>
         <p className="image-title" style={{fontWeight:'bold',}}>{title}</p>
         <p className="image-time"><span style={{fontWeight:'600'}}>Thời lượng: </span> {time}</p>
         <p className="image-date"><span style={{fontWeight:'600'}}>Khởi chiếu: </span> {date}</p>

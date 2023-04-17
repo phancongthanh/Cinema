@@ -54,12 +54,12 @@ function FilmInFor ({ film }: { film: FilmDetail }) {
                       </Link>
                     </div>
                     <div className="box">
-                      <button onClick={handleShowVideo} className='Trailer-btn'>Xem Trailer</button>
+                      <a className='Trailer-btn' href={`${trailer}`} target="_blank">Xem Trailer</a>
 
-                      <Modal isOpen={showVideo} onRequestClose={handleCloseVideo} className='modal'>
+                      {/* <Modal isOpen={showVideo} onRequestClose={handleCloseVideo} className='modal'>
                         <iframe width="840" height="472" src={`${trailer}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
 
-                      </Modal>
+                      </Modal> */}
                     </div>
                     </div>
                     </p>
