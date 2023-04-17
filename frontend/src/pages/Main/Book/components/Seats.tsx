@@ -3,7 +3,7 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import { IconButton } from '@mui/material';
 import { FC, useState } from 'react';
 import Seat from '../../../../types/Seat';
-import Ticket from '../../../../types/Ticket';
+import Ticket, { TicketStatus } from '../../../../types/Ticket';
 
 
 
@@ -45,6 +45,15 @@ const Seats : FC<Props> = ({ticketsSelector, setTicketsSelector, tseats, tickets
       })
     }
 
+    const ticketIsAvailable = (seat : Seat) => {
+      if(ticketss) {
+        const ticket = ticketss.find((ticket) => ticket.seatId === seat.seatId)
+        if(ticket) {
+          return ticket.status !== TicketStatus.Available
+        }
+      }
+      return false
+    }
 
     return (
       <table>
@@ -65,7 +74,7 @@ const Seats : FC<Props> = ({ticketsSelector, setTicketsSelector, tseats, tickets
                 return(
                   <td key={col} className='text-center max-w-[2rem]'>
                     {
-                   !seat[0].isAvailable ?
+                    ticketIsAvailable(seat[0]) ?
                       <IconButton disabled><EventSeatIcon className='text-red-800' /></IconButton>
                     : ticketsSelector && ticketsSelector.find((ticket) => ticket.seatId === seat[0].seatId) ?
                       <IconButton onClick={() => handleRemoveSeat(seat[0])}><EventSeatIcon className='text-green-500' /></IconButton>

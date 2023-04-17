@@ -3,6 +3,7 @@ export {default as Home} from './Main/Home';
 export {default as Showtimes} from './Main/Showtimes';
 export {default as Price} from './Main/Price';
 export {default as Refund} from './Main/Refund';
+export {default as FilmDetail} from './Main/FilmDetail';
 export {default as Book} from './Main/Book';
     export {default as ChooseFilm} from './Main/Book/components/ChooseFilm';
     export {default as ChooseSeats} from './Main/Book/components/ChooseSeats';

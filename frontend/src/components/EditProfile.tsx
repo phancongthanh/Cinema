@@ -15,15 +15,17 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 type ProfileModel = {
-    username: string;
     name: string;
     email: string;
+    phone: string;
+    address: string;
 }
 
 const profileSchema = object({
-    username: string().nonempty('Cần nhập tên'),
     name: string().nonempty('Cần nhập họ và tên'),
     email: string().nonempty('Cần nhập Email').email('Email không hợp lệ'),
+    phone: string().nonempty('Cần nhập số điện thoại'),
+    address: string().nonempty('Cần nhập địa chỉ'),
   });
   
 type ProfileInput = TypeOf<typeof profileSchema>;
@@ -57,9 +59,10 @@ const EditProfile = () => {
       const onSubmitHandler: SubmitHandler<ProfileInput> = async (values) => {
         setLoading(true);
         const loginForm : ProfileModel = {
-            username: values.username,
             name: values.name,
             email: values.email,
+            phone: values.phone,
+            address: values.address,
         }
       };
 
@@ -78,25 +81,33 @@ const EditProfile = () => {
                   label='Email Address'
                   type='email'
                   sx={{ mb: 2}}
-                  defaultValue={'abcd1234@gmail.com'}
+                  defaultValue={'Member@gmail.com'}
                 />
                 <FormInput
-                  name='password'
+                  name='name'
                   required
                   fullWidth
                   label='Mật khẩu'
-                  type='password'
-                  defaultValue={'12345678'}
+                  type='name'
+                  defaultValue={'Nguyễn Văn A'}
                 /> 
                 <FormInput
-                  name='password'
+                  name='phone'
                   required
                   fullWidth
                   label='Mật khẩu'
-                  type='password'
-                  defaultValue={'12345678'}
+                  type='phone'
+                  defaultValue={'0123456789'}
                 /> 
     
+                <FormInput
+                  name='address'
+                  required
+                  fullWidth
+                  label='Mật khẩu'
+                  type='address'
+                  defaultValue={'144 Xuân Thủy, Mai Dịch, Cầu Giấy, Hà Nội'}
+                /> 
                 
     
                 <LoadingButton

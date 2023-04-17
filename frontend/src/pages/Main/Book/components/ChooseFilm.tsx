@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+
 import { usePage } from '..';
-import Schedule from '../../../../types/Schedule';
+import backend from '../../../../backend';
 import films from '../../../../backend/films';
 import FilmDetail from '../../../../types/FilmDetail';
-import backend from '../../../../backend';
-import { useSearchParams } from 'react-router-dom';
+import Schedule from '../../../../types/Schedule';
+
+const getTimeWithFormat = (time: Date) => {
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return (h<10 ? "0"+h : h) + ":" + (m<10 ? "0"+m : m);
+}
 
 const ChooseFilm = () => {
   const {booking, setBooking} = usePage();
@@ -100,7 +106,7 @@ const ChooseFilm = () => {
         />
       </div>
         <ul className="w-full max-w-xs h-64 flex flex-col overflow-auto">
-        {scheduless && scheduless.map((schedule) => (
+        {scheduless && scheduless.filter(schedule => (schedule.startTime.getTime() - new Date().getTime()) > 0).sort((a,b) => a.startTime.getTime() - b.startTime.getTime()).map((schedule) => (
 
         <li
           key={schedule.scheduleId}
@@ -111,7 +117,7 @@ const ChooseFilm = () => {
           }`}
           onClick={() => handleScheduleSelect(schedule)}
         >
-          {schedule.startTime.toLocaleString()}
+          {schedule.startTime.toLocaleDateString('vi-VN') + " - " + getTimeWithFormat(schedule.startTime)}
         </li>
         ))}
       </ul>

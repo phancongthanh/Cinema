@@ -33,7 +33,7 @@ public class ScheduleSystem : IScheduleSystem
             .Where(r => r.RoomId == schedule.RoomId)
             .SingleOrDefaultAsync()
             ?? throw new NotFoundException("Phòng chiếu không tồn tại!");
-        if (_context.Films.Any(f => f.FilmId == schedule.FilmId))
+        if (!_context.Films.Any(f => f.FilmId == schedule.FilmId))
             throw new NotFoundException("Phim không tồn tại!");
         await _context.Schedules.AddAsync(schedule);
         foreach (var seat in room.Seats)

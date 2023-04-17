@@ -4,9 +4,13 @@ import Tab from '@mui/material/Tab';
 import { Link, useLocation } from 'react-router-dom';
 import { Divider} from '@mui/material';
 import TabItem from './TabItem';
+import useAuth from '../../../../hooks/useAuth';
 
 
 const TabPanel  = () => {
+
+    const {auth} = useAuth();
+
 
     const path = useLocation().pathname;
 
@@ -19,6 +23,10 @@ const TabPanel  = () => {
             setValue(1);
         } else if (path === '/price') {
             setValue(2);
+        } else if (path === '/book/chooseFilm') {
+            setValue(3);
+        } else if (path === '/refund') {
+            setValue(4);
         } else {
             setValue(0);
         }
@@ -38,7 +46,9 @@ const TabPanel  = () => {
                     <Divider orientation="vertical" flexItem variant='middle'/>
                     <Tab label={"Giá vé"} value={2} disabled={value === 2} component={Link} to={'/price'} className={'tab'}/>
                     <Divider orientation="vertical" flexItem variant='middle'/>
-                    <Tab label={"Book"} value={3} disabled={value === 3} component={Link} to={'book/chooseFilm'} className={'tab'}/>
+                    {auth === 'Member' && <Tab label={"Đặt vé"} value={3} disabled={value === 3} component={Link} to={'book/chooseFilm'} className={'tab'}/>}
+                    {auth === 'Member' && <Divider orientation="vertical" flexItem variant='middle'/>}
+                    {auth === 'Member' && <Tab label={"Thông tin vé đã đặt"} value={4} disabled={value === 4} component={Link} to={'refund'} className={'tab'}/>}
 
 
 
@@ -47,7 +57,7 @@ const TabPanel  = () => {
                     {/* <TabItem label="Giá vé" value={value} to='/price' tvalue={2}/> */}
                     
                 </Tabs>
-                <Link to='/admin'  className='self-center justify-self-end mr-4'>Chỉnh sửa</Link>
+                {auth ===  'Admin' && <Link to='/admin'  className='self-center justify-self-end mr-4'>Chỉnh sửa</Link>}
         </div>
     )
 }

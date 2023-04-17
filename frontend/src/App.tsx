@@ -1,6 +1,10 @@
 
 import Layout from './pages/Main/components/layout/MainLayout';
+<<<<<<< HEAD
 import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo  } from './pages';
+=======
+import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmDetail, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo } from './pages';
+>>>>>>> 08be8c3b61b65192d7a0930bf381aa3daa9c598d
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import React from 'react';
 import { AuthProvider } from './context/AuthProvider';
@@ -18,6 +22,7 @@ const router = createBrowserRouter(
             <Route path="home" element={<Home />}/>
             <Route path="showtimes" element={<Showtimes />}/>
             <Route path="price" element={<Price />}/>
+            <Route path="filmdetail/:filmid" element={<FilmDetail />}/>
             <Route element={<RequiredAuth allowedRole={'Member'} />}>
               <Route path="book/" element={<Book />}>
                 <Route path="chooseFilm/:filmid?/:scheduleid?" element={<ChooseFilm />}/>
@@ -26,7 +31,7 @@ const router = createBrowserRouter(
                 <Route path="payment/:filmid?/:scheduleid?" element={<Payment />}/>
                 <Route path="notification/:filmid?/:scheduleid?" element={<Notification />}/>
                </Route>
-              <Route path="refund" element={<Refund />}/>
+            <Route path="refund" element={<Refund />}/>
             </Route>
             <Route path="needLogin" element={<NeedLogin />}/>
           </Route>

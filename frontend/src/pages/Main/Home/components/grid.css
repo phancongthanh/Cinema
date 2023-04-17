@@ -13,8 +13,8 @@
 }
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 2rem;
     align-items: center;
     justify-items: center;
   }
@@ -54,12 +54,13 @@
     visibility: visible;
   }
   .book-box{
-    width: 50px;
+    margin: auto auto;
+    min-width: 50px;
+    max-width: 100px;
     height: 30px;
     background-image: linear-gradient(to right bottom, var(--blue), var(--green));
     padding: 1px;
     border-radius: 10px;
-    
 }
   .book-btn{
     width: 100%;

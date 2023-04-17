@@ -1,5 +1,6 @@
 ﻿using Cinema.Entities;
 using Cinema.Models;
+using Cinema.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,13 +12,28 @@ public class DbContextInitialiser
     private readonly CinemaContext _context;
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IFilmSystem _filmSystem;
+    private readonly IRoomSystem _roomSystem;
+    private readonly IScheduleSystem _scheduleSystem;
+    private readonly IBookingSystem _bookingSystem;
 
-    public DbContextInitialiser(ILogger<DbContextInitialiser> logger, CinemaContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    public DbContextInitialiser(ILogger<DbContextInitialiser> logger,
+        CinemaContext context,
+        UserManager<User> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IFilmSystem filmSystem,
+        IRoomSystem roomSystem,
+        IScheduleSystem scheduleSystem,
+        IBookingSystem bookingSystem)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
+        _filmSystem = filmSystem;
+        _roomSystem = roomSystem;
+        _scheduleSystem = scheduleSystem;
+        _bookingSystem = bookingSystem;
     }
 
     public async Task InitialiseAsync()
@@ -63,14 +79,14 @@ public class DbContextInitialiser
             {
                 UserName = "manager@gmail.com",
                 Email = "manager@gmail.com",
-                Name = "Manager",
+                Name = "Quản lý rạp chiếu phim",
                 Role = "Manager"
             },
             new User()
             {
                 UserName = "member@gmail.com",
                 Email = "member@gmail.com",
-                Name = "Member",
+                Name = "Nguyễn Văn A",
                 Role = "Member"
             }
         };
@@ -91,7 +107,7 @@ public class DbContextInitialiser
         }
         
         // Films
-        if (!_context.Films.Any())
+        if (!(await _filmSystem.GetFilms()).Any())
         {
             var films = new[]
             {
@@ -107,7 +123,7 @@ public class DbContextInitialiser
                     Country = "Nhật",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016786_0.jpeg",
-                    Trailer = "https://youtu.be/w9HWe8zt64M"
+                    Trailer = "https://www.youtube.com/embed/w9HWe8zt64M"
                 },
                 new Film()
                 {
@@ -121,7 +137,7 @@ public class DbContextInitialiser
                     Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016784_0.jpeg",
-                    Trailer = "https://youtu.be/UGO_i2tf1BM"
+                    Trailer = "https://www.youtube.com/embed/UGO_i2tf1BM"
                 },
                 new Film()
                 {
@@ -135,7 +151,7 @@ public class DbContextInitialiser
                     Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016781_0.jpeg",
-                    Trailer = "https://youtu.be/9dldS-QoUIk"
+                    Trailer = "https://www.youtube.com/embed/9dldS-QoUIk"
                 },
                 new Film()
                 {
@@ -149,7 +165,7 @@ public class DbContextInitialiser
                     Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
-                    Trailer = "https://youtu.be/eyq8cwWhMjk"
+                    Trailer = "https://www.youtube.com/embed/eyq8cwWhMjk"
                 },
                 new Film()
                 {
@@ -163,7 +179,7 @@ public class DbContextInitialiser
                     Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016798_0.jpeg",
-                    Trailer = "https://youtu.be/SUz8Aw28vrc"
+                    Trailer = "https://www.youtube.com/embed/SUz8Aw28vrc"
                 },
                 new Film()
                 {
@@ -177,7 +193,7 @@ public class DbContextInitialiser
                     Country = "Việt Nam",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016720_0.jpeg",
-                    Trailer = "https://youtu.be/s8l6VZQH9iM"
+                    Trailer = "https://www.youtube.com/embed/s8l6VZQH9iM"
                 }
                 ,
                 new Film()
@@ -192,14 +208,13 @@ public class DbContextInitialiser
                     Country = "Mỹ",
                     Tags = "",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016805_0.jpeg",
-                    Trailer = "https://youtu.be/p4LAYNacgkI"
+                    Trailer = "https://www.youtube.com/embed/p4LAYNacgkI"
                 }
             };
-            await _context.Films.AddRangeAsync(films);
-            await _context.SaveChangesAsync();
+            foreach (var film in films) await _filmSystem.CreateFilm(film);
         }
         // Rooms
-        if (!_context.Rooms.Any())
+        if (!(await _roomSystem.GetRooms()).Any())
         {
             for (int i = 0; i < 5; i++)
             {
@@ -226,12 +241,11 @@ public class DbContextInitialiser
                         room.Seats.Add(seat);
                     }
                 }
-                await _context.Rooms.AddAsync(room);
+                await _roomSystem.CreateRoom(room);
             }
-            await _context.SaveChangesAsync();
         }
         // Schedules
-        if (!_context.Schedules.Any())
+        if (!(await _scheduleSystem.GetSchedules()).Any())
         {
             var schedules = new List<Schedule>();
             var films = await _context.Films.ToListAsync();
@@ -240,6 +254,14 @@ public class DbContextInitialiser
             var time = DateTime.Now.AddDays(-1);
             time = time.AddMinutes(60 - time.Minute);
             var random = new Random(0);
+            schedules.Add(new Schedule()
+            {
+                ScheduleId = Guid.NewGuid().ToString(),
+                RoomId = rooms[random.Next(rooms.Count)].RoomId,
+                FilmId = films[0].FilmId,
+                StartTime = time.AddMonths(-1),
+                EndTime = time.AddMonths(-1).AddMinutes(films[0].Time / 30 * 30 + 30)
+            });
             while (time < DateTime.Now.AddDays(7))
             {
                 var room = rooms[random.Next(rooms.Count)];
@@ -259,22 +281,27 @@ public class DbContextInitialiser
                 schedules.Add(schedule);
             }
 
-            _context.Schedules.AddRange(schedules);
+            foreach (var schedule in schedules)
+                await _scheduleSystem.CreateSchedule(schedule, 50000, 60000);
+        }
+        // Booking
+        if (!_context.Bookings.Any())
+        {
+            var schedules = await _scheduleSystem.GetSchedules();
+            var members = await _userManager.Users.Where(u => u.Role == "Member").ToListAsync();
+            var random = new Random(0);
             foreach (var schedule in schedules)
             {
-
-                var room = rooms.Single(r => r.RoomId == schedule.RoomId);
-                var tickets = room.Seats.Select(seat => new Ticket()
+                var tickets = (await _scheduleSystem.GetSchedule(schedule.ScheduleId))?.Tickets ?? Array.Empty<Ticket>();
+                tickets = tickets.Where(t => t.Status == TicketStatus.Available);
+                foreach (var ticket in tickets)
                 {
-                    SeatId = seat.SeatId,
-                    ScheduleId = schedule.ScheduleId,
-                    Cost = seat.IsVip ? 75000 : 50000,
-                    UserId = null,
-                    Status = TicketStatus.Available
-                });
-                _context.Tickets.AddRange(tickets);
+                    if (random.Next(1000) >= 100) continue;
+                    var member = members[random.Next(members.Count)];
+                    await _bookingSystem.Book(member.Id, ticket.TicketId);
+                    await _bookingSystem.Pay(member.Id, ticket.TicketId);
+                }
             }
-            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,5 +1,7 @@
 import '../styles/timelineMovie.css';
 
+import { Link } from 'react-router-dom';
+
 import FilmDetail from '../../../../types/FilmDetail';
 
 function Timeline({films}: {films: FilmDetail[]}) {
@@ -36,6 +38,12 @@ function Timeline({films}: {films: FilmDetail[]}) {
   );
 }
 
+const getTimeWithFormat = (time: Date) => {
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return (h<10 ? "0"+h : h) + ":" + (m<10 ? "0"+m : m);
+}
+
 const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
     return (
         <>
@@ -46,19 +54,21 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                         <div className="info">
                             <h3>{film.title}</h3>
                             <p>
-                                <b style={{fontWeight:'400'}}>Thời lượng: {film.time}</b>
+                                <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Thời lượng: </span> {film.time} phút</b>
                                 <br />
-                                <b style={{fontWeight:'400'}}>Xuất Xứ: {film.country}</b>
+                                <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Xuất xứ: </span> {film.country}</b>
                                 <br />
-                                <b style={{fontWeight:'400'}}>Khởi chiếu: {film.releaseTime?.toLocaleDateString("vi-VN") || ""}</b>
+                                <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Khởi chiếu: </span> {film.releaseTime?.toLocaleDateString("vi-VN") || ""}</b>
                                 <br />
-                                <b style={{fontWeight:'400'}}>Nội dung: {film.description.substring(0, 150) + "..."}</b>
+                                <b style={{fontWeight:'400'}}><span style={{fontWeight:'600'}}>Nội dung: </span> {film.description.substring(0, 150) + "..."}</b>
                             </p>
                             <div className='mar-top'>
                                 <ul>
                                     {film.schedules.map(s => 
                                         <li style={{fontWeight: '400'}}>
-                                            {s.startTime.getHours()+":"+s.startTime.getMinutes()}
+                                          <Link to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}>
+                                            {getTimeWithFormat(s.startTime)}
+                                          </Link>  
                                         </li>
                                     )}
                                 </ul>
