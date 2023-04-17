@@ -6,7 +6,8 @@ import server from './server';
 const ticket = {
     book,
     pay,
-    cancel
+    cancel,
+    getBookingOfUser
 }
 
 export default ticket;
