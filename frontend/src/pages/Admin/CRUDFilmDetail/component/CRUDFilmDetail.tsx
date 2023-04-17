@@ -1,6 +1,3 @@
-import '../css/crud.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 import React from 'react';
 
 import FilmDetail from '../../../../types/FilmDetail';
@@ -21,7 +18,7 @@ export const CRUDFilmDetail = ({ films, changeView } : {films: FilmDetail[], cha
             </div>
             <div className='card-body'>
                 <div>
-                    <span onClick={() => handleClick("write", "")} className='btn btn-primary'>Thêm phim</span>
+                    <span style={{margin: '5px 0'}} onClick={() => handleClick("write", "")} className='btn btn-primary'>Thêm phim</span>
                 </div>
                 <table className='table table-bordered'>
                     <thead className='bg-dark text-white'>

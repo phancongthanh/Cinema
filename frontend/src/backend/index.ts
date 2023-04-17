@@ -3,6 +3,7 @@ import files from './files';
 import films from './films';
 import rooms from './rooms';
 import schedules from './schedules';
+import statistics from './statistics';
 import users from './users';
 
 const backend = {
@@ -11,7 +12,8 @@ const backend = {
     films,
     rooms,
     schedules,
-    files
+    files,
+    statistics
 }
 
 export default backend;
