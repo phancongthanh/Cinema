@@ -23,6 +23,7 @@ export {default as Analysis} from './Admin/Analysis';
 export {default as AccountsEdit} from './Admin/AccountsEdit';
 export {default as FilmsEdit} from './Admin/FilmsEdit';
 export {default as RoomsEdit} from './Admin/RoomsEdit';
+
 export {default as ShowtimesEdit} from './Admin/ShowtimesEdit';
 
 //Layout

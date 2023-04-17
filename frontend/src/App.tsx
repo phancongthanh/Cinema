@@ -1,6 +1,6 @@
 
 import Layout from './pages/Main/components/layout/MainLayout';
-import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo } from './pages';
+import { AccountsEdit, AdminLayout, Analysis, Book, ChooseFilm, ChooseSeats, FilmsEdit, Home, Login, MainLayout, Missing, NeedLogin, Notification, Payment, Price, Refund, Register, RoomsEdit, Showtimes, ShowtimesEdit, UserInfo  } from './pages';
 import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import React from 'react';
 import { AuthProvider } from './context/AuthProvider';
@@ -35,7 +35,12 @@ const router = createBrowserRouter(
             <Route index element={<Analysis />}/>
             <Route path="analysis" element={<Analysis />}/>
             <Route path="showtimes" element={<ShowtimesEdit />}/>
-            <Route path="film" element={<FilmsEdit />}/>
+            <Route path="film" element={<FilmsEdit />}
+              
+            >
+             
+              </Route>
+            
             <Route path="rooms" element={<RoomsEdit />}/>
             <Route path="accounts" element={<AccountsEdit />}/>
           </Route>
