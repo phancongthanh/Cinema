@@ -37,7 +37,7 @@ public class FilesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Download([FromRoute] int id)
+    public async Task<IActionResult> Download([FromRoute] string id)
     {
         // Lấy file từ database
         var file = await _context.Files.FindAsync(id);

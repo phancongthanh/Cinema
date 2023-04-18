@@ -58,7 +58,7 @@ export const AddFilmDetail = ({ reload, back }: { reload: () => void, back: () =
             <div className='container'>
                 <div className='card'>
 
-                    <div className='card-title'>
+                    <div className='card-title' style={{margin: '10px'}}>
                         <h2>Thêm phim</h2>
                     </div>
 
@@ -150,7 +150,7 @@ export const AddFilmDetail = ({ reload, back }: { reload: () => void, back: () =
 
                         </div>
 
-                        <div className='col-lg-12'>
+                        <div className='col-lg-12' style={{marginTop: '20px'}}>
                                 <div className='form-group'>
                                     
                                     <button onClick={handlesubmit}  className='btn btn-success' type='submit'>Tạo</button>

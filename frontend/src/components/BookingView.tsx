@@ -40,6 +40,7 @@ const BookingView : FC<Props> = ({booking}) => {
             if(res) {
                 alert('Hủy vé thành công');
                 setOpen(false);
+                window.location.reload();
             }
         }
     }

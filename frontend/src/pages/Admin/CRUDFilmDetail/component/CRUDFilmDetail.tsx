@@ -13,8 +13,8 @@ export const CRUDFilmDetail = ({ films, changeView } : {films: FilmDetail[], cha
     return (
         <div className='container'>
         <div className='card'>
-            <div className='card-title'>
-                <h2>Danh sách film</h2>
+            <div className='card-title' style={{margin: '10px'}}>
+                <h2>Danh sách phim</h2>
             </div>
             <div className='card-body'>
                 <div>
@@ -29,7 +29,7 @@ export const CRUDFilmDetail = ({ films, changeView } : {films: FilmDetail[], cha
                             <th>Đạo diễn</th>  
                             <th>Xuất xứ</th>
                             {/* <th>poster</th> */}
-                            <th>Diễn viên</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
