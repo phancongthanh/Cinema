@@ -91,11 +91,11 @@ const AccountIcon = () => {
         </MenuItem>
         }
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={() => navigate('/password')}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Cài đặt
+          Đổi mật khẩu
         </MenuItem>
         <MenuItem onClick={logout}>
           <ListItemIcon>

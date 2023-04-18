@@ -70,8 +70,8 @@ public class DbContextInitialiser
         // Default users
         var users = new[] {
             new User() {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com",
+                UserName = "admin@ncc.com",
+                Email = "admin@ncc.com",
                 Name = "Admin",
                 Role = "Admin",
                 PhoneNumber = "0123456789",
@@ -79,8 +79,8 @@ public class DbContextInitialiser
             },
             new User()
             {
-                UserName = "manager@gmail.com",
-                Email = "manager@gmail.com",
+                UserName = "manager@ncc.com",
+                Email = "manager@ncc.com",
                 Name = "Quản lý rạp chiếu phim",
                 Role = "Manager",
                 PhoneNumber = "0123456789",
@@ -88,8 +88,8 @@ public class DbContextInitialiser
             },
             new User()
             {
-                UserName = "member@gmail.com",
-                Email = "member@gmail.com",
+                UserName = "member@ncc.com",
+                Email = "member@ncc.com",
                 Name = "Nguyễn Văn A",
                 Role = "Member",
                 PhoneNumber = "0123456789",

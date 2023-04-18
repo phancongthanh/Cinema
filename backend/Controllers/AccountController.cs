@@ -126,7 +126,7 @@ public class AccountController : ControllerBase
 
     // Định nghĩa phương thức đổi mật khẩu
     [HttpPost("ChangePassword")]
-    public async Task<IActionResult> ChangePassword([FromQuery] string userId, [FromQuery] string old, [FromBody] string password)
+    public async Task<IActionResult> ChangePassword([FromQuery] string userId, [FromQuery] string old, [FromQuery] string password)
     {
         // Tìm người dùng theo id
         var user = await _userManager.FindByIdAsync(userId);

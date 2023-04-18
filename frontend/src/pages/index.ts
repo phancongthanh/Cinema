@@ -9,6 +9,7 @@ export { default as Book } from "./Main/Book";
 export { default as ChooseFilm } from "./Main/Book/components/ChooseFilm";
 export { default as ChooseSeats } from "./Main/Book/components/ChooseSeats";
 export { default as UserInfo } from "../components/UserInfo";
+export { default as PasswordEdit } from "../components/PasswordEdit";
 export { default as Payment } from "./Main/Book/components/Payment";
 export { default as Notification } from "./Main/Book/components/Notification";
 

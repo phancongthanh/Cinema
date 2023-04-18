@@ -19,6 +19,7 @@ import {
   Missing,
   NeedLogin,
   Notification,
+  PasswordEdit,
   Payment,
   Price,
   Refund,
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
             <Route path="price" element={<Price />}/>
             <Route path="filmdetail/:filmid" element={<FilmDetail />}/>
             <Route path="userinfo" element={<Info />}/>
+            <Route path="password" element={<PasswordEdit />}/>
             <Route element={<RequiredAuth allowedRole={['Member']} />}>
               <Route path="book/" element={<Book />}>
                 <Route path="chooseFilm/:filmid?/:scheduleid?" element={<ChooseFilm />}/>

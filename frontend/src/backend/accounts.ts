@@ -62,7 +62,8 @@ export async function login(request: LoginModel) : Promise<boolean> {
 export async function changePassword(userId: string, old: string, password: string) : Promise<boolean> {
     const url = server.basePath + "/Account/ChangePassword"
         + "?userId=" + userId
-        + "&old=" + old;
+        + "&old=" + old
+        + "&password=" + password;
     
     const response = await fetch(url, {
         method: 'POST',

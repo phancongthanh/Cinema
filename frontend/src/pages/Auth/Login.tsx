@@ -1,23 +1,16 @@
-import React, { useEffect } from 'react'
-import {
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  Typography,
-} from '@mui/material';
-
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { boolean, literal, object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoadingButton } from '@mui/lab';
-import FormInput from '../../components/FormInput';
-import LoginModel from '../../types/LoginModel';
-import accounts from '../../backend/accounts';
+import { Checkbox, FormControlLabel, FormGroup, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import users from '../../backend/users';
+import { boolean, object, string, TypeOf } from 'zod';
+
+import accounts from '../../backend/accounts';
 import identity from '../../backend/identity';
+import FormInput from '../../components/FormInput';
+import useAuth from '../../hooks/useAuth';
+import LoginModel from '../../types/LoginModel';
 
 const loginSchema = object({
   email: string().nonempty('Cần nhập Email').email('Email không hợp lệ'),
