@@ -1,23 +1,66 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-const revenueData = [
-    { month: 'T11/2022', value: 10000 },
-    { month: 'T12/2022', value: 20000 },
-    { month: 'T1/2023', value: 10000 },
-    { month: 'T2/2023', value: 15000 },
-    { month: 'T3/2023', value: 25000 },
-    { month: 'T4/2023', value: 10000 },
+
+const MonthRevenueData = [
+    { text: 'T11/2022', value: 10000 },
+    { text: 'T12/2022', value: 20000 },
+    { text: 'T1/2023', value: 10000 },
+    { text: 'T2/2023', value: 15000 },
+    { text: 'T3/2023', value: 25000 },
+    { text: 'T4/2023', value: 10000 },
   ];
 
+
+const YearRevenueData = [
+    { text: '2021', value: 320000 },
+    { text: '2022', value: 430000 },
+    { text: '2023', value: 150000 },
+  ];
+
+  const DayRevenueData : {text:string, value:number}[] = []
+  
+  for(let i = 6; i >= 0; i--) {
+    const today = new Date();
+    const date = new Date(today.setDate(today.getDate() - i));
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const text = `${day}/${month}`;
+    const value = Math.floor(Math.random() * (300 - 50 + 1) + 50);
+    DayRevenueData.push({text, value});
+  }
+
+
+
+
+
 const RevenueChart = () => {
+
+  const [revenueType, setRevenueType] = React.useState(1);
+  const revenueTypeLabel = ['Theo ngày', 'Theo tháng', 'Theo năm']
+
   return (
-    <div className='h-[30rem] flex flex-col items-center'>
+    <div className='h-[30rem] flex flex-col space-y-4'>
+      
+          <FormControl sx={{ width: '20rem'}}>
+          <InputLabel id="revenueType">Chọn loại biểu đồ doanh thu</InputLabel>
+          <Select
+            labelId="revenueType"
+            value={revenueType}
+            label="Chọn loại biểu đồ doanh thu"
+            onChange={(e) => setRevenueType(e.target.value as number)}
+          >
+            <MenuItem value={0}>{revenueTypeLabel[0]}</MenuItem>
+            <MenuItem value={1}>{revenueTypeLabel[1]}</MenuItem>
+            <MenuItem value={2}>{revenueTypeLabel[2]}</MenuItem>
+          </Select>
+        </FormControl>
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         width={500}
         height={300}
-        data={revenueData}
+        data={revenueType === 0 ? DayRevenueData : revenueType === 1 ? MonthRevenueData : YearRevenueData}
         margin={{
           top: 5,
           right: 30,
@@ -26,11 +69,11 @@ const RevenueChart = () => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
+        <XAxis dataKey="text" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Area type="monotone" dataKey="value" name='Doanh thu theo tháng trong 6 tháng gần đây' stroke="#82ca9d" fill="#82ca9d" />
+        <Area type="monotone" dataKey="value" name='Doanh thu' stroke="#82ca9d" fill="#82ca9d" />
       </AreaChart>
     </ResponsiveContainer>
   </div>

@@ -11,6 +11,8 @@ import TicketCancelChart from './components/TicketCancelChart';
 
 
 const Analysis = () => {
+
+
   return (
     <div className='flex flex-col items-center'>
       <div className='flex flex-col w-full max-w-[60rem] space-y-12'>
@@ -19,6 +21,7 @@ const Analysis = () => {
           <AnalysisBox label={'Số khách'} icon={<PeopleIcon sx={{ fontSize: 80, color: 'blueviolet' }}/>} value={1000} prevValue={1100}/>
           <AnalysisBox label={'Doanh thu'} icon={<PaidIcon sx={{ fontSize: 80, color: 'orange' }}/>} value={1100} prevValue={1000}/>
         </div>
+
         <RevenueChart/>
         <div className="flex">
           <TicketChart/>
