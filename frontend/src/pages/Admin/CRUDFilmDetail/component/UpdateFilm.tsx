@@ -58,8 +58,8 @@ return (
         <div className='container'>
             <div className='card'>
 
-                <div className='card-title'>
-                    <h2>Thêm phim</h2>
+                <div className='card-title' style={{margin: '10px'}}>
+                    <h2>Chỉnh sửa phim</h2>
                 </div>
 
                 <div className='card-body'>
@@ -149,7 +149,7 @@ return (
 
                     </div>
 
-                    <div className='col-lg-12'>
+                    <div className='col-lg-12' style={{marginTop: '20px'}}>
                             <div className='form-group'>
                                 
                                 <button onClick={() => handleUpdateFilm() }  className='btn btn-success' type='submit'>Cập Nhật</button>

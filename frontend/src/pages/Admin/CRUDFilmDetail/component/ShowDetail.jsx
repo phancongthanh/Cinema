@@ -1,7 +1,8 @@
-import React from 'react'
-import { useParams  } from 'react-router-dom'
-import { useEffect , useState } from 'react'
-import {getById}  from '../../../../backend/films';
+import React from 'react';
+import { useEffect, useState } from 'react';
+
+import { getById } from '../../../../backend/films';
+
 export const ShowDetail = (props) => {
 
     
@@ -33,7 +34,7 @@ export const ShowDetail = (props) => {
                 <div className='card'>
 
                     <div className='card-title'>
-                        <h2>Thêm phim</h2>
+                        <h2>Chi tiết phim</h2>
                     </div>
 
 

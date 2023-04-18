@@ -1,9 +1,9 @@
 import React from 'react';
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
+/*
 import backend from '../../../../backend';
 
-const TicketChart = () => {
   const [data, setData] = React.useState<{title: string, value: number}[]>([])
 
   React.useEffect(() => {
@@ -18,7 +18,9 @@ const TicketChart = () => {
     }
     fetchData()
   }, [])
-  
+*/
+
+const TicketChart = ({data}: {data:{title: string, value: number}[]}) => {
 
   const sortedData: {title: string, value: number}[] = data.sort((a, b) => b.value - a.value)
 

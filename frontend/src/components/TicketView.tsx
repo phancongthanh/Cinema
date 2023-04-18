@@ -28,11 +28,12 @@ const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime
   return (
     <div className={`flex ${isCancel ? 'bg-red-200' : 'bg-slate-200'} rounded-tr-[6rem] rounded-bl-3xl p-4 space-x-4 w-[40rem] relative`}>
   
-    {filmUrl && <img src={filmUrl} height={140} width={140} alt='poster'/>}
+    {filmUrl && <img src={filmUrl} height={140} width={160} alt='poster'/>}
     <Divider orientation='vertical' flexItem/>
     <div className='flex flex-col items-center relative w-[40rem]'>
       <div>{film}</div>
       <div>{room}</div>
+      <div style={{fontWeight:'600', margin: '2px'}}>{isCancel ? "Trạng thái: Đã hủy vé": ""}</div>
       <div className='absolute bottom-0 left-4 flex space-x-4 items-center justify-end'>
         <div>
           <div>Mã vé: {ticket.ticketId}</div>
@@ -48,7 +49,6 @@ const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime
           <div>{seats && seats.find(seat => seat.seatId === ticket.seatId)?.position}</div>
         </div>
       </div>
-      <div style={{fontWeight:'600', margin: '2px'}}>{isCancel ? "Trạng thái: Đã hủy vé": ""}</div>
       <img src={'https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/logo_home.png'} height={100} width={100} className='absolute bottom-0 right-0' alt='logo'/>
     </div>
      </div>

@@ -35,8 +35,12 @@ public class UsersController : ControllerBase
     public async Task<ActionResult> Put([FromRoute] string id, [FromBody] User user)
     {
         if (id != user.Id) return BadRequest();
-        if (_userManager.Users.All(u => u.Id != user.Id)) return BadRequest();
-        var result = await _userManager.UpdateAsync(user);
+        var u = await _userManager.FindByIdAsync(id);
+        if (u == null) return NotFound();
+        u.Name = user.Name;
+        u.PhoneNumber = user.PhoneNumber;
+        u.Address = user.Address;
+        var result = await _userManager.UpdateAsync(u);
         return result.Succeeded ? NoContent() : BadRequest();
     }
 

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
-import { usePage } from '..'
-import backend from '../../../../backend'
-import Ticket from '../../../../types/Ticket'
-import { Divider } from '@mui/material'
-import Seat from '../../../../types/Seat'
-import identity from '../../../../backend/identity'
-import TicketView from '../../../../components/TicketView'
+import { Divider } from '@mui/material';
+import React, { useEffect } from 'react';
+
+import { usePage } from '..';
+import backend from '../../../../backend';
+import identity from '../../../../backend/identity';
+import TicketView from '../../../../components/TicketView';
+import Seat from '../../../../types/Seat';
+import User from '../../../../types/User';
 
 const Notification = () => { 
   const {booking} = usePage()
 
-  const [name, setName] = React.useState<string>('');
-  const [email, setEmail] = React.useState<string>('');
+  const [user, setUser] = React.useState<User | null>(null);
   const [filmUrl, setFilmUrl] = React.useState<string | null>(null);
   const [film, setFilm] = React.useState<string>('');
   const [room, setRoom] = React.useState<string>('');
@@ -24,10 +24,7 @@ const Notification = () => {
       const userId = identity.getUserId()
       if(userId) {
         const user = await backend.users.getById(userId)
-        if(user) {
-          setName(user.name)
-          setEmail(user.email)
-        }
+        user && setUser(user)
       }
       const schedule = await backend.schedules.getById(booking.scheduleId)
       if(schedule) {
@@ -45,12 +42,14 @@ const Notification = () => {
 
   return (
     <div className="flex flex-col w-[60rem] h-[33rem] border rounded-2xl shadow items-center">
-      <div className="mt-4 text-2xl">Cảm ơn {name} đã đặt vé</div>
+      <div className="mt-4 text-2xl">Cảm ơn {user?.name} đã đặt vé</div>
       <div className="flex mt-4 space-x-4">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col ml-4">
           <div className="text-2xl">Thông tin đặt vé</div>
-          <div>Tên: {name}</div>
-          <div>Email: {email}</div>
+          <div>Tên: {user?.name}</div>
+          <div>Email: {user?.email}</div>
+          <div>Số điện thoại: {user?.phoneNumber}</div>
+          <div>Địa chỉ: {user?.address}</div>
         </div>
         <Divider orientation='vertical' flexItem/>
         <div className="flex flex-col items-center space-y-4">
