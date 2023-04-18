@@ -62,7 +62,7 @@ export const AddSchedule = ({ films, rooms, reload, back }:
                                 <div className='form-group'>
                                     <label htmlFor='name'>Chọn phim chiếu</label>
                                     <select value ={filmId} onChange={e => setFilm(e.target.value)} className='form-control'>
-                                        {films.map(f => (<option>{f.filmId}</option>))}
+                                        {films.map(f => (<option value={f.filmId}>{f.title}</option>))}
                                     </select>
                             </div>
 
@@ -71,7 +71,7 @@ export const AddSchedule = ({ films, rooms, reload, back }:
                                 <div className='form-group'>
                                     <label htmlFor='address'>Chọn phòng chiếu</label>
                                     <select value ={roomId} onChange={e => setRoom(e.target.value)} className='form-control'>
-                                        {rooms.map(r => (<option>{r.roomId}</option>))}
+                                        {rooms.map(r => (<option value={r.roomId}>{r.name}</option>))}
                                     </select>
                             </div>
 
