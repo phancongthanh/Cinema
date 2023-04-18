@@ -55,6 +55,14 @@ return (
 
                 </div>
                 <div className='col-lg-12'>
+                    <div className='form-group'>
+                        <label htmlFor='time'>Thời lượng</label>
+                        <input value ={film.time + " phút"} type='text' className='form-control' readOnly disabled/>
+
+                    </div>
+
+                </div>
+                <div className='col-lg-12'>
                                 <div className='form-group'>
                                     <label htmlFor='roomName'>Tên phòng chiếu phim</label>
                                     <input value ={room.name}  type='text' className='form-control'  readOnly disabled/>

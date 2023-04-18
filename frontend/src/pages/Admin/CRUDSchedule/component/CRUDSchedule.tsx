@@ -1,6 +1,26 @@
 import React from 'react';
 
+import Schedule from '../../../../types/Schedule';
 import { Data } from '../../ShowtimesEdit';
+
+function ScheduleItem({data, schedule, handleClick}: {data: Data, schedule: Schedule, handleClick: any}) {
+    const film = data.films.find(f => f.filmId === schedule.filmId);
+    const room = data.rooms.find(f => f.roomId === schedule.roomId);
+    return (
+        <tr key={schedule.scheduleId}>
+            <td>{film?.title}</td>
+            <td>{film?.time} phút</td>
+            <td>{room?.name}</td>
+            <td>{room?.address}</td>
+            <td>{schedule.startTime.toLocaleString("vi-VN")}</td>
+        
+            <td>
+            <span onClick={() => handleClick("edit" ,schedule.scheduleId )} className='btn btn-success'>Sửa</span>
+            <span onClick={() => handleClick("detail" , schedule.scheduleId)} className='btn btn-primary'>Chi tiết</span>
+            </td>
+        </tr>
+    )
+}
 
 export const CRUDSchedule = ({ data, changeView } : {data: Data, changeView: (view: {tab: "read"|"write"|"detail"|"edit", scheduleId: string})=>void}) => {
     
@@ -23,30 +43,20 @@ export const CRUDSchedule = ({ data, changeView } : {data: Data, changeView: (vi
                 <table className='table table-bordered'>
                     <thead className='bg-dark text-white'>
                         <tr>
-                            <th>FilmId</th>
-                            <th>RoomId</th>
+                            <th>Tên phim</th>
+                            <th>Thời lượng</th>
+                            <th>Tên phòng</th>
                             {/* <th>description</th> */}
-                            <th>Khởi chiếu</th>  
+                            <th>Vị trí phòng</th>  
                             {/* <th>Xuất xứ</th> */}
                             {/* <th>poster</th> */}
                             {/* <th>Diễn viên</th> */}
+                            <th>Khởi chiếu</th>
                             <th>Hành động</th>  
                         </tr>
                     </thead>
                     <tbody>
-                        {data.schedules.map((schedule) => (
-                            <tr key={schedule.scheduleId}>
-                                <td>{schedule.filmId}</td>
-                                <td>{schedule.roomId}</td>
-            
-                                <td>{schedule.startTime.toLocaleString("vi-VN")}</td>
-                            
-                                <td>
-                                <span onClick={() => handleClick("edit" ,schedule.scheduleId )} className='btn btn-success'>Sửa</span>
-                                <span onClick={() => handleClick("detail" , schedule.scheduleId)} className='btn btn-primary'>Chi tiết</span>
-                                </td>
-                            </tr>
-                        ))}
+                        {data.schedules.map((schedule) => (<ScheduleItem data={data} schedule={schedule} handleClick={handleClick}/>))}
                     </tbody>
                 </table>
             </div>
