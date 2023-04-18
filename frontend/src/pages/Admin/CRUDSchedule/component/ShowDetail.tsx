@@ -36,6 +36,22 @@ export const ShowDetail = ({scheduleId, back}: {scheduleId: string, back: () => 
 
                         </div>
                         <div className='col-lg-12'>
+                            <div className='form-group'>
+                                <label htmlFor='time'>Thời lượng</label>
+                                <input value ={schedule?.film.time + " phút"} type='text' className='form-control' readOnly disabled/>
+
+                            </div>
+
+                        </div>
+                        <div className='col-lg-12'>
+                            <div className='form-group'>
+                                <label htmlFor='time'>Thời gian chiếu</label>
+                                <input value ={schedule?.startTime.toLocaleString("vi-VN")} type='text' className='form-control' readOnly disabled/>
+
+                            </div>
+
+                        </div>
+                        <div className='col-lg-12'>
                                 <div className='form-group'>
                                     <label htmlFor='roomName'>Tên phòng chiếu phim</label>
                                     <input value ={schedule?.room.name}  type='text' className='form-control'  readOnly disabled/>
@@ -62,7 +78,7 @@ export const ShowDetail = ({scheduleId, back}: {scheduleId: string, back: () => 
                         <div className='col-lg-12'>
                             <div className='form-group'>
                                 <label htmlFor='address'>Số vé đã bán</label>
-                                <input value={schedule?.tickets.filter(t => t.status === TicketStatus.Paid).length} type='text' className='form-control' readOnly disabled/>
+                                <input value={schedule?.tickets.filter(t => t.status !== TicketStatus.Available).length} type='text' className='form-control' readOnly disabled/>
 
                             </div>
 

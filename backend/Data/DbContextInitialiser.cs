@@ -70,8 +70,8 @@ public class DbContextInitialiser
         // Default users
         var users = new[] {
             new User() {
-                UserName = "admin@ncc.com",
-                Email = "admin@ncc.com",
+                UserName = "admin@ncc.vn",
+                Email = "admin@ncc.vn",
                 Name = "Admin",
                 Role = "Admin",
                 PhoneNumber = "0123456789",
@@ -79,8 +79,8 @@ public class DbContextInitialiser
             },
             new User()
             {
-                UserName = "manager@ncc.com",
-                Email = "manager@ncc.com",
+                UserName = "manager@ncc.vn",
+                Email = "manager@ncc.vn",
                 Name = "Quản lý rạp chiếu phim",
                 Role = "Manager",
                 PhoneNumber = "0123456789",
@@ -88,8 +88,8 @@ public class DbContextInitialiser
             },
             new User()
             {
-                UserName = "member@ncc.com",
-                Email = "member@ncc.com",
+                UserName = "member@ncc.vn",
+                Email = "member@ncc.vn",
                 Name = "Nguyễn Văn A",
                 Role = "Member",
                 PhoneNumber = "0123456789",
@@ -251,6 +251,7 @@ public class DbContextInitialiser
             var rooms = await _context.Rooms.Include(r => r.Seats).ToListAsync();
 
             var time = DateTime.Now.AddDays(-1);
+            time = time.AddSeconds(60 - time.Second);
             time = time.AddMinutes(60 - time.Minute);
             var random = new Random(0);
             schedules.Add(new Schedule()
@@ -299,6 +300,8 @@ public class DbContextInitialiser
                     var member = members[random.Next(members.Count)];
                     await _bookingSystem.Book(member.Id, ticket.TicketId);
                     await _bookingSystem.Pay(member.Id, ticket.TicketId);
+                    if (random.Next(1000) < 100)
+                        await _bookingSystem.Cancel(member.Id, ticket.TicketId);
                 }
             }
         }

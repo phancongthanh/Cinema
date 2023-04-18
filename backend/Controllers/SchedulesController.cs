@@ -61,7 +61,7 @@ public class SchedulesController : ControllerBase
         try
         {
             var scheduleId = await _scheduleSystem.CreateSchedule(schedule, baseCost, vipCost);
-            return Ok(_scheduleSystem.GetSchedule(scheduleId));
+            return Ok(await _scheduleSystem.GetSchedule(scheduleId));
         }
         catch (NotFoundException e)
         {

@@ -72,6 +72,8 @@ export async function getById(scheduleId: string) : Promise<ScheduleDetail|null>
  * @throws APIError
  */
 export async function create(schedule: Schedule, baseCost: number, vipCost: number) : Promise<ScheduleDetail> {
+    schedule.startTime = new Date(new Date(schedule.startTime).getTime() + 7*60*60*1000)
+    schedule.endTime = new Date(new Date(schedule.endTime).getTime() + 7*60*60*1000)
     const url = server.basePath + "/Schedules"
         + "?baseCost=" + baseCost
         + "&vipCost=" + vipCost;
@@ -116,6 +118,8 @@ export async function create(schedule: Schedule, baseCost: number, vipCost: numb
  * @throws APIError
  */
 export async function update(scheduleId: string, startTime: Date, endTime: Date) : Promise<ScheduleDetail> {
+    startTime = new Date(new Date(startTime).getTime() + 7*60*60*1000)
+    endTime = new Date(new Date(endTime).getTime() + 7*60*60*1000)
     const url = server.basePath + "/Schedules/" + scheduleId
         + "?startTime=" + startTime.toISOString()
         + "&endTime=" + endTime.toISOString();
@@ -127,7 +131,8 @@ export async function update(scheduleId: string, startTime: Date, endTime: Date)
         headers: {
             'Content-Type': 'application/json',
             'Authorization': token
-        }
+        },
+        body: JSON.stringify({scheduleId, filmId: "", roomId: "", startTime, endTime})
     });
 
     if (response.ok) {

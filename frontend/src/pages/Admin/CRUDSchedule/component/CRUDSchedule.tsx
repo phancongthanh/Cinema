@@ -51,7 +51,7 @@ export const CRUDSchedule = ({ data, changeView } : {data: Data, changeView: (vi
                             {/* <th>Xuất xứ</th> */}
                             {/* <th>poster</th> */}
                             {/* <th>Diễn viên</th> */}
-                            <th>Khởi chiếu</th>
+                            <th>Thời gian chiếu</th>
                             <th>Hành động</th>  
                         </tr>
                     </thead>
