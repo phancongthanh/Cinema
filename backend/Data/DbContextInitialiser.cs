@@ -73,21 +73,27 @@ public class DbContextInitialiser
                 UserName = "admin@gmail.com",
                 Email = "admin@gmail.com",
                 Name = "Admin",
-                Role = "Admin"
+                Role = "Admin",
+                PhoneNumber = "0123456789",
+                Address = "144 Xuân Thủy, Cầu Giấy, Hà Nội"
             },
             new User()
             {
                 UserName = "manager@gmail.com",
                 Email = "manager@gmail.com",
                 Name = "Quản lý rạp chiếu phim",
-                Role = "Manager"
+                Role = "Manager",
+                PhoneNumber = "0123456789",
+                Address = "144 Xuân Thủy, Cầu Giấy, Hà Nội"
             },
             new User()
             {
                 UserName = "member@gmail.com",
                 Email = "member@gmail.com",
                 Name = "Nguyễn Văn A",
-                Role = "Member"
+                Role = "Member",
+                PhoneNumber = "0123456789",
+                Address = "144 Xuân Thủy, Cầu Giấy, Hà Nội"
             }
         };
         foreach (var user in users)

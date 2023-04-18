@@ -1,12 +1,13 @@
-import React, { FC, useEffect, useState } from 'react'
-import Ticket from '../types/Ticket';
-import Booking from '../types/Booking';
-import backend from '../backend';
-import ScheduleDetail from '../types/ScheduleDetail';
-import TicketView from './TicketView';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, Dialog, IconButton } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
+import React, { FC, useEffect, useState } from 'react';
+
+import backend from '../backend';
 import identity from '../backend/identity';
+import Booking from '../types/Booking';
+import ScheduleDetail from '../types/ScheduleDetail';
+import Ticket from '../types/Ticket';
+import TicketView from './TicketView';
 
 
 
@@ -30,7 +31,7 @@ const BookingView : FC<Props> = ({booking}) => {
             }
         }
         getData();
-    }, [])
+    }, [booking])
 
     const cancel = async () => {
         const userId = identity.getUserId();
@@ -46,8 +47,8 @@ const BookingView : FC<Props> = ({booking}) => {
     
   return (
     <div className='m-4 relative'>
-     {(schedule && ticket) && <TicketView filmUrl={schedule.film.poster} film={schedule.film.title} room={schedule.room.address} ticket={ticket} startTime={schedule.startTime} endTime={schedule.endTime} seats={schedule.room.seats}/>}
-     <DeleteIcon color='error' className='absolute top-2 right-2 cursor-pointer' onClick={() => setOpen(!open)}/>
+     {(schedule && ticket) && <TicketView filmUrl={schedule.film.poster} film={schedule.film.title} room={schedule.room.address} ticket={ticket} startTime={schedule.startTime} endTime={schedule.endTime} seats={schedule.room.seats} isCancel={booking.canceled}/>}
+     { !booking.canceled && <DeleteIcon color='error' className='absolute top-2 right-2 cursor-pointer' onClick={() => setOpen(!open)}/>}
         <Dialog
         open={open}
         onClose={() => setOpen(!open)}

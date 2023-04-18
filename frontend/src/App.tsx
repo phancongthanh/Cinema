@@ -45,7 +45,7 @@ const router = createBrowserRouter(
             <Route path="price" element={<Price />}/>
             <Route path="filmdetail/:filmid" element={<FilmDetail />}/>
             <Route path="userinfo" element={<Info />}/>
-            <Route element={<RequiredAuth allowedRole={'Member'} />}>
+            <Route element={<RequiredAuth allowedRole={['Member']} />}>
               <Route path="book/" element={<Book />}>
                 <Route path="chooseFilm/:filmid?/:scheduleid?" element={<ChooseFilm />}/>
                 <Route path="chooseSeats/:filmid?/:scheduleid?" element={<ChooseSeats />}/>

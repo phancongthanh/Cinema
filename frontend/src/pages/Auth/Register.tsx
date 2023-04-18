@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react'
-import {
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  Typography,
-} from '@mui/material';
-
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { literal, object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Checkbox from '@mui/material/Checkbox';
 import { LoadingButton } from '@mui/lab';
-import FormInput from '../../components/FormInput';
-import RegisterModel from '../../types/RegisterModel';
+import { FormControlLabel, FormGroup, FormHelperText, Typography } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import React, { useEffect } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { literal, object, string, TypeOf } from 'zod';
+
 import accounts from '../../backend/accounts';
+import identity from '../../backend/identity';
+import FormInput from '../../components/FormInput';
+import useAuth from '../../hooks/useAuth';
 import LoginModel from '../../types/LoginModel';
-import { useNavigate, Navigate, Link } from 'react-router-dom';
+import RegisterModel from '../../types/RegisterModel';
 
 const registerSchema = object({
   name: string()
@@ -37,6 +34,7 @@ const registerSchema = object({
 type RegisterInput = TypeOf<typeof registerSchema>;
 
 const Register = () => {
+  const {setAuth} = useAuth()
 
   const navigate = useNavigate();
 
@@ -81,14 +79,16 @@ const Register = () => {
         password: values.password,
         rememberMe: true
       }
-      const IsloginOK = await accounts.login(login);
-      if(!IsloginOK) {
-        alert('Đăng nhập thất bại');
-        return;
-      } else {
-        alert('Đăng nhập thành công');
+      try{
+        const IsloginOK = await accounts.login(login);
+        setLoading(false);
+        setAuth(identity.getRole());
         navigate('/')
-      }
+        } catch (error) {
+          setLoading(false);
+          alert('Đăng nhập thất bại');
+          return;
+        }
     }
 
     setLoading(false);

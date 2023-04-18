@@ -1,8 +1,9 @@
 // import React from 'react'
-import {useNavigate, useParams } from 'react-router-dom';
-import FilmInfor from './FilmDetails/components/FilmInfor'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import backend from '../../backend';
-import React, { useEffect, useState } from 'react';
+import FilmInfor from './FilmDetails/components/FilmInfor';
 
 const FilmDetail = () => {
     const {filmid} = useParams()

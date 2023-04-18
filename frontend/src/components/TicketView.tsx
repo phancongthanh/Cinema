@@ -1,5 +1,6 @@
-import { Dialog, Divider } from '@mui/material'
-import React, { FC } from 'react'
+import { Divider } from '@mui/material';
+import React, { FC } from 'react';
+
 import Seat from '../types/Seat';
 import Ticket from '../types/Ticket';
 
@@ -11,10 +12,11 @@ interface Props {
     startTime: Date | null;
     endTime: Date | null;
     seats: Seat[] | null;
+    isCancel?: boolean
 }
 
 
-const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime, seats}) => {
+const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime, seats, isCancel}) => {
 
 
   const getTimeWithFormat = (time: Date) => {
@@ -24,9 +26,9 @@ const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime
   }
 
   return (
-    <div className='flex bg-slate-200 rounded-tr-[6rem] rounded-bl-3xl p-4 space-x-4 w-[40rem] relative'>
+    <div className={`flex ${isCancel ? 'bg-red-200' : 'bg-slate-200'} rounded-tr-[6rem] rounded-bl-3xl p-4 space-x-4 w-[40rem] relative`}>
   
-    {filmUrl && <img src={filmUrl} height={140} width={140}/>}
+    {filmUrl && <img src={filmUrl} height={140} width={140} alt='poster'/>}
     <Divider orientation='vertical' flexItem/>
     <div className='flex flex-col items-center relative w-[40rem]'>
       <div>{film}</div>
@@ -46,7 +48,8 @@ const TicketView : FC<Props> = ({filmUrl, film, room, ticket, startTime, endTime
           <div>{seats && seats.find(seat => seat.seatId === ticket.seatId)?.position}</div>
         </div>
       </div>
-      <img src={'https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/logo_home.png'} height={100} width={100} className='absolute bottom-0 right-0'/>
+      <div style={{fontWeight:'600', margin: '2px'}}>{isCancel ? "Trạng thái: Đã hủy vé": ""}</div>
+      <img src={'https://chieuphimquocgia.com.vn/Themes/RapChieuPhim/Content/content.v2/images/logo_home.png'} height={100} width={100} className='absolute bottom-0 right-0' alt='logo'/>
     </div>
      </div>
   )

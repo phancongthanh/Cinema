@@ -32,12 +32,12 @@ public class UsersController : ControllerBase
 
     // PUT api/Users/5
     [HttpPut("{id}")]
-    public ActionResult Put([FromRoute] string id, [FromBody] User user)
+    public async Task<ActionResult> Put([FromRoute] string id, [FromBody] User user)
     {
         if (id != user.Id) return BadRequest();
         if (_userManager.Users.All(u => u.Id != user.Id)) return BadRequest();
-        _userManager.UpdateAsync(user);
-        return NoContent();
+        var result = await _userManager.UpdateAsync(user);
+        return result.Succeeded ? NoContent() : BadRequest();
     }
 
     // DELETE api/Users/5

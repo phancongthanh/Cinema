@@ -1,19 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import accounts from "../backend/accounts";
-import {
-  Avatar,
-  Divider,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
-import { Logout, Settings } from "@mui/icons-material";
+import { Logout, Settings } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import identity from "../backend/identity";
+import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import accounts from '../backend/accounts';
+import identity from '../backend/identity';
+import useAuth from '../hooks/useAuth';
 
 const AccountIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -21,7 +14,7 @@ const AccountIcon = () => {
   const { setAuth } = useAuth();
 
   const role = identity.getRole();
-  const avatarSrc = role === 'Member' ? "https://i.pravatar.cc/300?img=30" : role === 'Manager' ? "https://i.pravatar.cc/300?img=31" : "https://i.pravatar.cc/300?img=32";
+  const avatarSrc = role === 'Member' ? "" : role === 'Manager' ? "https://i.pravatar.cc/300?img=31" : "https://i.pravatar.cc/300?img=32";
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -90,11 +83,11 @@ const AccountIcon = () => {
           <Avatar src ={avatarSrc}/> Thông tin cá nhân
         </MenuItem>
         {role !== 'Member' && 
-        <MenuItem onClick={() => navigate('/admin')}>
+        <MenuItem onClick={() => navigate(role === 'Admin' ? '/admin' :'/admin/showtimes')}>
          <ListItemIcon>
             <DashboardIcon fontSize="small" />
           </ListItemIcon>
-          quản lý rạp phim
+          Quản lý rạp phim
         </MenuItem>
         }
         <Divider />
@@ -102,7 +95,7 @@ const AccountIcon = () => {
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Cài đặt
         </MenuItem>
         <MenuItem onClick={logout}>
           <ListItemIcon>

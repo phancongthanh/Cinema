@@ -1,8 +1,8 @@
-import React from 'react'
-import Sidebar from './Sidebar'
-import { Outlet } from 'react-router-dom'
-import AdminHeader from './AdminHeader'
-import RequiredAuth from '../../../../components/RequiredAuth'
+import React from 'react';
+
+import RequiredAuth from '../../../../components/RequiredAuth';
+import AdminHeader from './AdminHeader';
+import Sidebar from './Sidebar';
 
 
 const AdminLayout = () => {
@@ -12,7 +12,7 @@ const AdminLayout = () => {
       <div className="flex flex-col w-screen">
         <AdminHeader/>
         <div className="p-8">
-          <RequiredAuth allowedRole={'Admin'} />
+          <RequiredAuth allowedRole={['Admin', 'Manager']} />
         </div>
       </div>
     </div>

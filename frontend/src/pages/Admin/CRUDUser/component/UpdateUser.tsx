@@ -1,9 +1,10 @@
-import React from 'react'
-import { useEffect , useState} from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import {getById , update} from '../../../../backend/users'
-import  User, { Role } from '../../../../types/User'
-import { log } from 'console'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import React from 'react';
+import { useEffect, useState } from 'react';
+
+import { getById, update } from '../../../../backend/users';
+import User, { Role } from '../../../../types/User';
 
 export const UpdateUser = (props : any) => {
 
@@ -48,7 +49,7 @@ export const UpdateUser = (props : any) => {
     
     try {
 
-      const userToUpdate :User  = {
+      const userToUpdate :any  = {
         id: userID,
         username: username,
         name: name,

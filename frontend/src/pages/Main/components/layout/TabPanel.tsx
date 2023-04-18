@@ -1,9 +1,9 @@
-import React, { FC, ReactNode, useEffect, useState } from 'react'
-import Tabs from '@mui/material/Tabs';
+import { Divider } from '@mui/material';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Divider} from '@mui/material';
-import TabItem from './TabItem';
+
 import useAuth from '../../../../hooks/useAuth';
 
 
@@ -38,7 +38,7 @@ const TabPanel  = () => {
 
 
     return (
-        <div className=" bg-red-200 flex h-12">
+        <div className=" bg-red-400 flex h-12">
                 <Tabs value={value} onChange={handleChange} centered className=' w-screen flex-1 before' TabIndicatorProps={{style:{background:'red'}}}>
                     <Tab label={"Trang chủ"} value={0} disabled={value === 0} component={Link} to={"/home"} className={'tab'}/>
                     <Divider orientation="vertical" flexItem variant='middle'/>
@@ -46,7 +46,7 @@ const TabPanel  = () => {
                     <Divider orientation="vertical" flexItem variant='middle'/>
                     <Tab label={"Giá vé"} value={2} disabled={value === 2} component={Link} to={'/price'} className={'tab'}/>
                     <Divider orientation="vertical" flexItem variant='middle'/>
-                    <Tab label={"Đặt vé"} value={3} disabled={value === 3} component={Link} to={'book/chooseFilm'} className={'tab'}/>
+                    {(auth !== 'Admin' && auth !== 'Manager') && <Tab label={"Đặt vé"} value={3} disabled={value === 3} component={Link} to={'book/chooseFilm'} className={'tab'}/>}
                     {auth === 'Member' && <Divider orientation="vertical" flexItem variant='middle'/>}
                     {auth === 'Member' && <Tab label={"Vé đã đặt"} value={4} disabled={value === 4} component={Link} to={'refund'} className={'tab'}/>}
 
@@ -57,7 +57,7 @@ const TabPanel  = () => {
                     {/* <TabItem label="Giá vé" value={value} to='/price' tvalue={2}/> */}
                     
                 </Tabs>
-                {auth ===  'Admin' && <Link to='/admin'  className='self-center justify-self-end mr-4'>Chỉnh sửa</Link>}
+                {/*auth ===  'Admin' && <Link to='/admin'  className='self-center justify-self-end mr-4'>Chỉnh sửa</Link>*/}
         </div>
     )
 }

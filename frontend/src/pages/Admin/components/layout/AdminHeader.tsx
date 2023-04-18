@@ -1,11 +1,6 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {Avatar, Divider, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
-import { IconButton } from '@mui/material';
-import { Logout, Settings } from '@mui/icons-material';
-import useAuth from '../../../../hooks/useAuth';
-import identity from '../../../../backend/identity';
-import accounts from '../../../../backend/accounts';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 import AccountIcon from '../../../../components/AccountIcon';
 
 

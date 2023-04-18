@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 import { Role } from '../types/User';
 
 type propTypes = {
-    allowedRole: Role;
+    allowedRole: Role[];
 };
 
 const RequiredAuth: FC<propTypes> = ({allowedRole})=> {
@@ -14,7 +14,7 @@ const RequiredAuth: FC<propTypes> = ({allowedRole})=> {
     // const navigate = useNavigate()
     
     return (
-        auth === allowedRole ?
+        allowedRole.some(role => role === auth) ?
          <Outlet />
                 : auth
                 ? <Navigate to="/unauthorized" state={{from: location}} replace/>

@@ -28,10 +28,12 @@ const FilmItem = ({ film }: { film: FilmDetail }) => {
         <p className="image-date" style={{marginBottom:'0px'}}><span style={{fontWeight:'600'}}>Khởi chiếu: </span> {date}</p>
       </div>
       <div>
-        
-        <div className="book-box">
-          {identity.getRole() ? "" : <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">Đặt Vé</Link>}
-        </div>
+        {
+          identity.getRole() === "Manager" || identity.getRole() === "Admin" ? "" : 
+          <div className="book-box">
+            <Link to={`/book/chooseFilm/${film.filmId}`} className="book-btn">Đặt Vé</Link>
+          </div>
+        }
       </div>
     </div>
   );
@@ -63,7 +65,7 @@ const FilmView = ({ films, tab }: { films: FilmDetail[]; tab: number }) => {
   return (
     <div className="movie">
       <div className="image-grid" style={{ width: tableWidth }}>
-        {fs.map(f => (<FilmItem film={f} />))}
+        {fs.map(f => (<FilmItem film={f} key={f.filmId} />))}
       </div>
     </div>
   );

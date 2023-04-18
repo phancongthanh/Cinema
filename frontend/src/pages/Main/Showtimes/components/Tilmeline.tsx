@@ -1,7 +1,9 @@
 import '../styles/timelineMovie.css';
 
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import identity from '../../../../backend/identity';
 import FilmDetail from '../../../../types/FilmDetail';
 
 function Timeline({films}: {films: FilmDetail[]}) {
@@ -45,6 +47,14 @@ const getTimeWithFormat = (time: Date) => {
 }
 
 const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
+    const onBookTicket = useCallback((e: any) => {
+        if (identity.getRole() === "Manager" || identity.getRole() === "Admin") {
+            e.preventDefault();
+            e.stopPropagation();
+            alert(identity.getRole() + " không thể đặt vé!")
+        }
+    },[]);
+
     return (
         <>
             {films.map((film, index) => (
@@ -66,7 +76,9 @@ const ImageWithInfo = ({ films }: { films: FilmDetail[]}) => {
                                 <ul>
                                     {film.schedules.map(s => 
                                         <li style={{fontWeight: '400', }}>
-                                          <Link style={{textDecoration:'none', color:'black'}} to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}>
+                                          <Link style={{textDecoration:'none', color:'black'}}
+                                            to={`/book/chooseFilm/${film.filmId}/${s.scheduleId}`}
+                                            onClick={onBookTicket}>
                                             {getTimeWithFormat(s.startTime)}
                                           </Link>  
                                         </li>
