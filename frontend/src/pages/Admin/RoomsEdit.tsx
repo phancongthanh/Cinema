@@ -12,19 +12,19 @@ import UpdateRoom from './CRUDRoom/component/UpdateRoom';
 
 const RoomsEdit = () => {
 
-    const [rooms, setFilms] = useState<Room[]>([]);
+    const [rooms, setRooms] = useState<Room[]>([]);
 
     const [view, changeView] = useState<{tab: "read"|"write"|"detail"|"edit", roomId: string}>({tab: "read", roomId: ""});
   
     useEffect(()=>{
         backend.rooms.get()
-        .then(rooms => setFilms(rooms));
+        .then(rooms => setRooms(rooms));
     }, []);
 
     const reload = useCallback(()=> {
         changeView({tab: "read", roomId: ""});
         backend.rooms.get()
-        .then(rooms => setFilms(rooms));
+        .then(rooms => setRooms(rooms));
     }, []);
 
     const back = useCallback(()=>changeView({tab: "read", roomId: ""}), []);
