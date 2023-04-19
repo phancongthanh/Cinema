@@ -1,22 +1,21 @@
-import React, { FC } from 'react'
-import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import React, { FC } from 'react';
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 
 const MonthRevenueData = [
-    { text: 'T11/2022', value: 10000 },
-    { text: 'T12/2022', value: 20000 },
-    { text: 'T1/2023', value: 10000 },
-    { text: 'T2/2023', value: 15000 },
-    { text: 'T3/2023', value: 25000 },
-    { text: 'T4/2023', value: 10000 },
+    { text: 'T11/2022', value: 4560000 },
+    { text: 'T12/2022', value: 7610000 },
+    { text: 'T1/2023', value: 8160000 },
+    { text: 'T2/2023', value: 6610000 },
+    { text: 'T3/2023', value: 5310000 },
+    { text: 'T4/2023', value: 4350000 },
   ];
 
 
 const YearRevenueData = [
-    { text: '2021', value: 320000 },
-    { text: '2022', value: 430000 },
-    { text: '2023', value: 150000 },
+    { text: '2022', value: MonthRevenueData.filter(m => m.text.includes("2022")).map(m => m.value).reduce((a, b) => a + b, 0) },
+    { text: '2023', value: MonthRevenueData.filter(m => m.text.includes("2023")).map(m => m.value).reduce((a, b) => a + b, 0) },
   ];
 
   const DayRevenueData : {text:string, value:number}[] = []
@@ -27,8 +26,8 @@ const YearRevenueData = [
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const text = `${day}/${month}`;
-    const value = Math.floor(Math.random() * (300 - 50 + 1) + 50);
-    DayRevenueData.push({text, value});
+    const value = day !== new Date().getDate() ? Math.floor(Math.random() * (200 - 50 + 1) + 150) : 100;
+    DayRevenueData.push({text, value:value*1000});
   }
 
 

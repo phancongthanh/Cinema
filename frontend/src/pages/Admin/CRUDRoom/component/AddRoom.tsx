@@ -29,7 +29,7 @@ export const AddRoom = ({ reload, back }: { reload: () => void, back: () => void
                     row: r,
                     column: c,
                     isAvailable: true,
-                    isVip: r >= Number(row)+3 && r <= Number(row)-2 && c >= Number(col)+3 && c <= Number(col)-3
+                    isVip: r >= 3 && r <= Number(row)-2 && c >= 3 && c <= Number(col)-3
                 };
                 room.seats.push(seat);
             }

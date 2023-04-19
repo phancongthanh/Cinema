@@ -16,7 +16,7 @@ const RoomChart = () => {
       setData(
         rooms?.map((room) => {
           return {
-            title: room.address,
+            title: room.name,
             value: Math.floor(Math.random() * (2000 - 400 + 1) + 400),
           };
         })

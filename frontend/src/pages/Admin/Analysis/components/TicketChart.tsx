@@ -1,8 +1,8 @@
 import React from 'react';
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-
 import backend from '../../../../backend';
+
 
 
 
@@ -49,7 +49,7 @@ const TicketChart = () => {
           <Bar dataKey="value" name='Số vé' fill="#8884d8" maxBarSize={40}/>
         </BarChart>
       </ResponsiveContainer>
-      Số vé bán được trong tháng
+      Số vé bán được theo bộ phim
     </div>
   )
 }

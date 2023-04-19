@@ -29,7 +29,7 @@ export const AddFilmDetail = ({ reload, back }: { reload: () => void, back: () =
             trailer: trailer
         };
         console.log(film);
-        backend.films.create(film).then(()=>reload).catch(e => console.log(e.message));
+        backend.films.create(film).then(()=>reload()).catch(e => console.log(e.message));
     }
 
     const selectPoster = useCallback((e: any) => {
