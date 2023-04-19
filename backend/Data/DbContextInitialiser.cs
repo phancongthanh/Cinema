@@ -128,7 +128,7 @@ public class DbContextInitialiser
                     Actors = null,
                     Country = "Nhật",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016786_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/w9HWe8zt64M"
+                    Trailer = "https://youtu.be/w9HWe8zt64M"
                 },
                 new Film()
                 {
@@ -141,7 +141,7 @@ public class DbContextInitialiser
                     Actors = "Chris Pratt, Anya Taylor-Joy, Charlie Day,…",
                     Country = "Mỹ",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016784_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/UGO_i2tf1BM"
+                    Trailer = "https://youtu.be/UGO_i2tf1BM"
                 },
                 new Film()
                 {
@@ -154,7 +154,7 @@ public class DbContextInitialiser
                     Actors = "Valentino Bisegna, Sara Di Sturco, Chiara Fabiano and Mattia Fabiano",
                     Country = "Mỹ",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016781_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/9dldS-QoUIk"
+                    Trailer = "https://youtu.be/9dldS-QoUIk"
                 },
                 new Film()
                 {
@@ -167,7 +167,7 @@ public class DbContextInitialiser
                     Actors = "iktor Dobronravov, Ekaterina Tarasova, Vladimir Sychov, Elizaveta Boyarskaya, Roman Artemiev, Irina Savina, Elena Shulman, Anton Eldarov",
                     Country = "Mỹ",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016816_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/eyq8cwWhMjk"
+                    Trailer = "https://youtu.be/eyq8cwWhMjk"
                 },
                 new Film()
                 {
@@ -180,7 +180,7 @@ public class DbContextInitialiser
                     Actors = "Shameik Moore",
                     Country = "Mỹ",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016798_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/SUz8Aw28vrc"
+                    Trailer = "https://youtu.be/SUz8Aw28vrc"
                 },
                 new Film()
                 {
@@ -193,7 +193,7 @@ public class DbContextInitialiser
                     Actors = "Anh Tú, Mạc Văn Khoa, Ngọc Phước, Nhất Trung,...",
                     Country = "Việt Nam",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016720_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/s8l6VZQH9iM"
+                    Trailer = "https://youtu.be/s8l6VZQH9iM"
                 }
                 ,
                 new Film()
@@ -207,7 +207,7 @@ public class DbContextInitialiser
                     Actors = "Russell Crowe, Franco Nero,...",
                     Country = "Mỹ",
                     Poster = "https://chieuphimquocgia.com.vn/Content/Images/0016805_0.jpeg",
-                    Trailer = "https://www.youtube.com/embed/p4LAYNacgkI"
+                    Trailer = "https://youtu.be/p4LAYNacgkI"
                 }
             };
             foreach (var film in films) await _filmSystem.CreateFilm(film);
